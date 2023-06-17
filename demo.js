@@ -9,6 +9,7 @@ function e_toggleSlide(element){
 }
 
 window.onload=()=>{
+    MInitSet.Inheritor("inherit_demo");
     MInitSet.Switcher("switch_demo");
     MInitSet.Switcher("switch_test");
     MInitSet.Definition.c_eq_v();

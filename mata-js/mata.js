@@ -232,10 +232,11 @@ const MInitSet={
     Switcher(id){
         id = id.replace('#',''); // remove the character
         let father = Select(`#${id}`);
-        if(father==null)return new MResult(MErr,4);
         let label = document.createElement("label");
         let children = father.querySelectorAll("mconbox>content");
         let switchbox = document.createElement("fbox");
+        if(father==null || children==null )
+            return new MResult(MErr,4);
         for(let item of children){
             let text = item.getAttribute("name");
             /*
@@ -264,6 +265,15 @@ const MInitSet={
         switchbox.firstChild.click(); // show the first content
         father.appendChild(label);
         return new MResult(MOk);
+    },
+    Inheritor(id){
+        id = id.replace('#','');
+        let element = Select('#'+id);
+        let f_id = '#'+element.getAttribute('fromid');
+        let f = document.querySelector(f_id);
+        let i_father = element.parentNode;
+        i_father.innerHTML+=f.innerHTML;
+        element.remove();
     },
     Definition:{
         c_eq_v(){
