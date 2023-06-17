@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="mata-css/mata.css">
+        <script src="mata-js/mata.js"></script>
+        <script src="demo.js"></script>
+        <title>Demo</title>
+    </head>
+    <body>
+        <header>
+            <banner>
+                Mata Toolkit DEMO - 更新于 v1.0
+            </banner>
+            <nav>
+                <left>
+                    <GBox>
+                        <Toggle rounded active="false" onclick="e_toggleSlide(this)" id="slidetoggler">侧边栏</toggle>
+                    </GBox>
+                </left>
+                <center>
+                    <b>中间栏</b>
+                </center>
+                <right>
+                    <b>右边栏</b>
+                </right>
+            </nav>
+        </header>
+        <main>
+            <Slide active="false" id="slide">
+                <Notice>本页面为演示页面，仅供参考!</Notice>
+                <Notice Outline>
+                    Mata toolkit 是一个开源 JavaScript 样式工具集.
+                    其目标是提供一个可靠、高度自定义的样式渲染系统.
+                    源代码 : <a href=https://github.com/0xarch/mata-toolkit>Mata Toolkit</a>
+                </Notice>
+            </Slide>
+            <box>
+                <Line>
+                    <Action >动作(按钮)</Action>
+                    <Action Outline>动作(按钮)(外框)</Action>
+                </Line>
+                <Line>
+                    <Notice><i>So</i>警告(填满)</Notice>
+                    <Notice Outline><i>Ot</i>警告(外框)</Notice>
+                </Line>
+                <Line>
+                    <GBox>
+                        <Toggle active="false" onclick="Toggle(this)"></Toggle>
+                        <Tx>切换</Tx>
+                    </GBox>
+                    <GBox Column>
+                        <h4>切换 Mata toolkit 主题色</h4>
+                        <Select onchange="Palette.setSP(this.value,500,this.value,500)">
+                            <Option c-eq-v value=RED></Option>
+                            <Option c-eq-v value=PINK></Option>
+                            <Option c-eq-v value=PURPLE></Option>
+                            <Option c-eq-v value=DEEPPURPLE></Option>
+                            <Option c-eq-v value=INDIGO></Option>
+                            <Option c-eq-v value="BLUE"></Option>
+                            <Option c-eq-v value="LIGHTBLUE"></Option>
+                            <Option c-eq-v value="CYAN"></Option>
+                            <Option c-eq-v value="TEAL"></Option>
+                            <Option c-eq-v value="GREEN"></Option>
+                            <Option c-eq-v value="LIGHTGREEN"></Option>
+                            <Option c-eq-v value="LIME"></Option>
+                            <Option c-eq-v value="YELLOW"></Option>
+                            <Option c-eq-v value="AMBER"></Option>
+                            <Option c-eq-v value="ORANGE"></Option>
+                            <Option c-eq-v value="DEEPORANGE"></Option>
+                        </Select>
+                    </GBox>
+                </Line>
+                <Line top>
+                    <Switcher id="switch_demo">
+                        <MConBox>
+                            <Content name=昨天>
+                                明日复明日，万事成蹉跎
+                            </Content>
+                            <Content name=今天>
+                                是今天
+                            </Content>
+                            <Content name=现在>
+                                你瞎点什么呢～
+                            </Content>
+                        </MConBox>
+                    </Switcher>
+                    <Switcher id="switch_test" label="带有标题的切换器">
+                        <MConBox>
+                            <Content name=昨天>
+                                明日复明日，万事成蹉跎
+                            </Content>
+                            <Content name=今天>
+                                是今天
+                            </Content>
+                            <Content name=现在>
+                                你瞎点什么呢～
+                            </Content>
+                        </MConBox>
+                    </Switcher>
+                </Line>
+            </box>
+        </main>
+        <hover bottom right column>
+            <Action Rounded lf>
+                +
+            </Action>
+        </hover>
+    </body>
+</html>
+

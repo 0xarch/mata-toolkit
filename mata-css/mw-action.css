@@ -1,0 +1,59 @@
+/* Action */
+action{
+    border:1px solid;
+    font-weight: bold;
+    border-radius: var(--m-small-round);
+    box-shadow: var(--m-medium-shadow);
+    min-height: 40px;
+    box-sizing: border-box;
+    padding: 8px;
+    margin: 4px;
+    position: relative;
+}
+action[Rounded]{
+    border-radius: 128px;
+    height: 64px;
+    min-width: 64px;
+    width: 64px;
+    text-align: center;
+    box-shadow:var(--m-large-shadow);
+}
+action[Outline]{
+    box-shadow: none;
+}
+action[lf]{ font-size: xx-large }
+/* Toggle */
+toggle{
+    height:22px;
+    width: 40px;
+    border-radius: var(--m-large-round);
+    border: 1px solid;
+    position: relative;
+}
+toggle::before{
+    content: '';
+    position: absolute;
+    display: block;
+    border-radius: var(--m-medium-round);
+    height: 20px;
+    width: 20px;
+    top: 1px;
+    transition: all .2s ease-in-out;
+    background-color: #fff !important;
+}
+toggle[active="false"]{ filter: saturate(0%) }
+toggle[active="false"]::before{ left: 1px }
+toggle[active="true"]::before{ left: 19px }
+toggle[rounded]{
+    height: 32px;
+    min-width: 32px;
+    width: max-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding-left: 7px;
+    padding-right: 7px;
+}
+toggle[rounded][active=false]{ filter: none }
+toggle[rounded]::before{ visibility: hidden }

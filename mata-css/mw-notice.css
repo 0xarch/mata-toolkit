@@ -1,0 +1,12 @@
+notice{
+    position: relative;
+    display: inline-block;
+    border-radius: var(--m-small-round);
+    padding: 14px;
+    box-sizing: border-box;
+    margin: .25rem;
+    overflow: hidden;
+}
+notice[Outline]{ border: 1px solid; padding: 13px }
+notice>i{ padding-right: 7px }
+notice a{ text-decoration: underline }

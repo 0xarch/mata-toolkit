@@ -1,0 +1,54 @@
+switcher{
+    display: flex;
+    flex-direction: column;
+    min-width: 256px;
+    border-radius: var(--m-medium-round);
+    overflow: hidden;
+    box-shadow: var(--m-large-shadow);
+    margin: 8px;
+}
+switcher>mconbox>content{
+    padding: .5rem;
+    min-height: calc(192px - 0.5rem);
+}
+switcher>mconbox.short>content{
+    min-height: calc(64px - 0.5rem);
+}
+switcher>label{
+    flex: .5;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+switcher>label.top{
+    order: 0;
+}
+switcher>mconbox{
+    order: 1;
+}
+switcher>label>fbox>*{
+    margin: .5rem;
+    padding: 0px 8px;
+    min-height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--m-small-round);
+}
+switcher>mconbox{
+    flex: 3;
+    background-color: var(--background-backdrop);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+switcher>mconbox.short{
+    flex: 3;
+    background-color: var(--background-backdrop);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+bselect{
+    font-weight: bold;
+}
