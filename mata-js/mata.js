@@ -40,6 +40,40 @@ const HSLUtilties={
         else return { r:R, g:G, b:B };
     }
 }
+const DatetimeUtilites={
+    testLeap(year){
+        if(year%100!=0)
+            if(year%4==0) return true
+            else return false
+        else
+            if(year%400==0) return true
+            else return false
+    },
+    dayCountOf(month,year){
+        if([1,3,5,7,8,10,12].includes(month)) return 31;
+        else if(month==2)
+            if(this.testLeap(year))
+                return 29;
+            else return 28;
+        else return 30;
+    },
+    firstDayOf(month,year){
+        return new Date(`${year}-${month}-1`);
+    },
+    /**
+     * 
+     * @param { string } string an date string
+     * @returns { {year:string, month:string, day:string} } object(JSON)
+     * @example stringToObject('2023-06-17')
+     */
+    stringToObject(string){
+        return { 
+            year:string.slice(0,4),
+            month:string.slice(5,7),
+            day:string.slice(8,10)
+        };
+    }
+}
 class HSL{
     h;s;l;
     constructor(h,s,l){
@@ -274,6 +308,78 @@ const MInitSet={
         let i_father = element.parentNode;
         i_father.innerHTML+=f.innerHTML;
         element.remove();
+    },
+    Calendar(id){
+        id = id.replace('#','');
+        let element = Select('#'+id);
+        let config = element.textContent;
+        element.textContent='';
+
+        // Parse Config
+        config = JSON.parse(config);
+
+          // Read date
+          let date = new Date();
+          let year = (config['year']!=undefined&&config['year']!="this")?config['year']:date.getFullYear();
+          let month = (config['month']!=undefined&&config['month']!="this")?config['month']:date.getMonth()+1;
+          month=month[1]==undefined?'0'+month:month;
+          let day = (config['day']!=undefined&&config['day']!="this")?config['day']:date.getDate();
+          let first_day = DatetimeUtilites.firstDayOf(month,year).getDay();
+        let conf_mark = config['mark']!=undefined?config['mark']:[];
+        let _conf_clickevent=config['clickevent'];
+        let conf_clickevent={};
+        for(let i in _conf_clickevent){
+            let di;
+            if(i[0]=='$')di=i.replace('$',`${year}-${month}-`);
+            else di=i;
+            conf_clickevent[di]=_conf_clickevent[i];
+        }
+
+        // Element Creating
+        let main_label = document.createElement('label');
+        let fbox = document.createElement('fbox');
+          let left_arrow = document.createElement('arrow');
+          let right_arrow = document.createElement('arrow');
+          let month_label = document.createElement('textlabel');
+          fbox.appendChild(left_arrow);
+          fbox.appendChild(month_label);
+          fbox.appendChild(right_arrow);
+        let day_label = document.createElement('fbox');
+        day_label.setAttribute('FullWidth','');
+        for(let item of ['日','一','二','三','四','五','六']){
+            let _day_label = document.createElement('textlabel');
+            _day_label.textContent=item;
+            day_label.appendChild(_day_label);
+        }
+        main_label.appendChild(fbox);
+        main_label.appendChild(day_label);
+
+        // Day Action
+        let main_box = document.createElement('calendarbox');
+          if(first_day!=0)
+            for(var i=0;i<first_day;i++){
+                main_box.appendChild(document.createElement('dayblank'));
+            }
+          // Make Elements
+          month_label.textContent=year+'年'+month+'月';
+          let day_count=DatetimeUtilites.dayCountOf(month,year);
+          for(var i=1;i<=day_count;i++){
+            let day_action = document.createElement('dayaction');
+            day_action.textContent=i;
+            if(conf_mark.includes(i))day_action.setAttribute('daytag','marked');
+            for(let item in conf_clickevent){
+                if(item==year+'-'+month+'-'+i){
+                    day_action.setAttribute('daytag','clickevent');
+                    day_action.onclick=function(){eval(conf_clickevent[item])};
+                    break;
+                }
+            }
+            main_box.appendChild(day_action);
+          }
+        
+        // Final Process
+        element.appendChild(main_label);
+        element.appendChild(main_box);
     },
     Definition:{
         c_eq_v(){

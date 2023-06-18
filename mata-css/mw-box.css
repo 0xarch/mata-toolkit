@@ -1,3 +1,10 @@
+/* Attribute */
+*[direct=Column]{
+    flex-direction: column;
+}
+*[direct=Row]{
+    flex-direction: row;
+}
 /* Boxes */
 fbox,gbox{
     display: inline-flex;
@@ -10,11 +17,12 @@ gbox{
     font-weight: bold;
     margin: .25rem;
 }
-gbox[direct=Column],fbox[direct=Column]{
-    flex-direction: column;
+fbox[FullWidth]{
+    display: flex;
+    width: 100%;
 }
-gbox[direct=Row],fbox[direct=Column]{
-    flex-direction: column;
+fbox[FullWidth]>*{
+    flex:1;
 }
 line{
     display: flex;
@@ -25,7 +33,7 @@ line[top]{
     align-items: start;
 }
 main{
-    height: calc(100vh - 96px);
+    min-height: calc(100vh - 96px);
 }
 main,slide{
     display: flex;

@@ -1,0 +1,33 @@
+/* Calendar */
+calendar{
+    border-radius: var(--m-medium-round);
+    box-shadow: var(--m-large-shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+calendarbox{
+    display: grid;
+    grid: auto-flow / 48px 48px 48px 48px 48px 48px 48px;
+}
+dayblank,dayaction{
+    border-radius: 128px;
+    box-shadow: var(--m-medium-shadow);
+    min-height: 40px;
+    box-sizing: border-box;
+    padding: 8px;
+    margin: 4px;
+}
+dayblank{
+    filter: grayscale(1);
+    box-shadow: var(--m-small-shadow);
+    opacity: .5;
+}
+dayaction{
+    font-weight: bold;
+    position: relative;
+}
+dayaction[daytag=clickevent]{
+    filter: saturate(120%);
+    box-shadow: 0px 1px 3px 1px var(--primary-color-3);
+}

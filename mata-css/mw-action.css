@@ -10,8 +10,7 @@ action{
     margin: 4px;
     position: relative;
 }
-action[Rounded]{
-    border-radius: 128px;
+action[Hover]{
     height: 64px;
     min-width: 64px;
     width: 64px;
@@ -57,3 +56,19 @@ toggle[rounded]{
 }
 toggle[rounded][active=false]{ filter: none }
 toggle[rounded]::before{ visibility: hidden }
+/* Label & Arrow */
+label{
+    flex: .5;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    min-height: 40px;
+}
+label>*{
+    flex:1;
+}
+arrow{
+    display: block;
+    height: 32px;
+    width: 32px;
+}

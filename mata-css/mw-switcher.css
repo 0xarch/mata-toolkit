@@ -14,12 +14,6 @@ switcher>mconbox>content{
 switcher>mconbox.short>content{
     min-height: calc(64px - 0.5rem);
 }
-switcher>label{
-    flex: .5;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-}
 switcher>label.top{
     order: 0;
 }

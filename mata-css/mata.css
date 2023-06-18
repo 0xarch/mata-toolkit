@@ -3,6 +3,7 @@
 @import url("mw-action.css");
 @import url("mw-switcher.css");
 @import url("mw-selector.css");
+@import url("mw-calendar.css");
 @import url("mata-color.css");
 
 *{
@@ -37,8 +38,11 @@
 *[Outline],*[Outline]:hover{
     background-color: transparent;
 }
+*[Rounded]{
+    border-radius: 128px;
+}
 /* All Centering Elements */
-action
+action,dayaction
 {
     display: flex;
     align-items: center;
@@ -49,4 +53,5 @@ textlabel{
     margin: 6px;
     font-weight: bolder;
     font-size: 1.12rem;
+    text-align: center;
 }
