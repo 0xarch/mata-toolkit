@@ -40,7 +40,7 @@ dayaction[textfilled]>tx{
     position: relative;
     top:3px;
 }
-dayaction[daytag=clickevent]{
+dayaction[clickevented]{
     filter: saturate(120%);
     box-shadow: 0px 1px 3px 1px var(--primary-color-3);
 }

@@ -89,6 +89,18 @@
                             #switch_demo
                         </Inheritor>
                     </Switcher>
+                    <Switcher id="switch_json" label="使用JSON的切换器">
+                        [
+                            {
+                                "name":"主页面",
+                                "content":"请在只有纯文本时使用\n基于JSON配置的切换器"
+                            },
+                            {
+                                "name":"标签页面",
+                                "content":"这是一个一个标签页面"
+                            }
+                        ]
+                    </Switcher>
                 </Line>
                 <Line>
                     <Calendar id="calendar_demo">
@@ -97,9 +109,6 @@
                             "month":6,
                             "config":{
                                 "mark":{
-                                    "each":{
-                                        "7":[1]
-                                    },
                                     "2023":{
                                         "each":[1],
                                         "6":[17,18],
@@ -113,11 +122,14 @@
                                             "1":"建党节"
                                         }
                                     }
+                                },
+                                "click":{
+                                    "each":{
+                                        "6":{
+                                            "1":"alert('儿童节')"
+                                        }
+                                    }
                                 }
-                            },
-                            "clickevent":{
-                                "2023-06-18":"alert('2023-06-18')",
-                                "$16":"alert('$16')"
                             }
                         }
                     </Calendar>

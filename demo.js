@@ -13,5 +13,6 @@ window.onload=()=>{
     MInitSet.Calendar("calendar_demo");
     MInitSet.Switcher("switch_demo");
     MInitSet.Switcher("switch_test");
+    MInitSet.SwitcherJSON("switch_json");
     MInitSet.Definition.c_eq_v();
 }

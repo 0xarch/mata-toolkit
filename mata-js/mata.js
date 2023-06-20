@@ -14,6 +14,7 @@ Toggle=(element)=>element.setAttribute('active',GetActive(element)?false:true),
 ToggleForce=(element,bool)=>element.setAttribute('active',bool),
 newElement=(tag)=>document.createElement(tag),
 removeElement=(query)=>document.querySelector(query).remove();
+const Exist=(_var)=>_var!=null;
 
 const HSLUtilties={
     /**
@@ -95,30 +96,61 @@ const DatetimeUtilites={
 }
 class HSL{
     h;s;l;
+    /**
+     * @constructor HSL
+     * @param {*} h Hue 色相
+     * @param {*} s Saturation 饱和度
+     * @param {*} l Lightness 亮度
+     */
     constructor(h,s,l){
-        this.h=h!=undefined?h:0;
-        this.s=s!=undefined?s:0;
-        this.l=l!=undefined?l:0;
+        this.h=h?h:0;
+        this.s=s?s:0;
+        this.l=l?l:0;
     }
+    /**
+     * adjust the hue, returns new HSL
+     * 调节色相，返回新的 HSL
+     * @param { number } dh delta hue 变化的色相
+     * @returns { HSL }
+     */
     dh(dh){
         let h = this.h+dh;
         if (h<0) h=0;
         else if (h>360) h=360; 
         return new HSL(h,this.s,this.l);
     }
+    /**
+     * adjust the saturation, returns new HSL
+     * 调节饱和度，返回新的 HSL
+     * @param { number } ds delta saturation 变化的饱和度
+     * @returns { HSL }
+     */
     ds(ds){
         let s = this.s+ds;
         if (s<0) s=0;
         else if (s>100) s=100; 
         return new HSL(this.h,s,this.l);
     }
+    /**
+     * adjust the lightness, returns new HSL
+     * 调节亮度，返回新的 HSL
+     * @param { number } dl delta lightness 变化的亮度
+     * @returns { HSL }
+     */
     dl(dl){
         let l = this.l+dl;
         if (l<0) l=0;
         else if (l>100) l=100; 
         return new HSL(this.h,this.s,l);
     }
+    /**
+     * @returns { string } CSS 声明
+     */
     CSS=()=>`hsl(${this.h},${this.s}%,${this.l}%)`;
+    /**
+     * 测试以该HSL为背景，应该使用亮色文字还是暗色文字
+     * @returns { "#000" | "#FFF" } HEX 字符串
+     */
     textColor(){
         let rgb=HSLUtilties.HSLtoRGB(this);
         let gray = rgb.r*3+rgb.g*6+rgb.b+5;
@@ -137,7 +169,7 @@ class MResult{
             this.errcode=new Number(errcode);
         }
     }
-    extract(){
+    getMsg(){
         return this.#msg;
     }
     match(err_arr){
@@ -148,15 +180,20 @@ class MResult{
             }
         }
     }
-    is_ok(){
-        return this.result===MOk;
-    }
-    is_err(){
-        return this.result===MErr;
-    }
     unwrap_err(){
         this.match(DefaultErrMsg);
-        return this.#msg!=undefined?this.#msg:this.err;
+        return this.#msg?this.#msg:this.err;
+    }
+    toOk(){ this.result=MOk }
+    toErr(errcode){ this.result = MErr; this.errcode = errcode }
+    testOk(){ return this.result === MOk }
+    testErr(){ return this.result === MErr }
+    unwrap(){ 
+        if(this.testOk()){
+            this.release();
+        } else {
+            this.getMsg();
+        }
     }
     release(){
         delete this;
@@ -201,7 +238,7 @@ class MPaletteProcesser{
      * @returns { MResult }
      */
     setPrimary(col,light){
-        if(this.palettes[col]==undefined)
+        if(!this.palettes[col])
             return new MResult(MErr,3);
         else {
             this.setPaletteByHSL("primary",new HSL(this.palettes[col][0],this.palettes[col][1],light/10));
@@ -215,7 +252,7 @@ class MPaletteProcesser{
      * @returns { MResult }
      */
     setSecondary(col,light){
-        if(this.palettes[col]==undefined)return new MResult(MErr,3);
+        if(!this.palettes[col])return new MResult(MErr,3);
         else {
             this.setPaletteByHSL("secondary",new HSL(this.palettes[col][0],this.palettes[col][1],light/10));
             return new MResult(MOk);
@@ -243,7 +280,7 @@ class MPaletteProcesser{
      * @example setPaletteByHSL("primary",new HSL(0,0,0))
      */
     setPaletteByHSL(name,hsl){
-        this.colns[name]=hsl!=undefined?hsl:this.colns[name];
+        this.colns[name]=hsl?hsl:this.colns[name];
         let v2=this.colns[name];
         let v1=v2.dl(-15),v3=v2.dl(12);
         this.#Root.setStyle(`--${name}-color-1`,v1.CSS());
@@ -262,7 +299,7 @@ class MPaletteProcesser{
      * @returns { MResult }
      */
     setPaletteFrom(name,color,light){
-        if(this.palettes[color]==undefined)
+        if(!this.palettes[color])
             return new MResult(MErr,3);
         else {
             this.colns[name]=new HSL(this.palettes[color][0],this.palettes[color][1],light/10);
@@ -277,6 +314,7 @@ const MInitSet={
     /**
      * init switcher ( functions, children... )
      * @param { string } id the switcher's id
+     * @returns { MResult }
      */
     Switcher(id){
         id = id.replace('#',''); // remove the character
@@ -284,7 +322,7 @@ const MInitSet={
         let label = newElement("label");
         let children = father.querySelectorAll("mconbox>content");
         let switchbox = newElement("fbox");
-        if(father==null || children==null )
+        if(!Exist(father) || !Exist(children))
             return new MResult(MErr,4);
         for(let item of children){
             let text = item.getAttribute("name");
@@ -305,7 +343,7 @@ const MInitSet={
             }
             switchbox.appendChild(bselect);
         }
-        if(father.getAttribute("label")!=undefined){
+        if(father.getAttribute("label")){
             let _label = newElement("textlabel");
             _label.textContent=father.getAttribute("label");
             label.appendChild(_label);
@@ -315,32 +353,57 @@ const MInitSet={
         father.appendChild(label);
         return new MResult(MOk);
     },
+    SwitcherJSON(id){
+        id = id.replace('#','');
+        let element = Select('#'+id);
+        try{
+            var config = JSON.parse(element.textContent);
+        }
+        catch(e){
+            return new MResult(MErr,3);
+        }
+        let mconbox = newElement("mconbox");
+        for(let item of config){
+            let mcontent = newElement("content");
+            mcontent.setAttribute("name",item.name);
+            mcontent.innerHTML='<pre>'+item.content+'</pre>';
+            mconbox.appendChild(mcontent);
+        }
+        element.innerHTML='';
+        element.appendChild(mconbox);
+        return this.Switcher(id);
+    },
     Inheritor(id){
         id = id.replace('#','');
         let element = Select('#'+id);
         let config = /[#\w]+/.exec(element.textContent);
-        console.log(config,element.textContent);
         let f_id = '#'+config[0].replace('#','');
         let f = Select(f_id);
         let i_father = element.parentNode;
         element.remove();
         i_father.innerHTML=f.innerHTML;
     },
+    /**
+     * init a calendar element
+     * @param { string } id the id of calendar element
+     * @returns { MResult }
+     */
     Calendar(id){
         id = id.replace('#','');
         let element = Select('#'+id);
+        if(!Exist(element))return new MResult(MErr,3);
         let config = element.textContent;
         element.textContent='';
 
         // Parse Config
         config = JSON.parse(config);
-        let day_conf = config['config']==undefined?{}:config['config'];
+        let day_conf = !config['config']?{}:config['config'];
 
         // Read date
           let date = new Date();
-          let year = (config['year']!=undefined&&config['year']!="this")?config['year']:date.getFullYear();
-          let month = (config['month']!=undefined&&config['month']!="this")?config['month']:date.getMonth()+1;
-          month=month[1]==undefined?'0'+month:month;
+          let year = config['year']&&config['year']!="this"?config['year']:date.getFullYear();
+          let month = config['month']&&config['month']!="this"?config['month']:date.getMonth()+1;
+          month=!month[1]?'0'+month:month;
         
         let _conf_clickevent=config['clickevent'];
         let conf_clickevent={};
@@ -376,6 +439,18 @@ const MInitSet={
         main_box.setAttribute('year',year);
         main_box.setAttribute('month',month);
 
+        const e_dd_test=(e_dd,day)=>{
+            try{
+                if(e_dd.includes(day))
+                    return true
+            }catch(_){
+                for(let item in e_dd){
+                    if(item==day)
+                        return [ true, e_dd[item] ]
+                }
+            }
+            return undefined
+        }
         /**
          * @param { string } year 
          * @param { string } month 
@@ -384,52 +459,28 @@ const MInitSet={
          * @returns { boolean }
          */
         let test_day=function(year,month,day,day_conf_selected){
-            if(day_conf_selected==undefined)return false;
+            if(!day_conf_selected)return false;
             month = parseInt(month);
-            if(day_conf_selected['each']!=undefined){
+            if(day_conf_selected['each']){
                 let e_dc=day_conf_selected['each'];
-                if(e_dc['each']!=undefined){
-                    let e_dd=e_dc['each'];
-                    if(e_dd.includes!=undefined){
-                        if(e_dd.includes(day))
-                            return true
-                    }else for(let item in e_dd){
-                        if(item==day)
-                            return [true,e_dd[item]];
-                    }
+                if(e_dc['each']){
+                    let result = e_dd_test(e_dc['each'],day);
+                    if(result)return result;
                 }
-                if(e_dc[month]!=undefined){
-                    let e_dd=e_dc[month];
-                    if(e_dd.includes!=undefined){
-                        if(e_dd.includes(day))
-                            return true
-                    }else for(let item in e_dd){
-                        if(item==day)
-                            return [true,e_dd[item]];
-                    }
+                if(e_dc[month]){
+                    let result = e_dd_test(e_dc[month],day);
+                    if(result)return result;
                 }
             }
-            if(day_conf_selected[year]!=undefined){
+            if(day_conf_selected[year]){
                 let e_dc=day_conf_selected[year];
-                if(e_dc['each']!=undefined){
-                    let e_dd=e_dc['each'];
-                    if(e_dd.includes!=undefined){
-                        if(e_dd.includes(day))
-                            return true
-                    }else for(let item in e_dd){
-                        if(item==day)
-                            return [true,e_dd[item]];
-                    }
+                if(e_dc['each']){
+                    let result = e_dd_test(e_dc['each'],day);
+                    if(result)return result;
                 }
-                if(e_dc[month]!=undefined){
-                    let e_dd=e_dc[month];
-                    if(e_dd.includes!=undefined){
-                        if(e_dd.includes(day))
-                            return true
-                    }else for(let item in e_dd){
-                        if(item==day)
-                            return [true,e_dd[item]];
-                    }
+                if(e_dc[month]){
+                    let result = e_dd_test(e_dc[month],day);
+                    if(result)return result;
                 }
             }
             return false
@@ -437,7 +488,7 @@ const MInitSet={
         let refresh_calendarbox=function(){
             let month = main_box.getAttribute('month'),
             year = main_box.getAttribute('year');
-            month = month[1]==undefined?'0'+month:month;
+            month = !month[1]?'0'+month:month;
             // Firstday Blank
             let first_day = DatetimeUtilites.firstDayOf(month,year).getDay();
             if(first_day!=0)
@@ -449,21 +500,19 @@ const MInitSet={
             for(var i=1;i<=day_count;i++){
                 let day_action = newElement('dayaction');
                 day_action.textContent=i;
-                for(let item in conf_clickevent){
-                    if(item==year+'-'+month+'-'+i){
-                        day_action.setAttribute('daytag','clickevent');
-                        day_action.onclick=function(){eval(conf_clickevent[item])};
-                        break;
-                    }
-                }
                 if(test_day(year,month,i,day_conf['mark']))
                     day_action.setAttribute('marked',true)
                 let hover = test_day(year,month,i,day_conf['text']);
                   if(hover[0]){
                     day_action.setAttribute('textfilled',true);
                     let text = newElement("tx");
-                    text.textContent=hover[1];
+                    text.textContent = hover[1];
                     day_action.appendChild(text);
+                  }
+                let clickevent = test_day(year, month, i, day_conf['click']);
+                  if(clickevent[0]){
+                    day_action.setAttribute('clickevented',true);
+                    day_action.onclick=function(){ eval( clickevent[1] ) }
                   }
                 main_box.appendChild(day_action);
             }
@@ -491,6 +540,7 @@ const MInitSet={
         // Final Process
         element.appendChild(main_label);
         element.appendChild(main_box);
+        return new MResult(MOk);
     },
     Definition:{
         c_eq_v(){

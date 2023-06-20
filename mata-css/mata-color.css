@@ -1,7 +1,8 @@
 /* Solid Color */
 banner,
 action:hover,bselect[active=true],
-dayaction:hover,dayaction[daytag]:hover,dayaction[marked]:hover
+dayaction:hover,dayaction[marked]:hover,
+dayaction[clickevented]:hover,dayaction[textfilled]:hover
 {
     background-color: var(--primary-color-1);
     color: var(--primary-text-1);
@@ -10,7 +11,7 @@ dayaction:hover,dayaction[daytag]:hover,dayaction[marked]:hover
 nav,
 action,notice,
 toggle,toggle[active=true],label,
-dayaction[marked=true]
+dayaction[marked]
 {
     background-color: var(--primary-color-2);
     color: var(--primary-text-2);
@@ -18,7 +19,7 @@ dayaction[marked=true]
 }
 blank.primary-light,
 toggle:hover,bselect[active=false]:hover,
-dayblank,dayaction[daytag=clickevent]
+dayblank,dayaction[clickevented]
 {
     color: var(--primary-text-3);
     background-color: var(--primary-color-3);
