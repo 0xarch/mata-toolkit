@@ -50,7 +50,7 @@ slide[active="false"]{
     margin-right: 0rem;
 }
 slide[active="true"]{
-    width: 15.5em;
+    min-width: 15.5em;
     left: 0em;
     box-shadow: var(--m-large-shadow);
     margin-right: 1rem;
