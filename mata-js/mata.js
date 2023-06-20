@@ -500,7 +500,7 @@ const MInitSet={
             month_label.textContent=year+'年'+month+'月';
 
             // append day elements
-            if(day_conf['showtoday']==true){
+            if(day_conf['showtoday']){
                 var today=new Date();
                 var today_year=today.getFullYear(),
                 today_month=today.getMonth()+1,
@@ -524,7 +524,7 @@ const MInitSet={
                     day_action.setAttribute('clickevented',true);
                     day_action.onclick=function(){ eval( clickevent[1] ) }
                   }
-                if(day_conf['showtoday']==true){
+                if(day_conf['showtoday']){
                     if(today_year==year && today_month==main_box.getAttribute('month') && today_date==i){
                         day_action.setAttribute('textfilled',true);
                         let text = newElement("tx");
