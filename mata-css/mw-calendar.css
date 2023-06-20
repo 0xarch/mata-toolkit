@@ -14,6 +14,7 @@ dayblank,dayaction{
     border-radius: 128px;
     box-shadow: var(--m-medium-shadow);
     min-height: 40px;
+    min-width: 40px;
     box-sizing: border-box;
     padding: 8px;
     margin: 4px;
@@ -26,6 +27,18 @@ dayblank{
 dayaction{
     font-weight: bold;
     position: relative;
+    flex-direction: column;
+}
+dayaction[textfilled]>tx{
+    height: 0px;
+    margin: 0px;
+    padding: 0px;
+    opacity: .6;
+    font-size: 10px;
+    min-width: 40px;
+    text-align: center;
+    position: relative;
+    top:3px;
 }
 dayaction[daytag=clickevent]{
     filter: saturate(120%);

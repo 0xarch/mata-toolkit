@@ -7,7 +7,7 @@ const MataPalette={
     "TEAL":[155,62],"GREEN":[122,39],"LIGHTGREEN":[88,62],"LIME":[66,70],
     "YELLOW":[54,87],"AMBER":[45,100],"ORANGE":[36,100],"DEEPORANGE":[14,100]
 };
-const GetActive=(element)=>{return element.attributes.active.nodeValue=="true"?true:false},
+const GetActive=(element)=>{return element.getAttribute('active')=="true"?true:false},
 Select=(query)=>document.querySelector(query),
 SelectAll=(query)=>document.querySelectorAll(query),
 Toggle=(element)=>element.setAttribute('active',GetActive(element)?false:true),
@@ -363,12 +363,12 @@ const MInitSet={
           fbox.appendChild(month_label);
           fbox.appendChild(right_arrow);
         let day_label = newElement('fbox');
-        day_label.setAttribute('FullWidth','');
-        for(let item of ['日','一','二','三','四','五','六']){
+          day_label.setAttribute('FullWidth','');
+          for(let item of ['日','一','二','三','四','五','六']){
             let _day_label = newElement('textlabel');
             _day_label.textContent=item;
             day_label.appendChild(_day_label);
-        }
+          }
         main_label.appendChild(fbox);
         main_label.appendChild(day_label);
 
@@ -376,16 +376,15 @@ const MInitSet={
         main_box.setAttribute('year',year);
         main_box.setAttribute('month',month);
 
-        // Day Action
         /**
-         * 
          * @param { string } year 
          * @param { string } month 
          * @param { number } day 
          * @param { object } day_conf_selected 
-         * @returns 
+         * @returns { boolean }
          */
         let test_day=function(year,month,day,day_conf_selected){
+            if(day_conf_selected==undefined)return false;
             month = parseInt(month);
             if(day_conf_selected['each']!=undefined){
                 let e_dc=day_conf_selected['each'];
@@ -448,7 +447,7 @@ const MInitSet={
 
             let day_count=DatetimeUtilites.dayCountOf(month,year);
             for(var i=1;i<=day_count;i++){
-                let day_action = document.createElement('dayaction');
+                let day_action = newElement('dayaction');
                 day_action.textContent=i;
                 for(let item in conf_clickevent){
                     if(item==year+'-'+month+'-'+i){
@@ -459,10 +458,12 @@ const MInitSet={
                 }
                 if(test_day(year,month,i,day_conf['mark']))
                     day_action.setAttribute('marked',true)
-                let hover = test_day(year,month,i,day_conf['hover']);
+                let hover = test_day(year,month,i,day_conf['text']);
                   if(hover[0]){
-                    day_action.setAttribute('hovered',true);
-                    day_action.setAttribute('title',hover[1]);
+                    day_action.setAttribute('textfilled',true);
+                    let text = newElement("tx");
+                    text.textContent=hover[1];
+                    day_action.appendChild(text);
                   }
                 main_box.appendChild(day_action);
             }

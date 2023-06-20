@@ -14,7 +14,7 @@
             <nav>
                 <left>
                     <GBox>
-                        <Toggle rounded active="false" onclick="e_toggleSlide(this)" id="slidetoggler">侧边栏</toggle>
+                        <Toggle active="false" onclick="e_toggleSlide(this)" id="slidetoggler"></Toggle>侧边栏
                     </GBox>
                 </left>
                 <center>
@@ -46,7 +46,7 @@
                 <Line>
                     <GBox>
                         <Toggle active="false" onclick="Toggle(this)"></Toggle>
-                        <Tx>切换</Tx>
+                        <Toggle rounded active="false" onclick="Toggle(this)">切换</Toggle>
                     </GBox>
                     <GBox Column>
                         <h4>切换 Mata toolkit 主题色</h4>
@@ -107,9 +107,11 @@
                                         "8":[10]
                                     }
                                 },
-                                "hover":{
+                                "text":{
                                     "each":{
-                                        "6":{"1":"test"}
+                                        "7":{
+                                            "1":"建党节"
+                                        }
                                     }
                                 }
                             },
@@ -123,7 +125,7 @@
             </box>
         </main>
         <hover bottom right column>
-            <Action Hover Rounded lf>
+            <Action Hover Rounded lf onclick="e_toggleSlide(this)">
                 +
             </Action>
         </hover>
