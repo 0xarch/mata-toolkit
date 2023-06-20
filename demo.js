@@ -9,10 +9,17 @@ function e_toggleSlide(element){
 }
 
 window.onload=()=>{
+    fetch("/demo.json").then(data=>{
+        data.text().then(data=>{
+            data = JSON.parse(data);
+            Select("#calendar_demo").innerHTML=JSON.stringify(data['calendar_demo']);
+            MInitSet.Calendar("calendar_demo").unwrap();
+            Select("#switch_json").innerHTML=JSON.stringify(data['switch_json']);
+            MInitSet.SwitcherJSON("switch_json").unwrap();
+        })
+    });
     MInitSet.Inheritor("inherit_demo");
-    MInitSet.Calendar("calendar_demo");
-    MInitSet.Switcher("switch_demo");
-    MInitSet.Switcher("switch_test");
-    MInitSet.SwitcherJSON("switch_json");
+    MInitSet.Switcher("switch_demo").unwrap();
+    MInitSet.Switcher("switch_test").unwrap();
     MInitSet.Definition.c_eq_v();
 }

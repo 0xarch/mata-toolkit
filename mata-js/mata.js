@@ -10,7 +10,7 @@ const MataPalette={
 const GetActive=(element)=>{return element.getAttribute('active')=="true"?true:false},
 Select=(query)=>document.querySelector(query),
 SelectAll=(query)=>document.querySelectorAll(query),
-Toggle=(element)=>element.setAttribute('active',GetActive(element)?false:true),
+Toggle=(element)=>element.setAttribute('active',element.getAttribute('active')=="true"?false:true),
 ToggleForce=(element,bool)=>element.setAttribute('active',bool),
 newElement=(tag)=>document.createElement(tag),
 removeElement=(query)=>document.querySelector(query).remove();
@@ -180,10 +180,6 @@ class MResult{
             }
         }
     }
-    unwrap_err(){
-        this.match(DefaultErrMsg);
-        return this.#msg?this.#msg:this.err;
-    }
     toOk(){ this.result=MOk }
     toErr(errcode){ this.result = MErr; this.errcode = errcode }
     testOk(){ return this.result === MOk }
@@ -192,7 +188,8 @@ class MResult{
         if(this.testOk()){
             this.release();
         } else {
-            this.getMsg();
+            this.match(DefaultErrMsg);
+            console.log(this.#msg);
         }
     }
     release(){
@@ -223,6 +220,7 @@ class MPaletteProcesser{
     colns;
     /**
      * initialize a palette processer from specific color palettes
+     * @constructor
      * @param { Object } palettesJson
      * @example let palette_processer = new MPaletteProcesser(MataPalette)
      */
@@ -239,7 +237,7 @@ class MPaletteProcesser{
      */
     setPrimary(col,light){
         if(!this.palettes[col])
-            return new MResult(MErr,3);
+            return new MResult(MErr,2);
         else {
             this.setPaletteByHSL("primary",new HSL(this.palettes[col][0],this.palettes[col][1],light/10));
             return new MResult(MOk);
@@ -252,7 +250,7 @@ class MPaletteProcesser{
      * @returns { MResult }
      */
     setSecondary(col,light){
-        if(!this.palettes[col])return new MResult(MErr,3);
+        if(!this.palettes[col])return new MResult(MErr,2);
         else {
             this.setPaletteByHSL("secondary",new HSL(this.palettes[col][0],this.palettes[col][1],light/10));
             return new MResult(MOk);
@@ -300,7 +298,7 @@ class MPaletteProcesser{
      */
     setPaletteFrom(name,color,light){
         if(!this.palettes[color])
-            return new MResult(MErr,3);
+            return new MResult(MErr,2);
         else {
             this.colns[name]=new HSL(this.palettes[color][0],this.palettes[color][1],light/10);
             return this.setPaletteByHSL(name); 
@@ -357,10 +355,10 @@ const MInitSet={
         id = id.replace('#','');
         let element = Select('#'+id);
         try{
-            var config = JSON.parse(element.textContent);
+            var config = JSON.parse(element.innerHTML);
         }
         catch(e){
-            return new MResult(MErr,3);
+            return new MResult(MErr,2);
         }
         let mconbox = newElement("mconbox");
         for(let item of config){
@@ -392,11 +390,16 @@ const MInitSet={
         id = id.replace('#','');
         let element = Select('#'+id);
         if(!Exist(element))return new MResult(MErr,3);
-        let config = element.textContent;
-        element.textContent='';
+        let config = element.innerHTML;
+        element.innerHTML='';
 
         // Parse Config
-        config = JSON.parse(config);
+        try{
+            config = JSON.parse(config);
+        }
+        catch(e){
+            return new MResult(MErr,3);
+        }
         let day_conf = !config['config']?{}:config['config'];
 
         // Read date
@@ -496,7 +499,7 @@ const MInitSet={
             let first_day = DatetimeUtilites.firstDayOf(month,year).getDay();
             if(first_day!=0)
                 for(var i=0;i<first_day;i++)
-                    main_box.appendChild(document.createElement('dayblank'));
+                    main_box.appendChild(newElement('dayblank'));
             month_label.textContent=year+'年'+month+'月';
 
             // append day elements
@@ -563,7 +566,7 @@ const MInitSet={
     },
     Definition:{
         c_eq_v(){
-            for(let item of document.querySelectorAll("*[c-eq-v]")){
+            for(let item of SelectAll("*[c-eq-v]")){
                 item.textContent=item.getAttribute("value");
             }
         }
