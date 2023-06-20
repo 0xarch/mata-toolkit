@@ -318,11 +318,13 @@ const MInitSet={
     Inheritor(id){
         id = id.replace('#','');
         let element = Select('#'+id);
-        let f_id = '#'+element.getAttribute('fromid');
+        let config = /[#\w]+/.exec(element.textContent);
+        console.log(config,element.textContent);
+        let f_id = '#'+config[0].replace('#','');
         let f = Select(f_id);
         let i_father = element.parentNode;
-        i_father.innerHTML+=f.innerHTML;
         element.remove();
+        i_father.innerHTML=f.innerHTML;
     },
     Calendar(id){
         id = id.replace('#','');

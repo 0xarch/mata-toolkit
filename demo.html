@@ -85,7 +85,9 @@
                         </MConBox>
                     </Switcher>
                     <Switcher id="switch_test" label="带有标题的切换器">
-                        <Inheritor id="inherit_demo" fromid="switch_demo" inherit="children"></Inheritor>
+                        <Inheritor id="inherit_demo">
+                            #switch_demo
+                        </Inheritor>
                     </Switcher>
                 </Line>
                 <Line>
@@ -111,7 +113,6 @@
                                     }
                                 }
                             },
-                            "mark":[13,15,17,18],
                             "clickevent":{
                                 "2023-06-18":"alert('2023-06-18')",
                                 "$16":"alert('$16')"
