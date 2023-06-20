@@ -500,6 +500,12 @@ const MInitSet={
             month_label.textContent=year+'年'+month+'月';
 
             // append day elements
+            if(day_conf['showtoday']==true){
+                var today=new Date();
+                var today_year=today.getFullYear(),
+                today_month=today.getMonth()+1,
+                today_date=today.getDate();
+            }
             let day_count=DatetimeUtilites.dayCountOf(month,year);
             for(var i=1;i<=day_count;i++){
                 let day_action = newElement('dayaction');
@@ -518,6 +524,15 @@ const MInitSet={
                     day_action.setAttribute('clickevented',true);
                     day_action.onclick=function(){ eval( clickevent[1] ) }
                   }
+                console.log(day_conf['showtoday']);
+                if(day_conf['showtoday']==true){
+                    if(today_year==year && today_month==main_box.getAttribute('month') && today_date==i){
+                        day_action.setAttribute('textfilled',true);
+                        let text = newElement("tx");
+                        text.textContent = "今天";
+                        day_action.appendChild(text);
+                    }
+                }
                 main_box.appendChild(day_action);
             }
         }
