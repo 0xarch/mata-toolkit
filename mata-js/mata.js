@@ -415,6 +415,8 @@ const MInitSet={
         }
 
         // Element Creating
+
+        // Calendar Label
         let main_label = newElement('label');
         let fbox = newElement('fbox');
           let left_arrow = newElement('arrow');
@@ -435,6 +437,7 @@ const MInitSet={
         main_label.appendChild(fbox);
         main_label.appendChild(day_label);
 
+        // Calendar Box
         let main_box = newElement('calendarbox');
         main_box.setAttribute('year',year);
         main_box.setAttribute('month',month);
@@ -489,13 +492,14 @@ const MInitSet={
             let month = main_box.getAttribute('month'),
             year = main_box.getAttribute('year');
             month = !month[1]?'0'+month:month;
-            // Firstday Blank
+            // first day Blank
             let first_day = DatetimeUtilites.firstDayOf(month,year).getDay();
             if(first_day!=0)
                 for(var i=0;i<first_day;i++)
                     main_box.appendChild(document.createElement('dayblank'));
             month_label.textContent=year+'年'+month+'月';
 
+            // append day elements
             let day_count=DatetimeUtilites.dayCountOf(month,year);
             for(var i=1;i<=day_count;i++){
                 let day_action = newElement('dayaction');
@@ -517,6 +521,7 @@ const MInitSet={
                 main_box.appendChild(day_action);
             }
         }
+        // write arrow functions
         left_arrow.onclick=function(){
             main_box.innerHTML='';
             let month = eval(main_box.getAttribute('month')),year=eval(main_box.getAttribute('year'));
