@@ -524,7 +524,6 @@ const MInitSet={
                     day_action.setAttribute('clickevented',true);
                     day_action.onclick=function(){ eval( clickevent[1] ) }
                   }
-                console.log(day_conf['showtoday']);
                 if(day_conf['showtoday']==true){
                     if(today_year==year && today_month==main_box.getAttribute('month') && today_date==i){
                         day_action.setAttribute('textfilled',true);
