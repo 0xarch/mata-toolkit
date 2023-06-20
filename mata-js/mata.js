@@ -7,15 +7,16 @@ const MataPalette={
     "TEAL":[155,62],"GREEN":[122,39],"LIGHTGREEN":[88,62],"LIME":[66,70],
     "YELLOW":[54,87],"AMBER":[45,100],"ORANGE":[36,100],"DEEPORANGE":[14,100]
 };
-let GetActive=(element)=>{return element.attributes.active.nodeValue=="true"?true:false},
+const GetActive=(element)=>{return element.attributes.active.nodeValue=="true"?true:false},
 Select=(query)=>document.querySelector(query),
 SelectAll=(query)=>document.querySelectorAll(query),
-Toggle=(element)=>element.attributes.active.nodeValue=GetActive(element)?false:true,
-ToggleForce=(element,bool)=>element.attributes.active.nodeValue=bool;
+Toggle=(element)=>element.setAttribute('active',GetActive(element)?false:true),
+ToggleForce=(element,bool)=>element.setAttribute('active',bool),
+newElement=(tag)=>document.createElement(tag),
+removeElement=(query)=>document.querySelector(query).remove();
 
 const HSLUtilties={
     /**
-     * 
      * @param { HSL } hsl the specfic HSL color
      * @param { bool} textmode if uses text output (CSS format)
      * @returns { {r:number,g:number,b:number}|string }
@@ -41,6 +42,11 @@ const HSLUtilties={
     }
 }
 const DatetimeUtilites={
+    /**
+     * if the year is leap year
+     * @param { number } year 
+     * @returns { true|false }
+     */
     testLeap(year){
         if(year%100!=0)
             if(year%4==0) return true
@@ -49,14 +55,27 @@ const DatetimeUtilites={
             if(year%400==0) return true
             else return false
     },
+    /**
+     * the count of day of the month
+     * @param { string | number } month 
+     * @param { string| number } year to test leap year
+     * @returns { 31|30|29|28 }
+     */
     dayCountOf(month,year){
-        if([1,3,5,7,8,10,12].includes(month)) return 31;
+        month=parseInt(month);
+        if([1,3,5,7,8,10,12].includes(month)) return 31
         else if(month==2)
-            if(this.testLeap(year))
-                return 29;
-            else return 28;
-        else return 30;
+            if(this.testLeap(parseInt(year)))
+                return 29
+            else return 28
+        else return 30
     },
+    /**
+     * the first day of the month
+     * @param { string|number } month 
+     * @param { string|number } year 
+     * @returns { Date }
+     */
     firstDayOf(month,year){
         return new Date(`${year}-${month}-1`);
     },
@@ -150,10 +169,6 @@ class MDElement{
     }
     setStyle(key,val){
         this.element.style.setProperty(key,val);
-    }
-    
-    getAttribute(string){
-        return this.element.attributes[string].nodeValue;
     }
     isActived(){
         return GetActive(this.element);
@@ -266,9 +281,9 @@ const MInitSet={
     Switcher(id){
         id = id.replace('#',''); // remove the character
         let father = Select(`#${id}`);
-        let label = document.createElement("label");
+        let label = newElement("label");
         let children = father.querySelectorAll("mconbox>content");
-        let switchbox = document.createElement("fbox");
+        let switchbox = newElement("fbox");
         if(father==null || children==null )
             return new MResult(MErr,4);
         for(let item of children){
@@ -276,22 +291,22 @@ const MInitSet={
             /*
              * Beslect is a new widget used by switcher
              */
-            let bselect = document.createElement("bselect");
+            let bselect = newElement("bselect");
             bselect.textContent=text;
             bselect.setAttribute('father',id); // To let the function know what to change
             bselect.setAttribute('active',false);
             bselect.onclick=function(){
-                for(let item of document.querySelectorAll(`#${id}>mconbox>content`))
+                for(let item of SelectAll(`#${id}>mconbox>content`))
                     item.style.display='none';
-                document.querySelector(`#${this.getAttribute('father')}>mconbox>content[name="${this.textContent}"]`).style.display='block';
-                for (let item of document.querySelectorAll(`#${id}>label>fbox>bselect`))
+                Select(`#${this.getAttribute('father')}>mconbox>content[name="${this.textContent}"]`).style.display='block';
+                for (let item of SelectAll(`#${id}>label>fbox>bselect`))
                     item.setAttribute("active","false");
                 this.setAttribute("active",true);
             }
             switchbox.appendChild(bselect);
         }
         if(father.getAttribute("label")!=undefined){
-            let _label = document.createElement("textlabel");
+            let _label = newElement("textlabel");
             _label.textContent=father.getAttribute("label");
             label.appendChild(_label);
         }
@@ -304,7 +319,7 @@ const MInitSet={
         id = id.replace('#','');
         let element = Select('#'+id);
         let f_id = '#'+element.getAttribute('fromid');
-        let f = document.querySelector(f_id);
+        let f = Select(f_id);
         let i_father = element.parentNode;
         i_father.innerHTML+=f.innerHTML;
         element.remove();
@@ -317,15 +332,14 @@ const MInitSet={
 
         // Parse Config
         config = JSON.parse(config);
+        let day_conf = config['config']==undefined?{}:config['config'];
 
-          // Read date
+        // Read date
           let date = new Date();
           let year = (config['year']!=undefined&&config['year']!="this")?config['year']:date.getFullYear();
           let month = (config['month']!=undefined&&config['month']!="this")?config['month']:date.getMonth()+1;
           month=month[1]==undefined?'0'+month:month;
-          let day = (config['day']!=undefined&&config['day']!="this")?config['day']:date.getDate();
-          let first_day = DatetimeUtilites.firstDayOf(month,year).getDay();
-        let conf_mark = config['mark']!=undefined?config['mark']:[];
+        
         let _conf_clickevent=config['clickevent'];
         let conf_clickevent={};
         for(let i in _conf_clickevent){
@@ -336,46 +350,140 @@ const MInitSet={
         }
 
         // Element Creating
-        let main_label = document.createElement('label');
-        let fbox = document.createElement('fbox');
-          let left_arrow = document.createElement('arrow');
-          let right_arrow = document.createElement('arrow');
-          let month_label = document.createElement('textlabel');
+        let main_label = newElement('label');
+        let fbox = newElement('fbox');
+          let left_arrow = newElement('arrow');
+          let right_arrow = newElement('arrow');
+          left_arrow.setAttribute('towards','left');
+          right_arrow.setAttribute('towards','right');
+          let month_label = newElement('textlabel');
           fbox.appendChild(left_arrow);
           fbox.appendChild(month_label);
           fbox.appendChild(right_arrow);
-        let day_label = document.createElement('fbox');
+        let day_label = newElement('fbox');
         day_label.setAttribute('FullWidth','');
         for(let item of ['日','一','二','三','四','五','六']){
-            let _day_label = document.createElement('textlabel');
+            let _day_label = newElement('textlabel');
             _day_label.textContent=item;
             day_label.appendChild(_day_label);
         }
         main_label.appendChild(fbox);
         main_label.appendChild(day_label);
 
+        let main_box = newElement('calendarbox');
+        main_box.setAttribute('year',year);
+        main_box.setAttribute('month',month);
+
         // Day Action
-        let main_box = document.createElement('calendarbox');
-          if(first_day!=0)
-            for(var i=0;i<first_day;i++){
-                main_box.appendChild(document.createElement('dayblank'));
-            }
-          // Make Elements
-          month_label.textContent=year+'年'+month+'月';
-          let day_count=DatetimeUtilites.dayCountOf(month,year);
-          for(var i=1;i<=day_count;i++){
-            let day_action = document.createElement('dayaction');
-            day_action.textContent=i;
-            if(conf_mark.includes(i))day_action.setAttribute('daytag','marked');
-            for(let item in conf_clickevent){
-                if(item==year+'-'+month+'-'+i){
-                    day_action.setAttribute('daytag','clickevent');
-                    day_action.onclick=function(){eval(conf_clickevent[item])};
-                    break;
+        /**
+         * 
+         * @param { string } year 
+         * @param { string } month 
+         * @param { number } day 
+         * @param { object } day_conf_selected 
+         * @returns 
+         */
+        let test_day=function(year,month,day,day_conf_selected){
+            month = parseInt(month);
+            if(day_conf_selected['each']!=undefined){
+                let e_dc=day_conf_selected['each'];
+                if(e_dc['each']!=undefined){
+                    let e_dd=e_dc['each'];
+                    if(e_dd.includes!=undefined){
+                        if(e_dd.includes(day))
+                            return true
+                    }else for(let item in e_dd){
+                        if(item==day)
+                            return [true,e_dd[item]];
+                    }
+                }
+                if(e_dc[month]!=undefined){
+                    let e_dd=e_dc[month];
+                    if(e_dd.includes!=undefined){
+                        if(e_dd.includes(day))
+                            return true
+                    }else for(let item in e_dd){
+                        if(item==day)
+                            return [true,e_dd[item]];
+                    }
                 }
             }
-            main_box.appendChild(day_action);
-          }
+            if(day_conf_selected[year]!=undefined){
+                let e_dc=day_conf_selected[year];
+                if(e_dc['each']!=undefined){
+                    let e_dd=e_dc['each'];
+                    if(e_dd.includes!=undefined){
+                        if(e_dd.includes(day))
+                            return true
+                    }else for(let item in e_dd){
+                        if(item==day)
+                            return [true,e_dd[item]];
+                    }
+                }
+                if(e_dc[month]!=undefined){
+                    let e_dd=e_dc[month];
+                    if(e_dd.includes!=undefined){
+                        if(e_dd.includes(day))
+                            return true
+                    }else for(let item in e_dd){
+                        if(item==day)
+                            return [true,e_dd[item]];
+                    }
+                }
+            }
+            return false
+        }
+        let refresh_calendarbox=function(){
+            let month = main_box.getAttribute('month'),
+            year = main_box.getAttribute('year');
+            month = month[1]==undefined?'0'+month:month;
+            // Firstday Blank
+            let first_day = DatetimeUtilites.firstDayOf(month,year).getDay();
+            if(first_day!=0)
+                for(var i=0;i<first_day;i++)
+                    main_box.appendChild(document.createElement('dayblank'));
+            month_label.textContent=year+'年'+month+'月';
+
+            let day_count=DatetimeUtilites.dayCountOf(month,year);
+            for(var i=1;i<=day_count;i++){
+                let day_action = document.createElement('dayaction');
+                day_action.textContent=i;
+                for(let item in conf_clickevent){
+                    if(item==year+'-'+month+'-'+i){
+                        day_action.setAttribute('daytag','clickevent');
+                        day_action.onclick=function(){eval(conf_clickevent[item])};
+                        break;
+                    }
+                }
+                if(test_day(year,month,i,day_conf['mark']))
+                    day_action.setAttribute('marked',true)
+                let hover = test_day(year,month,i,day_conf['hover']);
+                  if(hover[0]){
+                    day_action.setAttribute('hovered',true);
+                    day_action.setAttribute('title',hover[1]);
+                  }
+                main_box.appendChild(day_action);
+            }
+        }
+        left_arrow.onclick=function(){
+            main_box.innerHTML='';
+            let month = eval(main_box.getAttribute('month')),year=eval(main_box.getAttribute('year'));
+            if(month==1){month=12,year-=1}
+            else month-=1;
+            main_box.setAttribute('month',month);
+            main_box.setAttribute('year',year);
+            refresh_calendarbox();
+        }
+        right_arrow.onclick=function(){
+            main_box.innerHTML='';
+            let month = eval(main_box.getAttribute('month')),year=eval(main_box.getAttribute('year'));
+            if(month==12){month=1,year+=1}
+            else month+=1;
+            main_box.setAttribute('month',month);
+            main_box.setAttribute('year',year);
+            refresh_calendarbox();
+        }
+        refresh_calendarbox();
         
         // Final Process
         element.appendChild(main_label);

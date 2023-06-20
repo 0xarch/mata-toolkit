@@ -42,7 +42,7 @@
     border-radius: 128px;
 }
 /* All Centering Elements */
-action,dayaction
+action,dayaction,arrow[towards]::before
 {
     display: flex;
     align-items: center;

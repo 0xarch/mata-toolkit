@@ -71,4 +71,19 @@ arrow{
     display: block;
     height: 32px;
     width: 32px;
+    position: relative;
+}
+arrow[towards]::before{
+    position: absolute;
+    top:0;left: 0;
+    height: 32px;
+    width: 32px;
+    font-size: larger;
+    font-weight: bold;
+}
+arrow[towards=left]::before{
+    content: '<';
+}
+arrow[towards=right]::before{
+    content: '>';
 }
