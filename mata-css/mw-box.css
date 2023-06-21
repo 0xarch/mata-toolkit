@@ -59,8 +59,6 @@ hover{
     display: flex;
     position: fixed;
 }
-hover[column]{ flex-direction: column }
-hover[row]{ flex-direction: row }
 hover[left]{ left: 2em }
 hover[right]{ right: 2em }
 hover[top]{ top: 2em }
