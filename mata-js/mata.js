@@ -564,11 +564,4 @@ const MInitSet={
         element.appendChild(main_box);
         return new MResult(MOk);
     },
-    Definition:{
-        c_eq_v(){
-            for(let item of SelectAll("*[c-eq-v]")){
-                item.textContent=item.getAttribute("value");
-            }
-        }
-    }
 }
