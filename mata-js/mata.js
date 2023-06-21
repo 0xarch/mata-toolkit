@@ -16,10 +16,10 @@ newElement=(tag)=>document.createElement(tag),
 removeElement=(query)=>document.querySelector(query).remove();
 const Exist=(_var)=>_var!=null;
 
-const HSLUtilties={
+const ColorUtilties={
     /**
      * @param { HSL } hsl the specfic HSL color
-     * @param { bool} textmode if uses text output (CSS format)
+     * @param { bool} textmode if uses text output (CSS format), defaults to false
      * @returns { {r:number,g:number,b:number}|string }
      */
     HSLtoRGB(hsl,textmode=false){
@@ -40,6 +40,31 @@ const HSLUtilties={
         const B = 255 * (vB + m);
         if (textmode) return `rgb(${R},${G},${B})`;
         else return { r:R, g:G, b:B };
+    },
+    /**
+     * convert RGB to HSL
+     * @param {*} r Red
+     * @param {*} g Green
+     * @param {*} b Blue
+     * @returns { HSL }
+     */
+    RGBtoHSL(r,g,b){
+        let R=r/255,G=g/255,B=b/255;
+        let min=Math.min(r,g,b),max=Math.max(r,g,b);
+        let l=(min+max)/2,d=max-min;
+        let H,S,L=l;
+        if(max==min) H=S=0;
+        else {
+            S=l>0.5 ? d/(2-max-min) : d/(max+min);
+            switch(max){
+                case R: H=(g-b)/d + (g<b ?6 :0); break;
+                case G: H=2.0+(b-r)/d; break;
+                case B: H=4.0+(r-g)/d; break;
+            }
+            H = Math.round(H*60);
+        }
+        S=Math.round(S*100),L=Math.round(L*100);
+        return new HSL(H,S,L);
     }
 }
 const DatetimeUtilites={
@@ -99,8 +124,8 @@ class HSL{
     /**
      * @constructor HSL
      * @param {*} h Hue 色相
-     * @param {*} s Saturation 饱和度
-     * @param {*} l Lightness 亮度
+     * @param {*} s Saturation 饱和度 (percent)
+     * @param {*} l Lightness 亮度 (percent)
      */
     constructor(h,s,l){
         this.h=h?h:0;
@@ -152,7 +177,7 @@ class HSL{
      * @returns { "#000" | "#FFF" } HEX 字符串
      */
     textColor(){
-        let rgb=HSLUtilties.HSLtoRGB(this);
+        let rgb=ColorUtilties.HSLtoRGB(this);
         let gray = rgb.r*3+rgb.g*6+rgb.b+5;
         if(gray>1200) return "#000"
         else return "#FFF"
