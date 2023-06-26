@@ -37,6 +37,17 @@ line{
 line[top]{
     align-items: start;
 }
+hidden{
+    display: none;
+}
+abox>article{
+    flex:3;
+}
+abox>aside{
+    flex:.7;
+}
+
+/* Big Boxes */
 main{
     min-height: calc(100vh - 7rem);
 }
