@@ -4,16 +4,16 @@ action{
     font-weight: bold;
     border-radius: var(--m-small-round);
     box-shadow: var(--m-medium-shadow);
-    min-height: 40px;
+    min-height: 3rem;
     box-sizing: border-box;
-    padding: 8px;
-    margin: 4px;
+    padding: 0.75rem;
+    margin: 0.25rem;
     position: relative;
 }
 action[Hover]{
-    height: 64px;
-    min-width: 64px;
-    width: 64px;
+    height: 4.5rem;
+    min-width: 4.5rem;
+    width: 4.5rem;
     text-align: center;
     box-shadow:var(--m-large-shadow);
 }
@@ -23,8 +23,8 @@ action[Outline]{
 action[lf]{ font-size: xx-large }
 /* Toggle */
 toggle{
-    height:22px;
-    width: 40px;
+    height: 1.75rem;
+    width: 3rem;
     border-radius: var(--m-large-round);
     border: 1px solid;
     position: relative;
@@ -33,26 +33,26 @@ toggle::before{
     content: '';
     position: absolute;
     display: block;
-    border-radius: var(--m-medium-round);
-    height: 20px;
-    width: 20px;
-    top: 1px;
+    border-radius: var(--m-large-round);
+    height: 1.71rem;
+    width: 1.71rem;
+    top: 0.02rem;
     transition: all .2s ease-in-out;
     background-color: #fff !important;
 }
 toggle[active="false"]{ filter: saturate(0%) }
-toggle[active="false"]::before{ left: 1px }
-toggle[active="true"]::before{ left: 19px }
+toggle[active="false"]::before{ left: 0.02rem }
+toggle[active="true"]::before{ left: 1.27rem }
 toggle[rounded]{
-    height: 32px;
-    min-width: 32px;
+    height: 2rem;
+    min-width: 2rem;
     width: max-content;
     display: flex;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    padding-left: 7px;
-    padding-right: 7px;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
 }
 toggle[rounded][active=false]{ filter: none }
 toggle[rounded]::before{ visibility: hidden }
@@ -62,22 +62,22 @@ label{
     display: flex;
     align-items: center;
     flex-direction: column;
-    min-height: 40px;
+    min-height: 3rem;
 }
 label>*{
     flex:1;
 }
 arrow{
     display: block;
-    height: 32px;
-    width: 32px;
+    height: 2.5rem;
+    width: 2.5rem;
     position: relative;
 }
 arrow[towards]::before{
     position: absolute;
     top:0;left: 0;
-    height: 32px;
-    width: 32px;
+    height: 2.5rem;
+    width: 2.5rem;
     font-size: larger;
     font-weight: bold;
 }

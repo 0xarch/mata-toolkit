@@ -1,18 +1,18 @@
 switcher{
     display: flex;
     flex-direction: column;
-    min-width: 256px;
+    min-width: 12rem;
     border-radius: var(--m-medium-round);
     overflow: hidden;
     box-shadow: var(--m-large-shadow);
-    margin: 8px;
+    margin: .75rem;
 }
 switcher>mconbox>content{
     padding: .5rem;
-    min-height: calc(192px - 0.5rem);
+    min-height: 11rem;
 }
 switcher>mconbox.short>content{
-    min-height: calc(64px - 0.5rem);
+    min-height: 11rem;
 }
 switcher>label.top{
     order: 0;
@@ -22,8 +22,8 @@ switcher>mconbox{
 }
 switcher>label>fbox>*{
     margin: .5rem;
-    padding: 0px 8px;
-    min-height: 32px;
+    padding: 0px .75rem;
+    min-height: 2.5rem;
     display: flex;
     align-items: center;
     justify-content: center;

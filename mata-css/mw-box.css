@@ -12,7 +12,7 @@ fbox,gbox{
     justify-content: center;
 }
 gbox{
-    min-height: 32px;
+    min-height: 2.5rem;
     padding:.25rem;
     font-weight: bold;
     margin: .25rem;
@@ -33,7 +33,7 @@ line[top]{
     align-items: start;
 }
 main{
-    min-height: calc(100vh - 96px);
+    min-height: calc(100vh - 7rem);
 }
 main,slide{
     display: flex;
@@ -46,11 +46,11 @@ slide{
 }
 slide[active="false"]{
     width: 0em;
-    left: -15.5em;
+    left: -15.5rem;
     margin-right: 0rem;
 }
 slide[active="true"]{
-    min-width: 15.5em;
+    min-width: 15.5rem;
     left: 0em;
     box-shadow: var(--m-large-shadow);
     margin-right: 1rem;
@@ -72,7 +72,7 @@ header,nav,banner{
     z-index: 10;
 }
 header{
-    height: 96px;
+    min-height: 7rem;
     top: 0;
     left: auto;
     right: 0;
@@ -80,9 +80,9 @@ header{
     box-shadow: var(--m-large-shadow);
 }
 nav{
-    height: 64px;
-    padding-left: 24px;
-    padding-right: 24px;
+    height: 4.5rem;
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
     display: flex;
     position: relative;
     align-items: center;
@@ -98,7 +98,7 @@ left,center,right{
     align-items: center;
 }
 banner{
-    min-height: 32px;
+    min-height: 2.5rem;
     display: flex;
     align-items: center;
     justify-content: center;

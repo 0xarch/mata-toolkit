@@ -34,6 +34,11 @@
         --color:#111;
     }
 }
+@media screen and (orientation:portrait){
+    html{
+        font-size: 1.5em;
+    }
+}
 /* Keyword Defintion */
 *[Outline],*[Outline]:hover{
     background-color: transparent;

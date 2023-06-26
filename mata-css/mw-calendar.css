@@ -8,16 +8,16 @@ calendar{
 }
 calendarbox{
     display: grid;
-    grid: auto-flow / 48px 48px 48px 48px 48px 48px 48px;
+    grid: auto-flow / 3.5rem 3.5rem 3.5rem 3.5rem 3.5rem 3.5rem 3.5rem;
 }
 dayblank,dayaction{
-    border-radius: 128px;
+    border-radius: 3rem;
     box-shadow: var(--m-medium-shadow);
-    min-height: 40px;
-    min-width: 40px;
+    min-height: 3rem;
+    min-width: 3rem;
     box-sizing: border-box;
-    padding: 8px;
-    margin: 4px;
+    padding: .75rem;
+    margin: .25rem;
 }
 dayblank{
     filter: grayscale(1);
@@ -34,11 +34,11 @@ dayaction[textfilled]>tx{
     margin: 0px;
     padding: 0px;
     opacity: .6;
-    font-size: 10px;
-    min-width: 40px;
+    font-size: .75rem;
+    min-width: 3rem;
     text-align: center;
     position: relative;
-    top:3px;
+    top:.3rem;
 }
 dayaction[clickevented]{
     filter: saturate(120%);
