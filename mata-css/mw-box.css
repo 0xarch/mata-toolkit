@@ -6,10 +6,15 @@
     flex-direction: row;
 }
 /* Boxes */
-fbox,gbox{
+fbox,gbox,cbox[FlexEnabled]{
     display: inline-flex;
     align-items: center;
     justify-content: center;
+}
+cbox{
+    border-radius:var(--m-medium-round);
+    padding:.5rem;
+    box-shadow:var(--m-medium-shadow);
 }
 gbox{
     min-height: 2.5rem;

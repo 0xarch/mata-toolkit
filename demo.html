@@ -13,7 +13,7 @@
             </banner>
             <nav>
                 <left>
-                    <GBox>
+                    <GBox FlexEnabled direct=Row>
                         <Toggle active="false" onclick="e_toggleSlide(this)" id="slidetoggler"></Toggle>侧边栏
                     </GBox>
                 </left>
@@ -36,8 +36,10 @@
             </Slide>
             <box>
                 <Line>
-                    <Action >动作(按钮)</Action>
-                    <Action Outline>动作(按钮)(外框)</Action>
+                    <CBox>
+                        <Action >动作(按钮)</Action>
+                        <Action Outline>动作(按钮)(外框)</Action>
+                    </CBox>
                 </Line>
                 <Line>
                     <Notice><i>So</i>警告(填满)</Notice>
