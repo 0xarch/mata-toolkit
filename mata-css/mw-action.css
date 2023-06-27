@@ -87,3 +87,13 @@ arrow[towards=left]::before{
 arrow[towards=right]::before{
     content: '>';
 }
+
+/* Hr */
+hr{
+    border-bottom: none;
+    opacity: .3;
+}
+hr[type=Blank]{
+    visibility:hidden;
+    height: .25rem;
+}

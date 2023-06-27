@@ -46,6 +46,30 @@
 *[Rounded]{
     border-radius: 128px;
 }
+*[space~=Margin]{
+    margin: 1.25rem;
+}
+*[space~=Padding]{
+    padding: 1.25rem;
+}
+*[space~=NoMargin]{
+    margin: 0 0 !important;
+}
+*[space~=NoPadding]{
+    padding: 0 0 !important;
+}
+*[flexOption~=AlignStart]{
+    align-items: start !important;
+}
+*[flexOption~=AlignEnd]{
+    align-items: end !important;
+}
+*[flexOption~=JustifyStart]{
+    justify-content: start !important;
+}
+*[flexOption~=JustifyEnd]{
+    align-items: end !important;
+}
 /* All Centering Elements */
 action,dayaction,arrow[towards]::before,abox
 {
