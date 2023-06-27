@@ -56,6 +56,9 @@ main{
 main,slide{
     display: flex;
 }
+main>*:first-child:last-child{
+    flex:1;
+}
 slide{
     display: block;
     position: relative;
