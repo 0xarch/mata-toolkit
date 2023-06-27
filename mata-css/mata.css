@@ -84,3 +84,7 @@ textlabel{
     font-size: 1.12rem;
     text-align: center;
 }
+/* Original Element Fix */
+li{
+    margin-left:1rem;
+}
