@@ -9,7 +9,7 @@ function e_toggleSlide(element){
 }
 
 window.onload=()=>{
-    fetch("/demo.json").then(data=>{
+    fetch("demo.json").then(data=>{
         data.text().then(data=>{
             data = JSON.parse(data);
             Select("#calendar_demo").innerHTML=JSON.stringify(data['calendar_demo']);
