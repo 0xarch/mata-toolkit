@@ -46,6 +46,9 @@
 *[Rounded]{
     border-radius: 128px;
 }
+*[FlexEnabled]{
+    display:flex;
+}
 *[space~=Margin]{
     margin: 1.25rem;
 }
@@ -58,20 +61,26 @@
 *[space~=NoPadding]{
     padding: 0 0 !important;
 }
-*[flexOption~=AlignStart]{
+*[flexOption~=Align\:Start]{
     align-items: start !important;
 }
-*[flexOption~=AlignEnd]{
+*[flexOption~=Align\:Center]{
+    align-items: center !important;
+}
+*[flexOption~=Align\:End]{
     align-items: end !important;
 }
-*[flexOption~=JustifyStart]{
+*[flexOption~=Justify\:Start]{
     justify-content: start !important;
 }
-*[flexOption~=JustifyEnd]{
+*[flexOption~=Justify\:Center]{
+    justify-content: center !important;
+}
+*[flexOption~=Justify\:End]{
     align-items: end !important;
 }
 /* All Centering Elements */
-action,dayaction,arrow[towards]::before,abox
+action,dayaction,arrow[towards]::before,flexmain
 {
     display: flex;
     align-items: center;

@@ -23,26 +23,26 @@ action[Outline]{
 action[lf]{ font-size: xx-large }
 /* Toggle */
 toggle{
-    height: 1.75rem;
+    height: 1.8rem;
     width: 3rem;
-    border-radius: var(--m-large-round);
-    border: 1px solid;
+    border-radius: 3rem;
+    border:none;
     position: relative;
 }
 toggle::before{
     content: '';
     position: absolute;
     display: block;
-    border-radius: var(--m-large-round);
-    height: 1.71rem;
-    width: 1.71rem;
-    top: 0.02rem;
+    border-radius: 3rem;
+    height: 1.4rem;
+    width: 1.4rem;
+    top: 0.2rem;
     transition: all .2s ease-in-out;
     background-color: #fff !important;
 }
 toggle[active="false"]{ filter: saturate(0%) }
-toggle[active="false"]::before{ left: 0.02rem }
-toggle[active="true"]::before{ left: 1.27rem }
+toggle[active="false"]::before{ left: 0.2rem }
+toggle[active="true"]::before{ left: 1.4rem }
 toggle[rounded]{
     height: 2rem;
     min-width: 2rem;
@@ -56,44 +56,3 @@ toggle[rounded]{
 }
 toggle[rounded][active=false]{ filter: none }
 toggle[rounded]::before{ visibility: hidden }
-/* Label & Arrow */
-label{
-    flex: .5;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    min-height: 3rem;
-}
-label>*{
-    flex:1;
-}
-arrow{
-    display: block;
-    height: 2.5rem;
-    width: 2.5rem;
-    position: relative;
-}
-arrow[towards]::before{
-    position: absolute;
-    top:0;left: 0;
-    height: 2.5rem;
-    width: 2.5rem;
-    font-size: larger;
-    font-weight: bold;
-}
-arrow[towards=left]::before{
-    content: '<';
-}
-arrow[towards=right]::before{
-    content: '>';
-}
-
-/* Hr */
-hr{
-    border-bottom: none;
-    opacity: .3;
-}
-hr[type=Blank]{
-    visibility:hidden;
-    height: .25rem;
-}

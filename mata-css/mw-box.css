@@ -6,24 +6,33 @@
     flex-direction: row;
 }
 /* Boxes */
-fbox,gbox,cbox[FlexEnabled]{
+fbox,gbox,container{
     display: inline-flex;
     align-items: center;
     justify-content: center;
 }
-cbox{
+/**
+ widget-like box
+ */
+cbox,widget{
     border-radius:var(--m-medium-round);
     padding:.5rem;
     box-shadow:var(--m-medium-shadow);
     display:block;
     min-width:10rem;
 }
-gbox{
+/**
+ containing box
+ */
+gbox,container{
     min-height: 2.5rem;
     padding:.25rem;
     font-weight: bold;
     margin: .25rem;
 }
+/**
+ default flex box
+ */
 fbox[FullWidth]{
     display: flex;
     width: 100%;
@@ -42,10 +51,11 @@ line[top]{
 hidden{
     display: none;
 }
-abox>article{
+/* FA_MAIN */
+flexmain>article{
     flex:3;
 }
-abox>aside{
+flexmain>aside{
     flex:.7;
 }
 
@@ -66,12 +76,13 @@ slide{
     padding: .5rem;
 }
 slide[active="false"]{
-    width: 0em;
-    left: -15.5rem;
+    width: 0rem;
+    left:-25vw;
     margin-right: 0rem;
 }
 slide[active="true"]{
-    min-width: 15.5rem;
+    width: 25vw;
+    max-width: 20rem;
     left: 0em;
     box-shadow: var(--m-large-shadow);
     margin-right: 1rem;

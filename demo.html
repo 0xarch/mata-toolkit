@@ -36,21 +36,21 @@
             </Slide>
             <box>
                 <Line>
-                    <CBox>
+                    <Widget>
                         <Action >动作(按钮)</Action>
                         <Action Outline>动作(按钮)(外框)</Action>
-                    </CBox>
+                    </Widget>
                 </Line>
                 <Line>
                     <Notice><i>So</i>警告(填满)</Notice>
                     <Notice Outline><i>Ot</i>警告(外框)</Notice>
                 </Line>
                 <Line>
-                    <GBox>
+                    <Container>
                         <Toggle active="false" onclick="Toggle(this)"></Toggle>
                         <Toggle rounded active="false" onclick="Toggle(this)">切换</Toggle>
-                    </GBox>
-                    <GBox Column>
+                    </Container>
+                    <Container Column>
                         <h4>切换 Mata toolkit 主题色</h4>
                         <Select onchange="Palette.setSP(this.value,500,this.value,500)">
                             <Option>RED</Option>
@@ -70,9 +70,9 @@
                             <Option>ORANGE</Option>
                             <Option>DEEPORANGE</Option>
                         </Select>
-                    </GBox>
+                    </Container>
                 </Line>
-                <Line top>
+                <Line flexOption="Align:Start">
                     <Switcher id="switch_demo">
                         <MConBox>
                             <Content name=昨天>
@@ -95,8 +95,7 @@
                     </Switcher>
                 </Line>
                 <Line>
-                    <Calendar id="calendar_demo">
-                    </Calendar>
+                        <Calendar id="calendar_demo"></Calendar>
                 </Line>
             </box>
         </main>

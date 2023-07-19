@@ -1,6 +1,7 @@
 const DefaultErrMsg=["程序运行正常。","脚本运行错误！","输入的数值有误！","服务器异常！","数据不存在！"];
 const MResultType={ Ok:Symbol(1) , Err:Symbol(2) };
 const MOk = MResultType.Ok,MErr= MResultType.Err;
+const _DOMParser = new DOMParser();
 const MataPalette={
     "RED":[0,88],"PINK":[330,92],"PURPLE":[285,80],"DEEPPURPLE":[262,52],
     "INDIGO":[231,48],"BLUE":[207,100],"LIGHTBLUE":[199,98],"CYAN":[187,100],
@@ -350,7 +351,7 @@ const MInitSet={
         for(let item of children){
             let text = item.getAttribute("name");
             /*
-             * Beslect is a new widget used by switcher
+             * Bselect is a new widget used by switcher
              */
             let bselect = newElement("bselect");
             bselect.textContent=text;
@@ -588,5 +589,5 @@ const MInitSet={
         element.appendChild(main_label);
         element.appendChild(main_box);
         return new MResult(MOk);
-    },
+    }
 }
