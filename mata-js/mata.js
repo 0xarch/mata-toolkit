@@ -5,7 +5,8 @@ const MResultType = {
 };
 const MOk = MResultType.Ok,
     MErr = MResultType.Err;
-const _DOMParser = new DOMParser();
+const _DOMParser = new DOMParser(),
+    _MatchMediaDark = matchMedia('(prefers-color-scheme:dark)');
 const MataPalette = {
     "RED": [0, 88],
     "PINK": [330, 92],
@@ -102,7 +103,7 @@ const ColorUtilties = {
         return new HSL(H, S, L);
     },
     BrowserIsDark() {
-        return matchMedia('(prefers-color-scheme:dark)').matches;
+        return _MatchMediaDark.matches;
     }
 }
 const DatetimeUtilites = {
@@ -303,6 +304,11 @@ class MPaletteProcesser {
     constructor(palettesJson) {
         this.palettes = palettesJson;
         this.colns = {};
+        matchMedia('(prefers-color-scheme:dark)').onchange = () => {
+            for (let item in this.colns) {
+                this.setPaletteByHSL(item, this.colns[item]);
+            }
+        };
     }
     #Root = new MDElement(":root");
     /**
