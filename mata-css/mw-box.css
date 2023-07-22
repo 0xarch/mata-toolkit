@@ -105,6 +105,7 @@ header,nav,banner{
 }
 header{
     display:flex;
+    flex-direction: column;
     top: 0;
     left: auto;
     right: 0;
