@@ -20,6 +20,7 @@ cbox,widget{
     box-shadow:var(--m-medium-shadow);
     display:block;
     min-width:10rem;
+    flex-direction: column;
 }
 /**
  containing box
@@ -111,6 +112,7 @@ header{
     right: 0;
     position: sticky;
     box-shadow: var(--m-large-shadow);
+    min-height: 4.5rem;
 }
 nav{
     height: 4.5rem;
