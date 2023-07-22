@@ -1,111 +1,148 @@
 /* Attribute */
-*[direct=Column]{
+*[direct=Column] {
     flex-direction: column;
 }
-*[direct=Row]{
+
+*[direct=Row] {
     flex-direction: row;
 }
+
 /* Boxes */
-fbox,gbox,container{
+fbox,
+gbox,
+container {
     display: inline-flex;
     align-items: center;
     justify-content: center;
 }
+
 /**
  widget-like box
  */
-cbox,widget{
-    border-radius:var(--m-medium-round);
-    padding:.5rem;
-    box-shadow:var(--m-medium-shadow);
-    display:block;
-    min-width:10rem;
+cbox,
+widget {
+    border-radius: var(--m-medium-round);
+    padding: .5rem;
+    box-shadow: var(--m-medium-shadow);
+    display: block;
+    min-width: 10rem;
     flex-direction: column;
 }
+
 /**
  containing box
  */
-gbox,container{
+gbox,
+container {
     min-height: 2.5rem;
-    padding:.25rem;
+    padding: .25rem;
     font-weight: bold;
     margin: .25rem;
 }
+
 /**
  default flex box
  */
-fbox[FullWidth]{
+fbox[FullWidth] {
     display: flex;
     width: 100%;
 }
-fbox[FullWidth]>*{
-    flex:1;
+
+fbox[FullWidth]>* {
+    flex: 1;
 }
-line{
+
+line {
     display: flex;
     align-items: center;
     padding: .25rem;
 }
-line[top]{
+
+line[top] {
     align-items: start;
 }
-hidden{
+
+hidden {
     display: none;
 }
+
 /* FA_MAIN */
-flexmain>article{
-    flex:3;
+flexmain>article {
+    flex: 3;
 }
-flexmain>aside{
-    flex:.7;
+
+flexmain>aside {
+    flex: .7;
 }
 
 /* Big Boxes */
-main{
+main {
     min-height: calc(100vh - 7rem);
 }
-main,slide{
+
+main,
+slide {
     display: flex;
 }
-main>*:first-child:last-child{
-    flex:1;
+
+main>*:first-child:last-child {
+    flex: 1;
 }
-slide{
+
+slide {
     display: block;
     position: relative;
-    top:0px;
+    top: 0px;
     padding: .5rem;
 }
-slide[active="false"]{
+
+slide[active="false"] {
     width: 0rem;
-    left:-25vw;
+    left: -25vw;
     margin-right: 0rem;
 }
-slide[active="true"]{
+
+slide[active="true"] {
     width: 25vw;
     max-width: 20rem;
     left: 0em;
     box-shadow: var(--m-large-shadow);
     margin-right: 1rem;
 }
-hover{
+
+hover {
     display: flex;
     position: fixed;
 }
-hover[left]{ left: 2em }
-hover[right]{ right: 2em }
-hover[top]{ top: 2em }
-hover[bottom]{ bottom: 2em }
+
+hover[left] {
+    left: 2em
+}
+
+hover[right] {
+    right: 2em
+}
+
+hover[top] {
+    top: 2em
+}
+
+hover[bottom] {
+    bottom: 2em
+}
 
 /* Header Box */
-header,nav,banner{
+header,
+nav,
+banner {
     display: block;
     width: 100%;
     box-sizing: border-box;
     z-index: 10;
 }
-header{
-    display:flex;
+
+header {
+    display: flex;
     flex-direction: column;
     top: 0;
     left: auto;
@@ -114,24 +151,39 @@ header{
     box-shadow: var(--m-large-shadow);
     min-height: 4.5rem;
 }
-nav{
+
+nav {
     height: 4.5rem;
     padding-left: 1.75rem;
     padding-right: 1.75rem;
     display: flex;
     align-items: center;
 }
-nav>*{
+
+nav>* {
     flex: 1;
 }
-left{ justify-content: left }
-center{ justify-content: center }
-right{ justify-content: right }
-left,center,right{
+
+left {
+    justify-content: left
+}
+
+center {
+    justify-content: center
+}
+
+right {
+    justify-content: right
+}
+
+left,
+center,
+right {
     display: inline-flex;
     align-items: center;
 }
-banner{
+
+banner {
     min-height: 2.5rem;
     display: flex;
     align-items: center;
@@ -139,10 +191,12 @@ banner{
 }
 
 /* HTML Boxes */
-html,body{
+html,
+body {
     margin: 0;
 }
-html{
+
+html {
     font-size: 0.875em;
     font-weight: 400;
     line-height: 1.43;
@@ -150,7 +204,8 @@ html{
     background-color: var(--background);
     color: var(--color);
 }
-tx{
+
+tx {
     margin: .75rem;
     display: flex;
     justify-content: center;

@@ -1,16 +1,19 @@
 /* Calendar */
-calendar{
+calendar {
     border-radius: var(--m-medium-round);
     box-shadow: var(--m-large-shadow);
     overflow: hidden;
     display: flex;
     flex-direction: column;
 }
-calendarbox{
+
+calendarbox {
     display: grid;
     grid: auto-flow / 3.5rem 3.5rem 3.5rem 3.5rem 3.5rem 3.5rem 3.5rem;
 }
-dayblank,dayaction{
+
+dayblank,
+dayaction {
     border-radius: 3rem;
     box-shadow: var(--m-medium-shadow);
     min-height: 3rem;
@@ -19,17 +22,20 @@ dayblank,dayaction{
     padding: .75rem;
     margin: .25rem;
 }
-dayblank{
+
+dayblank {
     filter: grayscale(1);
     box-shadow: var(--m-small-shadow);
     opacity: .5;
 }
-dayaction{
+
+dayaction {
     font-weight: bold;
     position: relative;
     flex-direction: column;
 }
-dayaction[textfilled]>tx{
+
+dayaction[textfilled]>tx {
     height: 0px;
     margin: 0px;
     padding: 0px;
@@ -38,9 +44,10 @@ dayaction[textfilled]>tx{
     min-width: 3rem;
     text-align: center;
     position: relative;
-    top:.3rem;
+    top: .3rem;
 }
-dayaction[clickevented]{
+
+dayaction[clickevented] {
     filter: saturate(120%);
     box-shadow: 0px 1px 3px 1px var(--primary-color-3);
 }

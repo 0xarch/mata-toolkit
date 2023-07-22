@@ -1,44 +1,51 @@
 /* Solid Color */
 banner,
-action:hover,bselect[active=true],
-dayaction:hover,dayaction[marked]:hover,
-dayaction[clickevented]:hover,dayaction[textfilled]:hover
-{
+action:hover,
+bselect[active=true],
+dayaction:hover,
+dayaction[marked]:hover,
+dayaction[clickevented]:hover,
+dayaction[textfilled]:hover {
     background-color: var(--primary-color-1);
     color: var(--primary-text-1);
     border-color: var(--primary-color-1);
 }
+
 nav,
-action,notice,
-toggle,toggle[active=true],label,
-dayaction[marked]
-{
+action,
+notice,
+toggle,
+toggle[active=true],
+label,
+dayaction[marked] {
     background-color: var(--primary-color-2);
     color: var(--primary-text-2);
     border-color: var(--primary-color-2);
 }
+
 blank.primary-light,
-toggle:hover,bselect[active=false]:hover,
-dayblank,dayaction[clickevented]
-{
+toggle:hover,
+bselect[active=false]:hover,
+dayblank,
+dayaction[clickevented] {
     color: var(--primary-text-3);
     background-color: var(--primary-color-3);
     border-color: var(--primary-color-3);
 }
-blank.secondary-dark
-{
+
+blank.secondary-dark {
     background-color: var(--secondary-color-1);
     color: var(--secondary-text-1);
     border-color: var(--secondary-color-1);
 }
-blank.secondary-main
-{
+
+blank.secondary-main {
     background-color: var(--secondary-color-2);
     color: var(--secondary-text-2);
     border-color: var(--secondary-color-2);
 }
-blank.secondary-light
-{
+
+blank.secondary-light {
     background-color: var(--secondary-color-3);
     color: var(--secondary-text-3);
     border-color: var(--secondary-color-3);
@@ -46,35 +53,35 @@ blank.secondary-light
 
 /* Outline Color */
 blank.primary-dark.outline,
-action[Outline]:hover
-{
+action[Outline]:hover {
     color: var(--primary-color-1);
     border-color: var(--primary-color-1);
 }
+
 blank.primary-main.outline,
-action[Outline],notice[Outline]
-{
+action[Outline],
+notice[Outline] {
     color: var(--primary-color-2);
     border-color: var(--primary-color-2);
 }
-blank.primary-light.outline
-{
+
+blank.primary-light.outline {
     color: var(--primary-color-3);
     border-color: var(--primary-color-3);
 }
-blank.secondary-dark.outline
-{
+
+blank.secondary-dark.outline {
     color: var(--secondary-color-1);
     border-color: var(--secondary-color-1);
 }
+
 blank.secondary-main.outline,
-notice a
-{
+notice a {
     color: var(--secondary-color-2);
     border-color: var(--secondary-color-2);
 }
-blank.secondary-light.outline
-{
+
+blank.secondary-light.outline {
     color: var(--secondary-color-3);
     border-color: var(--secondary-color-3);
 }

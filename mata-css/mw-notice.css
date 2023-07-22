@@ -1,4 +1,4 @@
-notice{
+notice {
     position: relative;
     display: inline-block;
     border-radius: var(--m-small-round);
@@ -7,47 +7,65 @@ notice{
     margin: .25rem;
     overflow: hidden;
 }
-notice[Outline]{ border: 1px solid; padding: calc(1rem - 1px) }
-notice>i{ padding-right: .5rem }
-notice a{ text-decoration: underline }
+
+notice[Outline] {
+    border: 1px solid;
+    padding: calc(1rem - 1px)
+}
+
+notice>i {
+    padding-right: .5rem
+}
+
+notice a {
+    text-decoration: underline
+}
+
 /* Label & Arrow */
-label{
+label {
     flex: .5;
     display: flex;
     align-items: center;
     flex-direction: column;
     min-height: 3rem;
 }
-label>*{
-    flex:1;
+
+label>* {
+    flex: 1;
 }
-arrow{
+
+arrow {
     display: block;
     height: 2.5rem;
     width: 2.5rem;
     position: relative;
 }
-arrow[towards]::before{
+
+arrow[towards]::before {
     position: absolute;
-    top:0;left: 0;
+    top: 0;
+    left: 0;
     height: 2.5rem;
     width: 2.5rem;
     font-size: larger;
     font-weight: bold;
 }
-arrow[towards=left]::before{
+
+arrow[towards=left]::before {
     content: '<';
 }
-arrow[towards=right]::before{
+
+arrow[towards=right]::before {
     content: '>';
 }
 
 /* Hr */
-hr{
+hr {
     border-bottom: none;
     opacity: .3;
 }
-hr[type=Blank]{
-    visibility:hidden;
+
+hr[type=Blank] {
+    visibility: hidden;
     height: .25rem;
 }
