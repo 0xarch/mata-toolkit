@@ -6,7 +6,7 @@
 @import url("mw-calendar.css");
 @import url("mata-color.css");
 
-*{
+* {
     transition: all .25s ease-in-out;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -14,90 +14,112 @@
     position: relative;
 }
 
-:root{
-    --m-small-round:6px;
-    --m-medium-round:9px;
-    --m-large-round:12px;
-    --m-larger-round:15px;
-    --m-xlarge-round:18px;
-    --m-small-shadow:0px 1px 1px -3px rgba(60,60,60,0.1),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);
-    --m-medium-shadow:0px 2px 3px -1px rgba(60,60,60,0.4);
-    --m-large-shadow:0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12);
+:root {
+    --m-small-round: 6px;
+    --m-medium-round: 9px;
+    --m-large-round: 12px;
+    --m-larger-round: 15px;
+    --m-xlarge-round: 18px;
+    --m-small-shadow: 0px 1px 1px -3px rgba(60, 60, 60, 0.1), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+    --m-medium-shadow: 0px 2px 3px -1px rgba(60, 60, 60, 0.4);
+    --m-large-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
 }
-@media(prefers-color-scheme:dark){
-    :root{
-        --background:rgb(10,25,41);
-        --background-backdrop:#333;
-        --color:#fff;
+
+@media(prefers-color-scheme:dark) {
+    :root {
+        --background: #121212;
+        --background-backdrop: #333;
+        --color: #fff;
     }
 }
-@media(prefers-color-scheme:light){
-    :root{
-        --background:#fff;
-        --background-backdrop:#f5f5f5;
-        --color:#111;
+
+@media(prefers-color-scheme:light) {
+    :root {
+        --background: #fff;
+        --background-backdrop: #f5f5f5;
+        --color: #111;
     }
 }
-@media screen and (orientation:portrait){
-    html{
+
+@media screen and (orientation:portrait) {
+    html {
         font-size: 1.5em;
     }
 }
+
 /* Keyword Defintion */
-*[Outline],*[Outline]:hover{
+*[Outline],
+*[Outline]:hover {
     background-color: transparent;
 }
-*[Rounded]{
+
+*[Rounded] {
     border-radius: 128px;
 }
-*[FlexEnabled]{
-    display:flex;
+
+*[FlexEnabled] {
+    display: flex;
 }
-*[space~=Margin]{
+
+*[space~=Margin] {
     margin: 1.25rem;
 }
-*[space~=Padding]{
+
+*[space~=Padding] {
     padding: 1.25rem;
 }
-*[space~=NoMargin]{
+
+*[space~=NoMargin] {
     margin: 0 0 !important;
 }
-*[space~=NoPadding]{
+
+*[space~=NoPadding] {
     padding: 0 0 !important;
 }
-*[flexOption~=Align\:Start]{
+
+*[flexOption~=Align\:Start] {
     align-items: start !important;
 }
-*[flexOption~=Align\:Center]{
+
+*[flexOption~=Align\:Center] {
     align-items: center !important;
 }
-*[flexOption~=Align\:End]{
+
+*[flexOption~=Align\:End] {
     align-items: end !important;
 }
-*[flexOption~=Justify\:Start]{
+
+*[flexOption~=Justify\:Start] {
     justify-content: start !important;
 }
-*[flexOption~=Justify\:Center]{
+
+*[flexOption~=Justify\:Center] {
     justify-content: center !important;
 }
-*[flexOption~=Justify\:End]{
+
+*[flexOption~=Justify\:End] {
     align-items: end !important;
 }
+
 /* All Centering Elements */
-action,dayaction,arrow[towards]::before,flexmain
-{
+action,
+dayaction,
+arrow[towards]::before,
+flexmain {
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
 /* Label */
-textlabel{
+textlabel {
     margin: 6px;
     font-weight: bolder;
     font-size: 1.12rem;
     text-align: center;
 }
+
 /* Original Element Fix */
-li{
-    margin-left:1rem;
+li {
+    margin-left: 1rem;
 }
