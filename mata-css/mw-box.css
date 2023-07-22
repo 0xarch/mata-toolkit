@@ -104,7 +104,7 @@ header,nav,banner{
     z-index: 10;
 }
 header{
-    min-height: 7rem;
+    display:flex;
     top: 0;
     left: auto;
     right: 0;
@@ -116,7 +116,6 @@ nav{
     padding-left: 1.75rem;
     padding-right: 1.75rem;
     display: flex;
-    position: relative;
     align-items: center;
 }
 nav>*{
