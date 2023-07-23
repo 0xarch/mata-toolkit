@@ -1,17 +1,15 @@
 /* Action */
-action {
+action,.action {
     border: 1px solid;
     font-weight: bold;
     border-radius: var(--m-small-round);
     box-shadow: var(--m-medium-shadow);
     min-height: 3rem;
-    box-sizing: border-box;
     padding: 0.75rem;
     margin: 0.25rem;
-    position: relative;
 }
 
-action[Hover] {
+action[Hover],.action[Hover] {
     height: 4.5rem;
     min-width: 4.5rem;
     width: 4.5rem;
@@ -19,11 +17,11 @@ action[Hover] {
     box-shadow: var(--m-large-shadow);
 }
 
-action[Outline] {
+action[Outline],.action[Outline] {
     box-shadow: none;
 }
 
-action[lf] {
+action[lf],.action[lf] {
     font-size: xx-large
 }
 

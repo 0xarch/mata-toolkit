@@ -103,6 +103,7 @@
 
 /* All Centering Elements */
 action,
+.action,
 dayaction,
 arrow[towards]::before,
 flexmain {
