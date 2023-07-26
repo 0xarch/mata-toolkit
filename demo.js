@@ -1,6 +1,6 @@
 const Palette=new MPaletteProcesser(MataPalette);
 
-Palette.setPaletteFrom("primary","TEAL",500);
+Palette.setPaletteFrom("primary","TEAL",500,true);
 Palette.setPaletteFrom("secondary","RED",450);
 
 function e_toggleSlide(element){

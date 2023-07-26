@@ -295,6 +295,7 @@ class MDElement {
 class MPaletteProcesser {
     palettes;
     colns;
+    bgcoln;
     /**
      * initialize a palette processer from specific color palettes
      * @constructor
@@ -306,7 +307,7 @@ class MPaletteProcesser {
         this.colns = {};
         matchMedia('(prefers-color-scheme:dark)').onchange = () => {
             for (let item in this.colns) {
-                this.setPaletteByHSL(item, this.colns[item]);
+                this.setPaletteByHSL(item, this.colns[item],this.bgcoln==item);
             }
         };
     }
@@ -354,12 +355,13 @@ class MPaletteProcesser {
     }
     /**
      * set the specific palette from a HSLColor
-     * @param { string} name 
-     * @param { HSL } hsl 
+     * @param { string } name 
+     * @param { HSL } hsl
+     * @param { boolean } force_background whether to let background use this color or not
      * @returns { void }
-     * @example setPaletteByHSL("primary",new HSL(0,0,0))
+     * @example setPaletteByHSL("primary",new HSL(0,0,0),true)
      */
-    setPaletteByHSL(name, hsl) {
+    setPaletteByHSL(name, hsl, force_background) {
         this.colns[name] = hsl ? hsl : this.colns[name];
         let v2 = this.colns[name];
         let v1 = v2.dl(-15),
@@ -373,6 +375,12 @@ class MPaletteProcesser {
         this.#Root.setStyle(`--${name}-text-1`, v1.textColor());
         this.#Root.setStyle(`--${name}-text-2`, v2.textColor());
         this.#Root.setStyle(`--${name}-text-3`, v3.textColor());
+        if(force_background==true){
+            console.log(1);
+            this.colns["background"]=ColorUtilties.BrowserIsDark()?v2.ds(-45).dl(-15):v2.ds(10).dl(40);
+            this.#Root.setStyle(`--background-colored`,this.colns["background"].CSS());
+            this.bgcoln=name;
+        }
         return new MResult(MOk);
     }
     /**
@@ -380,14 +388,15 @@ class MPaletteProcesser {
      * @param { string } name the name of palette (e.g. "primary" )
      * @param { string } color the name of color (e.g. "RED" )
      * @param { number } light the light of color (e.g. 550 )
+     * @param { boolean } force_background whether to let background use this color or not
      * @returns { MResult }
      */
-    setPaletteFrom(name, color, light) {
+    setPaletteFrom(name, color, light,force_background) {
         if (!this.palettes[color])
             return new MResult(MErr, 2);
         else {
             this.colns[name] = new HSL(this.palettes[color][0], this.palettes[color][1], light / 10);
-            return this.setPaletteByHSL(name);
+            return this.setPaletteByHSL(name,this.colns[name],force_background);
         }
     }
     release() {
