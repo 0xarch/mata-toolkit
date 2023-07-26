@@ -62,7 +62,7 @@ action[Outline]:hover,
 
 blank.primary-main.outline,
 action[Outline],
-.action[Outline]
+.action[Outline],
 notice[Outline] {
     color: var(--primary-color-2);
     border-color: var(--primary-color-2);

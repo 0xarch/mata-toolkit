@@ -653,5 +653,10 @@ const MInitSet = {
         element.appendChild(main_label);
         element.appendChild(main_box);
         return new MResult(MOk);
+    },
+    ActionTitle(){
+        for(let item of SelectAll("action,.action")){
+            item.setAttribute("title",item.textContent);
+        }
     }
 }

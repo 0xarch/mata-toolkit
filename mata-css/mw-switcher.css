@@ -54,3 +54,24 @@ switcher>mconbox.short {
 bselect {
     font-weight: bold;
 }
+
+/* Wind */
+wind{
+    display: block;
+    min-width: 200pt;
+}
+wind>label{
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+wind>content{
+    display: block;
+    max-height: 0vh;
+    transform: scaleY(0);
+}
+wind:hover>content{
+    transform: scaleY(1);
+    max-height: 10vh;
+}
