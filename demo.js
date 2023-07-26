@@ -21,4 +21,6 @@ window.onload=()=>{
     MInitSet.Inheritor("inherit_demo");
     MInitSet.Switcher("switch_demo").unwrap();
     MInitSet.Switcher("switch_test").unwrap();
+    MInitSet.ActionTitle();
+    MInitSet.Wind();
 }

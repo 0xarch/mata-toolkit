@@ -68,10 +68,4 @@ wind>label{
 }
 wind>content{
     display: block;
-    max-height: 0vh;
-    transform: scaleY(0);
-}
-wind:hover>content{
-    transform: scaleY(1);
-    max-height: 10vh;
 }

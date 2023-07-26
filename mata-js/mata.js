@@ -658,5 +658,23 @@ const MInitSet = {
         for(let item of SelectAll("action,.action")){
             item.setAttribute("title",item.textContent);
         }
+    },
+    Wind(){
+        for(let item of SelectAll("wind,.wind")){
+            let label = item.querySelector("label");
+            let content = item.querySelector("content");
+            label.onclick=function(event,force){
+                console.log(force);
+                item.setAttribute("unwinded",force?force:(item.getAttribute("unwinded")=="true"?"false":"true"));
+                if(item.getAttribute("unwinded")=="true"){
+                    content.style.setProperty("max-height","fit-content");
+                    content.style.setProperty("transform","scaleY(1)");
+                }else{
+                    content.style.setProperty("max-height","0vh");
+                    content.style.setProperty("transform","scaleY(0)");
+                }
+            }
+            label.click(item.getAttribute("unwinded"));
+        }
     }
 }
