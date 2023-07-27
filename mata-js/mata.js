@@ -377,7 +377,7 @@ class MPaletteProcesser {
         this.#Root.setStyle(`--${name}-text-3`, v3.textColor());
         if(force_background==true){
             console.log(1);
-            this.colns["background"]=ColorUtilties.BrowserIsDark()?v2.ds(-45).dl(-15):v2.ds(10).dl(40);
+            this.colns["background"]=ColorUtilties.BrowserIsDark()?v2.ds(-45).dl(-20):v2.ds(10).dl(40);
             this.#Root.setStyle(`--background-colored`,this.colns["background"].CSS());
             this.bgcoln=name;
         }
