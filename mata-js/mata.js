@@ -802,6 +802,9 @@ const Em3et={
                         i++;
                         result = `${result} class="${stack[i]}"`;
                         break;
+                    default:
+                        result = result+text;
+                        break;
                 }
             }
             i++;
