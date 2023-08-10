@@ -23,4 +23,5 @@ window.onload=()=>{
     MInitSet.Switcher("switch_test").unwrap();
     MInitSet.ActionTitle();
     MInitSet.Wind();
+    Em3et.render(Select("em3et"),"plain");
 }
