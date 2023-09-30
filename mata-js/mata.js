@@ -715,7 +715,7 @@ const Em3et={
                 i++;
                 while(i<len){
                     let __char_now = raw_chars[i];
-                    if(/[A-Za-z ]/.test(__char_now)){
+                    if(/[A-Za-z \-_+=]/.test(__char_now)){
                         _str = _str+__char_now;
                         i++;
                     }else{
