@@ -488,18 +488,20 @@ const MInitSet = {
         element.innerHTML = '';
 
         // Parse Config
-        try {
-            config = JSON.parse(config);
-        } catch (e) {
-            return new MResult(MErr, 3);
+        if(config!=''){
+            try {
+                config = JSON.parse(config);
+            } catch (e) {
+                return new MResult(MErr, 3);
+            }
         }
         let day_conf = !config['config'] ? {} : config['config'];
 
         // Read date
         let date = new Date();
-        let year = config['year'] && config['year'] != "this" ? config['year'] : date.getFullYear();
-        let month = config['month'] && config['month'] != "this" ? config['month'] : date.getMonth() + 1;
-        month = !month[1] ? '0' + month : month;
+        let year = parseInt(config['year'] && config['year'] != "this" ? config['year'] : date.getFullYear());
+        let month = parseInt(config['month'] && config['month'] != "this" ? config['month'] : date.getMonth() + 1);
+        month = month<10 ? '0' + month : month;
 
         let _conf_clickevent = config['clickevent'];
         let conf_clickevent = {};

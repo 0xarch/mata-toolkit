@@ -18,6 +18,7 @@ window.onload=()=>{
             MInitSet.SwitcherJSON("switch_json").unwrap();
         })
     });
+    MInitSet.Calendar("calendar_today").unwrap();
     MInitSet.Inheritor("inherit_demo");
     MInitSet.Switcher("switch_demo").unwrap();
     MInitSet.Switcher("switch_test").unwrap();
