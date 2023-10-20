@@ -5,6 +5,7 @@
 @import url("mw-selector.css");
 @import url("mw-calendar.css");
 @import url("mata-color.css");
+@import url("attribute.css");
 
 * {
     transition: all .25s ease-in-out;
@@ -52,74 +53,8 @@
 *[Outline]:hover {
     background-color: transparent;
 }
-
 *[Rounded] {
     border-radius: 128px;
-}
-
-*[FlexEnabled],.foe {
-    display: flex;
-}
-
-*[space~=Margin],._001 {
-    margin: 1.25rem;
-}
-
-*[space~=Padding],._011 {
-    padding: 1.25rem;
-}
-
-*[space~=NoMargin],._000 {
-    margin: 0 0 !important;
-}
-
-*[space~=NoPadding],._010 {
-    padding: 0 0 !important;
-}
-
-*[flexOption~=Align\:Start],._100 {
-    align-items: start !important;
-}
-
-*[flexOption~=Align\:Center]._101 {
-    align-items: center !important;
-}
-
-*[flexOption~=Align\:End],._102 {
-    align-items: end !important;
-}
-
-*[flexOption~=Justify\:Start],._110 {
-    justify-content: start !important;
-}
-
-*[flexOption~=Justify\:Center],._111 {
-    justify-content: center !important;
-}
-
-*[flexOption~=Justify\:End],._112 {
-    align-items: end !important;
-}
-._120{
-    flex-direction: row;
-}
-._121{
-    flex-direction: column;
-}
-._130{
-    flex: 1;
-}
-._131{
-    flex: .75;
-}
-._132{
-    flex: .5;
-}
-._133{
-    flex: .25;
-}
-._200{
-    background: transparent;
 }
 ._201{
     background: var(--background-colored);
