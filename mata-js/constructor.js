@@ -1,4 +1,4 @@
-const MataConstruct = {
+const WidgetConstructor = {
     /**
      * init switcher ( functions, children... )
      * @param {string} id the switcher's id
