@@ -25,7 +25,7 @@ const MataPalette = {
     "ORANGE": [36, 100],
     "DEEPORANGE": [14, 100]
 };
-const GetActive = (element) => {
+let GetActive = (element) => {
         return element.getAttribute('active') == "true" ? true : false
     },
     Select = (query) => document.querySelector(query),
@@ -33,8 +33,8 @@ const GetActive = (element) => {
     Toggle = (element) => element.setAttribute('active', element.getAttribute('active') == "true" ? false : true),
     ToggleForce = (element, bool) => element.setAttribute('active', bool),
     newElement = (tag) => document.createElement(tag),
-    removeElement = (query) => document.querySelector(query).remove();
-const Exist = (_var) => _var != null;
+    removeElement = (query) => document.querySelector(query).remove(),
+    Exist = (_var) => _var != null;
 
 const ColorUtilties = {
     /**
