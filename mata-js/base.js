@@ -138,7 +138,7 @@ const DatetimeUtils = {
     }
 }
 
-class MResult {
+class Result {
     result;
     errcode;
     #msg;
