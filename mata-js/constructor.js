@@ -109,8 +109,7 @@ const MataConstruct = {
         // Calendar Label
         let main_label = newElement('label');
         let fbox = newElement('fbox');
-        let left_arrow = newElement('arrow');
-        let right_arrow = newElement('arrow');
+        let left_arrow = newElement('arrow'), right_arrow = newElement('arrow');
         left_arrow.setAttribute('towards', 'left');
         right_arrow.setAttribute('towards', 'right');
         let month_label = newElement('textlabel');
@@ -118,7 +117,8 @@ const MataConstruct = {
         fbox.appendChild(month_label);
         fbox.appendChild(right_arrow);
         let day_label = newElement('fbox');
-        day_label.setAttribute('FullWidth', '');
+        //day_label.setAttribute('FullWidth', '');
+        day_label.classList.add("w_100");
         for (let item of ['日', '一', '二', '三', '四', '五', '六']) {
             let _day_label = newElement('textlabel');
             _day_label.textContent = item;
@@ -179,11 +179,11 @@ const MataConstruct = {
             return false
         }
         let refresh_calendarbox = function() {
-            let month = main_box.getAttribute('month'),
-                year = main_box.getAttribute('year');
-            month = !month[1] ? '0' + month : month;
+            let month = parseInt(main_box.getAttribute('month')),
+                year = parseInt(main_box.getAttribute('year'));
+            month = month<10 ? '0' + month : month;
             // first day Blank
-            let first_day = DatetimeUtilites.firstDayOf(month, year).getDay();
+            let first_day = DatetimeUtilites.firstDayOf(year_month).getDay();
             if (first_day != 0)
                 for (var i = 0; i < first_day; i++)
                     main_box.appendChild(newElement('dayblank'));
@@ -196,7 +196,7 @@ const MataConstruct = {
                     today_month = today.getMonth() + 1,
                     today_date = today.getDate();
             }
-            let day_count = DatetimeUtilites.dayCountOf(month, year);
+            let day_count = DatetimeUtilites.dayCountOf(year,month);
             for (var i = 1; i <= day_count; i++) {
                 let day_action = newElement('dayaction');
                 day_action.textContent = i;

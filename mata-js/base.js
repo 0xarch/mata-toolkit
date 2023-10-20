@@ -101,11 +101,11 @@ const DatetimeUtilites = {
     },
     /**
      * the count of day of the month
-     * @param { string | number } month
-     * @param { string| number } year to test leap year
+     * @param { string | number } year
+     * @param { string| number } month
      * @returns { 31|30|29|28 }
      */
-    dayCountOf(month, year) {
+    dayCountOf(year, month) {
         month = parseInt(month);
         if ([1, 3, 5, 7, 8, 10, 12].includes(month)) return 31
         else if (month == 2)
@@ -116,16 +116,16 @@ const DatetimeUtilites = {
     },
     /**
      * the first day of the month
-     * @param { string|number } month
      * @param { string|number } year
+     * @param { string|number } month
      * @returns { Date }
      */
-    firstDayOf(month, year) {
+    firstDayOf(year, month) {
         return new Date(`${year}-${month}-1`);
     },
     /**
      *
-     * @param { string } string an date string
+     * @param { string } string
      * @returns { {year:string, month:string, day:string} } object(JSON)
      * @example stringToObject('2023-06-17')
      */
@@ -145,10 +145,10 @@ class MResult {
     constructor(result, errcode) {
         if (result == MOk) {
             this.result = MOk;
-            this.errcode = new Number(0);
+            this.errcode = 0;
         } else {
             this.result = MErr;
-            this.errcode = new Number(errcode);
+            this.errcode = parseInt(errcode);
         }
     }
     getMsg() {
@@ -174,6 +174,10 @@ class MResult {
     }
     testErr() {
         return this.result === MErr
+    }
+    crash_if_error(){
+        if(this.result === MErr)
+            throw new error;
     }
     unwrap() {
         if (this.testOk()) {

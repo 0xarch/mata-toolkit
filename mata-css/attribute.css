@@ -86,16 +86,16 @@
 *[flex~=enabled],.fl_en {
     display: flex;
 }
-*[space~=margin],.sp_m {
+*[space~=margin],.sp_m,.sp_mp,.sp_pm {
     margin: 1.25rem;
 }
-*[space~=padding],.sp_p {
+*[space~=padding],.sp_p,.sp_mp,.sp_pm {
     padding: 1.25rem;
 }
-*[space~=no_margin],.sp_m0 {
+*[space~=no_margin],.sp_m0,.sp_mp0,.sp_pm0 {
     margin: 0 0 !important;
 }
-*[space~=no_padding],.sp_p0 {
+*[space~=no_padding],.sp_p0,.sp_mp0,.sp_pm0 {
     padding: 0 0 !important;
 }
 *[flex_option~=align_start],.fo_ai0 {
