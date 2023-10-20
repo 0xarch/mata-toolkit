@@ -1,9 +1,9 @@
- const MResultType = {
+ const ResultType = {
     Ok: Symbol(1),
     Err: Symbol(2)
 };
-const MOk = MResultType.Ok,
-    MErr = MResultType.Err;
+const Ok = ResultType.Ok,
+    Err = ResultType.Err;
 const GetActive = (element) => {
         return element.getAttribute('active') == "true" ? true : false
     },
@@ -143,11 +143,11 @@ class Result {
     errcode;
     #msg;
     constructor(result, errcode) {
-        if (result == MOk) {
-            this.result = MOk;
+        if (result == Ok) {
+            this.result = Ok;
             this.errcode = 0;
         } else {
-            this.result = MErr;
+            this.result = Err;
             this.errcode = parseInt(errcode);
         }
     }
@@ -163,20 +163,20 @@ class Result {
         }
     }
     toOk() {
-        this.result = MOk
+        this.result = Ok
     }
     toErr(errcode) {
-        this.result = MErr;
+        this.result = Err;
         this.errcode = errcode
     }
     testOk() {
-        return this.result === MOk
+        return this.result === Ok
     }
     testErr() {
-        return this.result === MErr
+        return this.result === Err
     }
     crash_if_error(){
-        if(this.result === MErr)
+        if(this.result === Err)
             throw new error;
     }
     unwrap() {

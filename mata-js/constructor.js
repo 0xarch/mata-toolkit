@@ -11,7 +11,7 @@ const MataConstruct = {
         let children = father.querySelectorAll("mconbox>content");
         let switchbox = newElement("fbox");
         if (!Exist(father) || !Exist(children))
-            return new Result(MErr, 4);
+            return new Result(Err, 4);
         for (let item of children) {
             let text = item.getAttribute("name");
             let bselect = newElement("bselect");
@@ -36,7 +36,7 @@ const MataConstruct = {
         label.appendChild(switchbox);
         switchbox.firstChild.click(); // show the first content
         father.appendChild(label);
-        return new Result(MOk);
+        return new Result(Ok);
     },
     SwitcherJSON(id) {
         id = id.replace('#', '');
@@ -44,7 +44,7 @@ const MataConstruct = {
         try {
             var config = JSON.parse(element.innerHTML);
         } catch (e) {
-            return new Result(MErr, 2);
+            return new Result(Err, 2);
         }
         let mconbox = newElement("mconbox");
         for (let item of config) {
@@ -75,7 +75,7 @@ const MataConstruct = {
     Calendar(id) {
         id = id.replace('#', '');
         let element = Select('#' + id);
-        if (!Exist(element)) return new Result(MErr, 3);
+        if (!Exist(element)) return new Result(Err, 3);
         let config = element.innerHTML;
         element.innerHTML = '';
 
@@ -84,7 +84,7 @@ const MataConstruct = {
             try {
                 config = JSON.parse(config);
             } catch (e) {
-                return new Result(MErr, 3);
+                return new Result(Err, 3);
             }
         }
         let day_conf = !config['config'] ? {} : config['config'];
@@ -255,7 +255,7 @@ const MataConstruct = {
         // Final Process
         element.appendChild(main_label);
         element.appendChild(main_box);
-        return new Result(MOk);
+        return new Result(Ok);
     },
     ActionTitle(){
         for(let item of SelectAll("action,.action")){
