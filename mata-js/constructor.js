@@ -183,7 +183,7 @@ const MataConstruct = {
                 year = parseInt(main_box.getAttribute('year'));
             month = month<10 ? '0' + month : month;
             // first day Blank
-            let first_day = DatetimeUtilites.firstDayOf(year_month).getDay();
+            let first_day = DatetimeUtils.firstDayOf(year,month).getDay();
             if (first_day != 0)
                 for (var i = 0; i < first_day; i++)
                     main_box.appendChild(newElement('dayblank'));
@@ -196,7 +196,7 @@ const MataConstruct = {
                     today_month = today.getMonth() + 1,
                     today_date = today.getDate();
             }
-            let day_count = DatetimeUtilites.dayCountOf(year,month);
+            let day_count = DatetimeUtils.dayCountOf(year,month);
             for (var i = 1; i <= day_count; i++) {
                 let day_action = newElement('dayaction');
                 day_action.textContent = i;

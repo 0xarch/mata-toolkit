@@ -15,7 +15,7 @@ const GetActive = (element) => {
     removeElement = (query) => document.querySelector(query).remove();
 const Exist = (_var) => _var != null;
 
-const ColorUtilties = {
+const ColorUtils = {
     /**
      * @param { HSL } hsl the specfic HSL color
      * @param { bool} textmode if uses text output (CSS format), defaults to false
@@ -85,7 +85,7 @@ const ColorUtilties = {
         return _MatchMediaDark.matches;
     }
 }
-const DatetimeUtilites = {
+const DatetimeUtils = {
     /**
      * if the year is leap year
      * @param { number } year
