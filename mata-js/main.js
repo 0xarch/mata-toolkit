@@ -697,7 +697,7 @@ class PaletteController {
         delete this;
     }
 }
-
+
 const Em3et={
     /**
      * @param { element } element
