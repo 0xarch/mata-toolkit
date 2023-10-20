@@ -1,0 +1,32 @@
+collapse{
+    display: flex;
+    flex-direction: column;
+    min-width: 12rem;
+    border-radius: var(--m-medium-round);
+    overflow: hidden;
+    box-shadow: var(--m-large-shadow);
+    margin: .75rem;
+    & >content{
+        position: relative;
+        margin: 0px;
+        transition: max-height .2s ease-in-out;
+    }
+    & >container::before{
+        position: absolute;
+        left: 1rem;
+        top: 25%;
+        height:50%;
+        content: '>';
+        transform: rotate(0deg);
+        transition: transform .2s ease-in-out;
+    }
+    & >container[opened=true]::before{
+        transform: rotate(90deg);
+    }
+    & >container{
+        margin: 0px;
+        background-color: var(--primary-color-2);
+        color: var(--primary-text-2);
+        border-color: var(--primary-color-2);
+    }
+}

@@ -211,3 +211,18 @@ tx {
     justify-content: center;
     align-items: center;
 }
+
+/* wind */
+wind{
+    display: block;
+    min-width: 200pt;
+}
+wind>label{
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+wind>content{
+    display: block;
+}

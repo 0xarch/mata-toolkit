@@ -1,4 +1,4 @@
-const Palette=new MPaletteProcesser(MataPalette);
+const Palette=new PaletteController(MataPalette);
 
 Palette.setPaletteFrom("primary","TEAL",500,true);
 Palette.setPaletteFrom("secondary","RED",450);
@@ -13,16 +13,14 @@ window.onload=()=>{
         data.text().then(data=>{
             data = JSON.parse(data);
             Select("#calendar_demo").innerHTML=JSON.stringify(data['calendar_demo']);
-            MInitSet.Calendar("calendar_demo").unwrap();
-            Select("#switch_json").innerHTML=JSON.stringify(data['switch_json']);
-            MInitSet.SwitcherJSON("switch_json").unwrap();
+            WidgetConstructor.Calendar("calendar_demo").unwrap();
         })
     });
-    MInitSet.Calendar("calendar_today").unwrap();
-    MInitSet.Inheritor("inherit_demo");
-    MInitSet.Switcher("switch_demo").unwrap();
-    MInitSet.Switcher("switch_test").unwrap();
-    MInitSet.ActionTitle();
-    MInitSet.Wind();
+    WidgetConstructor.Calendar("calendar_today").unwrap();
+    WidgetConstructor.ActionTitle();
+    WidgetConstructor.Wind();
+    buildTabs("tabs_demo");
+    buildTabsJSON("tabs_json_demo");
+    buildCollapse("collapse_demo");
     Em3et.render(Select("em3et"),"plain");
 }

@@ -1,62 +1,143 @@
+const getIDFromArgument=(arg)=>'#'+arg.replace('#','');
+
+/*  |``````TabLabel``````|
+    |_Tab1_|_Tab2_|_Tab3_|
+    |                    |
+    |       Content      |
+    |                    |
+    |____________________|
+*/
+function buildTabs(id){
+    let TabsID = getIDFromArgument(id);
+    let Tabs = Select(TabsID);
+    let TabContainer = newElement("container"); // contains label and tabs
+    let TabsBox = newElement("container");
+    let contents = Tabs.querySelectorAll("content");
+    let containing_tabs;
+    let tab_active;
+
+    if(Tabs.getAttribute("title")){
+        let TabLabel = newElement("label");
+        TabLabel.textContent = Tabs.getAttribute("title");
+        TabContainer.appendChild(TabLabel);
+        TabContainer.appendChild(TabsBox);
+        TabContainer.style.setProperty("flex-direction","column");
+        containing_tabs = TabsBox;
+    }else{
+        containing_tabs = TabContainer;
+        delete TabsBox;
+    }
+    containing_tabs.classList.add("widen");
+
+    for(let content_element of contents){
+        let tab_name = content_element.getAttribute("tab");
+        let Tab = newElement("tab");
+        Tab.textContent = tab_name;
+        if(content_element.getAttribute("active")=="true") tab_active=Tab;
+        Tab.onclick=function(){
+            for(let item of containing_tabs.childNodes){
+                item.setAttribute("active","false");
+                Tabs.querySelector(`*[tab=${item.textContent}]`).style.display="none";
+            };
+            Tab.setAttribute("active","true");
+            Tabs.querySelector(`*[tab=${tab_name}]`).style.display="block";
+        }
+        containing_tabs.appendChild(Tab);
+    }
+    if(!tab_active) tab_active = containing_tabs.childNodes[0];
+    tab_active.click();
+    Tabs.insertBefore(TabContainer,Tabs.firstChild);
+}
+
+function buildTabsJSON(id){
+    let TabsID=getIDFromArgument(id);
+    let Tabs = Select(TabsID);
+    let config;
+    try{
+        config = JSON.parse(Tabs.innerHTML);
+        Tabs.innerHTML="";
+    }catch(e){
+        return new Result(Err);
+    }
+    let TabContainer = newElement("container"); // contains label and tabs
+    let TabsBox = newElement("container");
+    let containing_tabs;
+    let tab_active;
+
+    if(config.title){
+        let TabLabel = newElement("label");
+        TabLabel.textContent = config.title;
+        TabContainer.appendChild(TabLabel);
+        TabContainer.appendChild(TabsBox);
+        // set style
+        TabContainer.style.setProperty("flex-direction","column");
+        containing_tabs = TabsBox;
+    }else{
+        containing_tabs = TabContainer;
+        delete TabsBox;
+    }
+    containing_tabs.classList.add("widen");
+
+    for(let tab_element of config.tabs){
+        let tab_name = tab_element.tab;
+        let Tab = newElement("tab");
+        let Content = newElement("content");
+        Content.setAttribute("tab",tab_name);
+        Content.innerHTML='<pre>'+tab_element.content+'</pre>';
+        Tab.textContent = tab_name;
+        Tabs.appendChild(Content);
+        if(tab_element["active"]=="true")
+            tab_active=Tab;
+        Tab.onclick=function(){
+            for(let item of containing_tabs.childNodes){
+                item.setAttribute("active","false");
+                Tabs.querySelector(`*[tab=${item.textContent}]`).style.display="none";
+            };
+            Tab.setAttribute("active","true");
+            Tabs.querySelector(`*[tab=${Tab.textContent}]`).style.display="block";
+        }
+        containing_tabs.appendChild(Tab);
+    }
+    if(!tab_active) tab_active = containing_tabs.childNodes[0];
+    tab_active.click();
+    Tabs.insertBefore(TabContainer,Tabs.firstChild);
+}
+
+function buildCollapse(id){
+    let CollapseID = getIDFromArgument(id);
+    let Collapse = Select(CollapseID);
+    let CollapseTitle = newElement("container");
+    let Content = newElement("content");
+    let opened = Collapse.getAttribute("opened");
+
+    Content.innerHTML = Collapse.innerHTML;
+    CollapseTitle.textContent = Collapse.getAttribute("title");
+    CollapseTitle.setAttribute("closed",opened?opened:false);
+    Collapse.innerHTML="";
+
+    Collapse.appendChild(CollapseTitle);
+    Collapse.appendChild(Content);
+    let maxHeight=window.getComputedStyle(Content).height;
+    console.log(maxHeight);
+
+    CollapseTitle.onclick=function(){
+        let opened = CollapseTitle.getAttribute("opened");
+        if(opened=="true"){
+            Content.style.transform="scaleY(0)";
+            Content.style.maxHeight="0px";
+            CollapseTitle.setAttribute("opened","false");
+        }else{
+            Content.style.transform="scaleY(1)";
+            Content.style.maxHeight=maxHeight;
+            CollapseTitle.setAttribute("opened","true");
+        }
+        console.log(opened);
+    }
+    
+    CollapseTitle.click();
+}
+
 const WidgetConstructor = {
-    /**
-     * init switcher ( functions, children... )
-     * @param {string} id the switcher's id
-     * @returns { Result }
-     */
-    Switcher(id) {
-        id = id.replace('#', ''); // remove the character
-        let father = Select(`#${id}`);
-        let label = newElement("label");
-        let children = father.querySelectorAll("mconbox>content");
-        let switchbox = newElement("fbox");
-        if (!Exist(father) || !Exist(children))
-            return new Result(Err, 4);
-        for (let item of children) {
-            let text = item.getAttribute("name");
-            let bselect = newElement("bselect");
-            bselect.textContent = text;
-            bselect.setAttribute('father', id); // To let the function know what to change
-            bselect.setAttribute('active', false);
-            bselect.onclick = function() {
-                for (let item of SelectAll(`#${id}>mconbox>content`))
-                    item.style.display = 'none';
-                Select(`#${this.getAttribute('father')}>mconbox>content[name="${this.textContent}"]`).style.display = 'block';
-                for (let item of SelectAll(`#${id}>label>fbox>bselect`))
-                    item.setAttribute("active", "false");
-                this.setAttribute("active", true);
-            }
-            switchbox.appendChild(bselect);
-        }
-        if (father.getAttribute("label")) {
-            let _label = newElement("textlabel");
-            _label.textContent = father.getAttribute("label");
-            label.appendChild(_label);
-        }
-        label.appendChild(switchbox);
-        switchbox.firstChild.click(); // show the first content
-        father.appendChild(label);
-        return new Result(Ok);
-    },
-    SwitcherJSON(id) {
-        id = id.replace('#', '');
-        let element = Select('#' + id);
-        try {
-            var config = JSON.parse(element.innerHTML);
-        } catch (e) {
-            return new Result(Err, 2);
-        }
-        let mconbox = newElement("mconbox");
-        for (let item of config) {
-            let mcontent = newElement("content");
-            mcontent.setAttribute("name", item.name);
-            mcontent.innerHTML = '<pre>' + item.content + '</pre>';
-            mconbox.appendChild(mcontent);
-        }
-        element.innerHTML = '';
-        element.appendChild(mconbox);
-        return this.Switcher(id);
-    },
     Inheritor(id) {
         id = id.replace('#', '');
         let element = Select('#' + id);

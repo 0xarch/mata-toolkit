@@ -82,7 +82,7 @@ const ColorUtils = {
         return new HSL(H, S, L);
     },
     BrowserIsDark() {
-        return _MatchMediaDark.matches;
+        return matchMedia('(prefers-color-scheme:dark)').matches;
     }
 }
 
@@ -199,7 +199,7 @@ class HSL {
      * @returns { "#000" | "#FFF" } HEX 字符串
      */
     textColor() {
-        let rgb = ColorUtilties.HSLtoRGB(this);
+        let rgb = ColorUtils.HSLtoRGB(this);
         let gray = rgb.r * 3 + rgb.g * 6 + rgb.b + 5;
         if (gray > 1200) return "#000"
         else return "#FFF"
