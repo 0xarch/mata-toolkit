@@ -85,6 +85,7 @@ const ColorUtils = {
         return _MatchMediaDark.matches;
     }
 }
+
 const DatetimeUtils = {
     /**
      * if the year is leap year
@@ -135,6 +136,73 @@ const DatetimeUtils = {
             month: string.slice(5, 7),
             day: string.slice(8, 10)
         };
+    }
+}
+
+class HSL {
+    h;
+    s;
+    l;
+    /**
+     * @constructor HSL
+     * @param {*} h Hue 色相
+     * @param {*} s Saturation 饱和度 (percent)
+     * @param {*} l Lightness 亮度 (percent)
+     */
+    constructor(h, s, l) {
+        this.h = h ? h : 0;
+        this.s = s ? s : 0;
+        this.l = l ? l : 0;
+    }
+    /**
+     * adjust the hue, returns new HSL
+     * 调节色相，返回新的 HSL
+     * @param { number } dh delta hue 变化的色相
+     * @returns { HSL }
+     */
+    dh(dh) {
+        let h = this.h + dh;
+        if (h < 0) h = 0;
+        else if (h > 360) h = 360;
+        return new HSL(h, this.s, this.l);
+    }
+    /**
+     * adjust the saturation, returns new HSL
+     * 调节饱和度，返回新的 HSL
+     * @param { number } ds delta saturation 变化的饱和度
+     * @returns { HSL }
+     */
+    ds(ds) {
+        let s = this.s + ds;
+        if (s < 0) s = 0;
+        else if (s > 100) s = 100;
+        return new HSL(this.h, s, this.l);
+    }
+    /**
+     * adjust the lightness, returns new HSL
+     * 调节亮度，返回新的 HSL
+     * @param { number } dl delta lightness 变化的亮度
+     * @returns { HSL }
+     */
+    dl(dl) {
+        let l = this.l + dl;
+        if (l < 0) l = 0;
+        else if (l > 100) l = 100;
+        return new HSL(this.h, this.s, l);
+    }
+    /**
+     * @returns { string } CSS 声明
+     */
+    CSS = () => `hsl(${this.h},${this.s}%,${this.l}%)`;
+    /**
+     * 测试以该HSL为背景，应该使用亮色文字还是暗色文字
+     * @returns { "#000" | "#FFF" } HEX 字符串
+     */
+    textColor() {
+        let rgb = ColorUtilties.HSLtoRGB(this);
+        let gray = rgb.r * 3 + rgb.g * 6 + rgb.b + 5;
+        if (gray > 1200) return "#000"
+        else return "#FFF"
     }
 }
 
