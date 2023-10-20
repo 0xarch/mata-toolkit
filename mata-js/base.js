@@ -192,7 +192,7 @@ class Result {
     }
 }
 
-class MDElement {
+class ElementController {
     element;
     constructor(query) {
         this.element = Select(query);
