@@ -9,4 +9,4 @@ cat palette.js >> main.js
 echo -e "\n" >> main.js
 cat em3et.js >> main.js
 
-sh ./build_components.js
+sh ./build_components.sh

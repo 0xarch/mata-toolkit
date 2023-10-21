@@ -33,9 +33,9 @@ class CollapseComponent{
         let CollapseTitle = newElement("container");
         let Content = newElement("content");
 
-        Content.innerHTML = content;
-        CollapseTitle.textContent = title;
-        CollapseTitle.setAttribute("closed",active);
+        Content.innerHTML = this.content;
+        CollapseTitle.textContent = this.title;
+        CollapseTitle.setAttribute("closed",this.active);
 
         Collapse.appendChild(CollapseTitle);
         Collapse.appendChild(Content);
