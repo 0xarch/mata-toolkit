@@ -22,9 +22,12 @@ pagination{
         background-color: var(--primary-color-3);
         color: var(--primary-text-3);
     }
-    & >a.page.this, & >a.prev, &>a.next{
+    & >a.page.this{
         background-color: var(--primary-color-1);
         color:var(--primary-text-1);
+    }
+    & >a.prev,& >a.next{
+        color:var(--primary-color-1);
     }
     & >a.disabled{
         opacity: .5;

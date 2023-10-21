@@ -170,14 +170,12 @@ function buildPaginationJSON(id){
     }
     Pagination.appendChild(GoPrev);
 
-    if(haveSeparator){
-        for(let i=1;i<=page;i++){
-            if([1,now-1,now,now+1,page].includes(i)){
-                builds.push(i);
-            }else{
-                if(builds.at(-1)!="space")
-                    builds.push("space");
-            }
+    for(let i=1;i<=page;i++){
+        if([1,now-1,now,now+1,page].includes(i)){
+            builds.push(i);
+        }else if(haveSeparator){
+            if(builds.at(-1)!="space")
+                builds.push("space");
         }
     }
     for(let item of builds){
