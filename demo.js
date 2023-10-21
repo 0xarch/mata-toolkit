@@ -22,5 +22,6 @@ window.onload=()=>{
     buildTabs("tabs_demo");
     buildTabsJSON("tabs_json_demo");
     buildCollapse("collapse_demo");
+    buildPaginationJSON("pagination_demo");
     Em3et.render(Select("em3et"),"plain");
 }
