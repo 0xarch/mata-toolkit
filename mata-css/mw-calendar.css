@@ -5,6 +5,12 @@ calendar {
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    & >label{
+        width: 100%;
+        & >fbox.w_100>textlabel{
+            flex:1;
+        }
+    }
 }
 
 calendarbox {

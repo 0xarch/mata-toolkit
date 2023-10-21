@@ -3,6 +3,7 @@
     <head>
         <link rel="stylesheet" href="mata-css/mata.css">
         <script src="mata-js/main.js"></script>
+        <script src="mata-js/components.js"></script>
         <script src="demo.js"></script>
         <title>Demo</title>
     </head>
@@ -72,7 +73,7 @@
                         </Select>
                     </Container>
                 </Line>
-                <Line flexOption="Align:Start">
+                <Line class="fo_ai0">
                     <Tabs id="tabs_demo" title="标签页">
                         <Content tab="昨天">
                             明日复明日，万事成蹉跎
@@ -84,21 +85,7 @@
                             你瞎点什么呢～
                         </Content>
                     </Tabs>
-                    <Tabs id="tabs_json_demo">
-                        {
-                            "title":"标签页",
-                            "tabs":[
-                                {
-                                    "tab":"文本",
-                                    "content":"在纯文本或少量标签时使用JSON配置的切换器\n使用\\n在该切换器的配置中插入换行符\n使用JSON切换器的部分默认使用\n<b>&lt;pre&gt;</b>标签"
-                                },
-                                {
-                                    "tab":"标签",
-                                    "content":"<h1>标签</h1>"
-                                }
-                            ]
-                        }
-                    </Tabs>
+                    <Anchor anchor="anchor1"></Anchor>
                     <Collapse title="折叠面板" id="collapse_demo">
                         <h3>Collapse/折叠面板</h3>
                     </Collapse>
@@ -106,21 +93,23 @@
                 <Line>
                         <Calendar id="calendar_demo"></Calendar>
                         <Calendar id="calendar_today"></Calendar>
-                        <Widget>
-                            <Label>Em3et</Label>
-                            <pre>
-                                <Em3et>
-                                    div{ ul#ul{
-                                         li.l i-1{
-                                            a(href="/"){
-                                                :ah,so beautiful!:
-                                            }
-                                          }
+                </Line>
+                <Line>
+                    <Component>
+                        <Label>Em3et</Label>
+                        <pre>
+                            <Em3et>
+                                div{ ul#ul{
+                                     li.l i-1{
+                                        a(href="/"){
+                                            :ah,so beautiful!:
                                         }
+                                      }
                                     }
-                                </Em3et>
-                            </pre>
-                        </Widget>
+                                }
+                            </Em3et>
+                        </pre>
+                    </Component>
                 </Line>
                 <Pagination id="pagination_demo">
                     {

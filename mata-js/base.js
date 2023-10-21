@@ -11,9 +11,17 @@ let GetActive = (element) => {
     SelectAll = (query) => document.querySelectorAll(query),
     Toggle = (element) => element.setAttribute('active', element.getAttribute('active') == "true" ? false : true),
     ToggleForce = (element, bool) => element.setAttribute('active', bool),
-    newElement = (tag) => document.createElement(tag),
     removeElement = (query) => document.querySelector(query).remove(),
     Exist = (_var) => _var != null;
+
+/**
+ * 
+ * @param { string } tag 
+ * @returns HTMLElement
+ */
+function newElement(tag){
+    return document.createElement(tag);
+}
 
 const ColorUtils = {
     /**

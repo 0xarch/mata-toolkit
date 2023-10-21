@@ -18,10 +18,20 @@ window.onload=()=>{
     });
     WidgetConstructor.Calendar("calendar_today").unwrap();
     WidgetConstructor.ActionTitle();
-    WidgetConstructor.Wind();
     buildTabs("tabs_demo");
     buildTabsJSON("tabs_json_demo");
     buildCollapse("collapse_demo");
     buildPaginationJSON("pagination_demo");
     Em3et.render(Select("em3et"),"plain");
+    let tabs_json = [
+        {
+            "tab":"文本",
+            "content":"在纯文本或少量标签时使用JSON配置的Tabs分页"
+        },
+        {
+            "tab":"标签",
+            "content":"<h1>标签</h1>"
+        }
+    ];
+    InsertAtAnchor("anchor1",new TabsComponent(tabs_json,"JSON Tab").render());
 }
