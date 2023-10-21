@@ -46,10 +46,12 @@ class CollapseComponent{
             if(opened=="true"){
                 Content.style.transform="scaleY(0)";
                 Content.style.maxHeight="0px";
+                Content.style.margin="0px";
                 CollapseTitle.setAttribute("opened","false");
             }else{
                 Content.style.transform="scaleY(1)";
                 Content.style.maxHeight=maxHeight;
+                Content.style.margin=".5rem";
                 CollapseTitle.setAttribute("opened","true");
             }
         }
