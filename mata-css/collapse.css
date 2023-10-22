@@ -28,6 +28,9 @@ collapse{
     & >container[opened=true]::before{
         transform: scaleY(1);
     }
+    & >container[opened=true]+content{
+        margin: .5rem;
+    }
     & >container{
         margin: 0px;
         background-color: var(--primary-color-2);

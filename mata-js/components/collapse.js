@@ -63,7 +63,7 @@ class CollapseComponent{
         let Collapse = newElement("Collapse");
         Collapse.setAttribute("title",this.title);
         Collapse.innerHTML=this.content;
-        Collapse.setAttribute("opened",!this.active);
+        Collapse.setAttribute("opened",this.active);
         Collapse.setAttribute("stat",'tbr');
         return Collapse;
     }
@@ -76,7 +76,7 @@ function renderCollapse(Collapse){
 
     Content.innerHTML = Collapse.innerHTML;
     CollapseTitle.textContent = Collapse.getAttribute("title");
-    CollapseTitle.setAttribute("closed",opened?opened:false);
+    CollapseTitle.setAttribute("opened",opened=="true"?false:true);
     Collapse.innerHTML="";
 
     Collapse.appendChild(CollapseTitle);
