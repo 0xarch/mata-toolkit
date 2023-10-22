@@ -36,6 +36,7 @@ class CollapseComponent{
         Content.innerHTML = this.content;
         CollapseTitle.textContent = this.title;
         CollapseTitle.setAttribute("opened",!this.active);
+        Collapse.setAttribute("stat",'rdd');
 
         Collapse.appendChild(CollapseTitle);
         Collapse.appendChild(Content);
@@ -63,6 +64,7 @@ class CollapseComponent{
         Collapse.setAttribute("title",this.title);
         Collapse.innerHTML=this.content;
         Collapse.setAttribute("opened",!this.active);
+        Collapse.setAttribute("stat",'tbr');
         return Collapse;
     }
 }
@@ -95,4 +97,11 @@ function renderCollapse(Collapse){
     }
     
     CollapseTitle.click();
+    Collapse.setAttribute("stat",'rdd');
+}
+
+function renderAllCollapse(){
+    for(let item of SelectAll("collapse[stat='tbr']")){
+        renderCollapse(item);
+    }
 }

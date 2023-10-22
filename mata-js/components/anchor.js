@@ -1,7 +1,7 @@
 /**
  * 
  * @param { string } anchor 
- * @param { element } element 
+ * @param { HTMLElement } element 
  * @param { ?string } side 
  */
 function InsertAtAnchor(anchor,element,side){
@@ -16,4 +16,14 @@ function InsertAtAnchor(anchor,element,side){
     }else{
         parent.insertBefore(element,Anchor);
     }
+}
+
+/**
+ * 
+ * @param { string } anchor 
+ * @param { HTMLElement|string } element 
+ */
+function ReplaceAnchorWith(anchor,element){
+    InsertAtAnchor(anchor,element,"after");
+    Select(`anchor[anchor="${anchor}"]`).remove();
 }

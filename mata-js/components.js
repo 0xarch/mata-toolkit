@@ -36,6 +36,7 @@ class CollapseComponent{
         Content.innerHTML = this.content;
         CollapseTitle.textContent = this.title;
         CollapseTitle.setAttribute("opened",!this.active);
+        Collapse.setAttribute("stat",'rdd');
 
         Collapse.appendChild(CollapseTitle);
         Collapse.appendChild(Content);
@@ -63,6 +64,7 @@ class CollapseComponent{
         Collapse.setAttribute("title",this.title);
         Collapse.innerHTML=this.content;
         Collapse.setAttribute("opened",!this.active);
+        Collapse.setAttribute("stat",'tbr');
         return Collapse;
     }
 }
@@ -95,6 +97,13 @@ function renderCollapse(Collapse){
     }
     
     CollapseTitle.click();
+    Collapse.setAttribute("stat",'rdd');
+}
+
+function renderAllCollapse(){
+    for(let item of SelectAll("collapse[stat='tbr']")){
+        renderCollapse(item);
+    }
 }
 
 class TabsComponent{
@@ -182,7 +191,7 @@ class TabsComponent{
 /**
  * 
  * @param { string } anchor 
- * @param { element } element 
+ * @param { HTMLElement } element 
  * @param { ?string } side 
  */
 function InsertAtAnchor(anchor,element,side){
@@ -197,4 +206,14 @@ function InsertAtAnchor(anchor,element,side){
     }else{
         parent.insertBefore(element,Anchor);
     }
+}
+
+/**
+ * 
+ * @param { string } anchor 
+ * @param { HTMLElement|string } element 
+ */
+function ReplaceAnchorWith(anchor,element){
+    InsertAtAnchor(anchor,element,"after");
+    Select(`anchor[anchor="${anchor}"]`).remove();
 }
