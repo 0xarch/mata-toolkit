@@ -20,7 +20,6 @@ window.onload=()=>{
     WidgetConstructor.ActionTitle();
     buildTabs("tabs_demo");
     buildTabsJSON("tabs_json_demo");
-    buildCollapse("collapse_demo");
     buildPaginationJSON("pagination_demo");
     Em3et.render(Select("em3et"),"plain");
     let tabs_json = [
@@ -33,5 +32,9 @@ window.onload=()=>{
             "content":"<h1>标签</h1>"
         }
     ];
+    let Collapse = new CollapseComponent("折叠面板","<h3>Collapse</h3>",true).renderHTMLElement();
+    InsertAtAnchor("anchor1",Collapse);
+    renderCollapse(Collapse);
+    renderCollapse(Select("#collapse_demo"));
     InsertAtAnchor("anchor1",new TabsComponent(tabs_json,"JSON Tab").render());
 }
