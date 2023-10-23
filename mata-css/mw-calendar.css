@@ -11,22 +11,17 @@ calendar {
             flex:1;
         }
     }
-}
-
-calendarbox {
-    display: grid;
-    grid: auto-flow / 3.5rem 3.5rem 3.5rem 3.5rem 3.5rem 3.5rem 3.5rem;
+    & >calendarbox{
+        display:grid;
+        grid: auto-flow / repeat(7,calc(100% / 7));
+    }
 }
 
 dayblank,
 dayaction {
-    border-radius: 3rem;
     box-shadow: var(--m-medium-shadow);
-    min-height: 3rem;
-    min-width: 3rem;
     box-sizing: border-box;
-    padding: .75rem;
-    margin: .25rem;
+    padding: 1rem;
 }
 
 dayblank {
