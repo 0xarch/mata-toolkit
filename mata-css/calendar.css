@@ -1,0 +1,83 @@
+/* Calendar */
+calendar {
+    border-radius: var(--m-small-round);
+    box-shadow: var(--m-small-shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    & >label{
+        width: 100%;
+        & >label{
+            width: 100%;
+        }
+        & >label>arrow{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        & label.days{
+            font-weight: bold;
+            flex-direction: row;
+            & >p{
+                flex:1;
+                text-align: center;
+            }
+        }
+        & label.months{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.12rem;
+            font-weight: bold;
+        }
+    }
+    & >container{
+        margin: 0px;
+        padding: 0px;
+	    width:100%;
+        display:grid;
+        grid: auto-flow / repeat(7,calc(100% / 7));
+        & >dayaction{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}
+
+dayblank,
+dayaction {
+    box-shadow: var(--m-medium-shadow);
+    box-sizing: border-box;
+    padding: 1rem;
+}
+
+dayblank {
+    height:100%;
+    filter: grayscale(1);
+    box-shadow: var(--m-small-shadow);
+    opacity: .5;
+}
+
+dayaction {
+    font-weight: bold;
+    position: relative;
+    flex-direction: column;
+}
+
+dayaction[textfilled]>tx {
+    height: 0px;
+    margin: 0px;
+    padding: 0px;
+    opacity: .6;
+    font-size: .75rem;
+    min-width: 3rem;
+    text-align: center;
+    position: relative;
+    top: .3rem;
+}
+
+dayaction[clickevented] {
+    filter: saturate(120%);
+    box-shadow: 0px 1px 3px 1px var(--primary-color-3);
+}

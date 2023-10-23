@@ -28,37 +28,6 @@ class CollapseComponent{
     setOpen(open){
         this.active = open;
     }
-    render(){
-        let Collapse = newElement("Collapse");
-        let CollapseTitle = newElement("container");
-        let Content = newElement("content");
-
-        Content.innerHTML = this.content;
-        CollapseTitle.textContent = this.title;
-        CollapseTitle.setAttribute("opened",!this.active);
-        Collapse.setAttribute("stat",'rdd');
-
-        Collapse.appendChild(CollapseTitle);
-        Collapse.appendChild(Content);
-
-        CollapseTitle.onclick=function(){
-            let opened = CollapseTitle.getAttribute("opened");
-            if(opened=="true"){
-                Content.style.setProperty("--mh",window.getComputedStyle(Content).height);
-                Content.style.transform="scaleY(0)";
-                Content.style.maxHeight="0px";
-                Content.style.margin="0px";
-                CollapseTitle.setAttribute("opened","false");
-            }else{
-                Content.style.transform="scaleY(1)";
-                Content.style.maxHeight="var(--mh)";
-                Content.style.margin=".5rem";
-                CollapseTitle.setAttribute("opened","true");
-            }
-        }
-        CollapseTitle.click();
-        return Collapse;
-    }
     renderHTMLElement(){
         let Collapse = newElement("Collapse");
         Collapse.setAttribute("title",this.title);
@@ -76,23 +45,23 @@ function renderCollapse(Collapse){
 
     Content.innerHTML = Collapse.innerHTML;
     CollapseTitle.textContent = Collapse.getAttribute("title");
-    CollapseTitle.setAttribute("opened",opened=="true"?false:true);
+    Collapse.setAttribute("opened",opened=="true"?false:true);
     Collapse.innerHTML="";
 
     Collapse.appendChild(CollapseTitle);
     Collapse.appendChild(Content);
-    let maxHeight=window.getComputedStyle(Content).height;
+    Collapse.setAttribute("maxheight",window.getComputedStyle(Content).height);
 
     CollapseTitle.onclick=function(){
-        let opened = CollapseTitle.getAttribute("opened");
+        let opened = Collapse.getAttribute("opened");
         if(opened=="true"){
             Content.style.transform="scaleY(0)";
             Content.style.maxHeight="0px";
-            CollapseTitle.setAttribute("opened","false");
+            Collapse.setAttribute("opened","false");
         }else{
             Content.style.transform="scaleY(1)";
-            Content.style.maxHeight=maxHeight;
-            CollapseTitle.setAttribute("opened","true");
+            Content.style.maxHeight=Collapse.getAttribute("maxheight");
+            Collapse.setAttribute("opened","true");
         }
     }
     

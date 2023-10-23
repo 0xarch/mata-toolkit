@@ -25,10 +25,10 @@ collapse{
         content:'';
         opacity: .75;
     }
-    & >container[opened=true]::before{
+    &[opened=true] >container::before{
         transform: scaleY(1);
     }
-    & >container[opened=true]+content{
+    &[opened=true] >content{
         margin: .5rem;
     }
     & >container{

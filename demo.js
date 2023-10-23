@@ -13,10 +13,11 @@ window.onload=()=>{
         data.text().then(data=>{
             data = JSON.parse(data);
             Select("#calendar_demo").innerHTML=JSON.stringify(data['calendar_demo']);
-            WidgetConstructor.Calendar("calendar_demo").unwrap();
+            // WidgetConstructor.Calendar("calendar_demo").unwrap();
+            renderAllCalendar();
         })
     });
-    WidgetConstructor.Calendar("calendar_today").unwrap();
+    // WidgetConstructor.Calendar("calendar_today").unwrap();
     WidgetConstructor.ActionTitle();
     buildTabs("tabs_demo");
     buildTabsJSON("tabs_json_demo");

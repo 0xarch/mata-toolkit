@@ -113,38 +113,6 @@ function buildTabsJSON(id){
     Tabs.insertBefore(TabContainer,Tabs.firstChild);
 }
 
-function buildCollapse(id){
-    let CollapseID = getIDFromArgument(id);
-    let Collapse = Select(CollapseID);
-    let CollapseTitle = newElement("container");
-    let Content = newElement("content");
-    let opened = Collapse.getAttribute("opened");
-
-    Content.innerHTML = Collapse.innerHTML;
-    CollapseTitle.textContent = Collapse.getAttribute("title");
-    CollapseTitle.setAttribute("closed",opened?opened:false);
-    Collapse.innerHTML="";
-
-    Collapse.appendChild(CollapseTitle);
-    Collapse.appendChild(Content);
-    let maxHeight=window.getComputedStyle(Content).height;
-
-    CollapseTitle.onclick=function(){
-        let opened = CollapseTitle.getAttribute("opened");
-        if(opened=="true"){
-            Content.style.transform="scaleY(0)";
-            Content.style.maxHeight="0px";
-            CollapseTitle.setAttribute("opened","false");
-        }else{
-            Content.style.transform="scaleY(1)";
-            Content.style.maxHeight=maxHeight;
-            CollapseTitle.setAttribute("opened","true");
-        }
-    }
-    
-    CollapseTitle.click();
-}
-
 function buildPaginationJSON(id){
     let PaginationID = getIDFromArgument(id);
     let Pagination = Select(PaginationID);
