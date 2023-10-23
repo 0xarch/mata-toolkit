@@ -12,6 +12,7 @@ calendar {
         }
     }
     & >calendarbox{
+	width:100%;
         display:grid;
         grid: auto-flow / repeat(7,calc(100% / 7));
     }
