@@ -1,40 +1,68 @@
+collapse>panel{
+    display: flex;
+    flex-direction: column;
+    min-width: 20vw;
+    overflow: hidden;
+    border-radius: var(--m-medium-round);
+}
+
+collapse>panel>container{
+    margin: 0px;
+    background-color: var(--primary-color-2);
+    color: var(--primary-text-2);
+    border-color: var(--primary-color-2);
+}
+
+collapse>panel>container::before{
+    position: absolute;
+    display: block;
+    left: 1rem;
+    top: calc(50% - .5rem);
+    height: 1rem;
+    width: 1rem;
+    border-radius:100px;
+    transform: scaleY(.1);
+    transition: transform .2s ease-in-out;
+    background-color: var(--primary-text-2);
+    content:'';
+    opacity: .75;
+}
+
+collapse>panel[opened=true]>container::before{
+    transform: scaleY(1);
+}
+
+collapse>panel[opened=true]>content{
+    padding: .5rem;
+}
+
+collapse>panel>content{
+    position: relative;
+    margin: 0px;
+    padding: 0px;
+    transition: max-height .2s ease-in-out,padding .2s ease-in-out;
+    background-color: var(--primary-background);
+}
+
+collapse>panel:not(:first-child){
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+}
+
+collapse>panel:not(:last-child){
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+collapse>panel:not(:last-child):not([opened=true]){
+    border-bottom:1px solid var(--primary-color-1);   
+}
+
 collapse{
     display: flex;
     flex-direction: column;
-    min-width: 12rem;
     border-radius: var(--m-medium-round);
-    overflow: hidden;
     box-shadow: var(--m-large-shadow);
+    min-width: 20vw;
     margin: .75rem;
-    & >content{
-        position: relative;
-        margin: 0px;
-        transition: max-height .2s ease-in-out;
-    }
-    & >container::before{
-        position: absolute;
-        display: block;
-        left: 1rem;
-        top: calc(50% - .5rem);
-        height: 1rem;
-        width: 1rem;
-        border-radius:100px;
-        transform: scaleY(.1);
-        transition: transform .2s ease-in-out;
-        background-color: var(--primary-text-2);
-        content:'';
-        opacity: .75;
-    }
-    &[opened=true] >container::before{
-        transform: scaleY(1);
-    }
-    &[opened=true] >content{
-        margin: .5rem;
-    }
-    & >container{
-        margin: 0px;
-        background-color: var(--primary-color-2);
-        color: var(--primary-text-2);
-        border-color: var(--primary-color-2);
-    }
 }

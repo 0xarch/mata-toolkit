@@ -33,8 +33,8 @@ window.onload=()=>{
             "content":"<h1>标签</h1>"
         }
     ];
-    let Collapse = new CollapseComponent("折叠面板","<h3>Collapse</h3>",true).renderHTMLElement();
-    InsertAtAnchor("anchor1",Collapse);
+    let Collapse = new CollapseComponent([{"header":"折叠面板","content":"<h3>折叠面板</h3>","open":false}]).renderHTMLElement();
+    ReplaceAnchorWith("demo_coll_anc",Collapse);
     renderAllCollapse();
     ReplaceAnchorWith("anchor1",new TabsComponent(tabs_json,"JSON Tab").render());
 }

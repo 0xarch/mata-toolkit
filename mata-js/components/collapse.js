@@ -1,76 +1,96 @@
 class CollapseComponent{
     size;
-    active;
-    content;
-    title;
+    json;
     /**
      * 
-     * @param { ?string } title 
-     * @param { ?string } content 
-     * @param { ?number } size 
-     * @param { ?boolean } open
+     * @param { Array.<{header:string,content:string,open:boolean}> } conf 
+     * @param { 0|1|2 } size 
+     * @param { string } type
      */
-    constructor(title,content,open,size){
-        this.title = title;
-        this.content = content;
-        this.size = size!=undefined?size:0;
-        this.active = open!=undefined?open:false;
+    constructor(conf,size,type){
+        this.size = size!=undefined?size:1;
+        this.type = type;
+        this.json = conf;
     }
-    setTitle(title){
-        this.title = title;
-    }
-    setContent(content){
-        this.content = content;
+    setConf(conf){
+        this.json = conf;
     }
     setSize(size){
         this.size = size;
     }
-    setOpen(open){
-        this.active = open;
+    setType(type){
+        this.type = type;
     }
     renderHTMLElement(){
         let Collapse = newElement("Collapse");
-        Collapse.setAttribute("title",this.title);
-        Collapse.innerHTML=this.content;
-        Collapse.setAttribute("opened",this.active);
-        Collapse.setAttribute("stat",'tbr');
+        Collapse.setAttribute("type",this.type);
+        for(let item of this.json){
+            let Panel = newElement("panel");
+            Panel.setAttribute("header",item.header);
+            Panel.innerHTML=item.content;
+            Panel.setAttribute("opened",item.active);
+            Panel.setAttribute("stat",'tbr');
+            Collapse.appendChild(Panel);
+        }
         return Collapse;
     }
 }
 
 function renderCollapse(Collapse){
-    let CollapseTitle = newElement("container");
-    let Content = newElement("content");
-    let opened = Collapse.getAttribute("opened");
+    let type = Collapse.getAttribute("type");
+    for(let Panel of Collapse.querySelectorAll("panel")){
+        let Header = newElement("Container");
+        let Content = newElement("Content");
+        let opened = Panel.getAttribute("opened");
 
-    Content.innerHTML = Collapse.innerHTML;
-    CollapseTitle.textContent = Collapse.getAttribute("title");
-    Collapse.setAttribute("opened",opened=="true"?false:true);
-    Collapse.innerHTML="";
+        Content.innerHTML = Panel.innerHTML;
+        Header.textContent = Panel.getAttribute("header");
+        Panel.setAttribute("opened",opened=="true"?false:true);
+        Panel.innerHTML="";
 
-    Collapse.appendChild(CollapseTitle);
-    Collapse.appendChild(Content);
-    Collapse.setAttribute("maxheight",window.getComputedStyle(Content).height);
+        Panel.appendChild(Header);
+        Panel.appendChild(Content);
+        Panel.setAttribute("maxheight",window.getComputedStyle(Content).height);
 
-    CollapseTitle.onclick=function(){
-        let opened = Collapse.getAttribute("opened");
-        if(opened=="true"){
-            Content.style.transform="scaleY(0)";
-            Content.style.maxHeight="0px";
-            Collapse.setAttribute("opened","false");
-        }else{
-            Content.style.transform="scaleY(1)";
-            Content.style.maxHeight=Collapse.getAttribute("maxheight");
-            Collapse.setAttribute("opened","true");
+        Header.onclick=function(){
+            let opened = Panel.getAttribute("opened");
+            if(opened=="true"){
+                Content.style.transform="scaleY(0)";
+                Content.style.maxHeight="0px";
+                Panel.setAttribute("opened","false");
+            }else{
+                if(type=="accordion"){
+                    for(let item of Collapse.querySelectorAll("&>panel")){
+                        if(item!=Panel){
+                            try{
+                                let _Content = item.querySelector("content");
+                                _Content.style.transform="scaleY(0)";
+                                _Content.style.maxHeight="0px";
+                            }
+                            catch(e){}
+                            finally{
+                                item.setAttribute("opened","false");
+                            }
+                        }
+                    }
+                }
+                Content.style.transform="scaleY(1)";
+                Content.style.maxHeight=Panel.getAttribute("maxheight");
+                Panel.setAttribute("opened","true");
+            }
         }
+
+        Header.click();
     }
-    
-    CollapseTitle.click();
-    Collapse.setAttribute("stat",'rdd');
+    Collapse.setAttribute("stat","rdd");
 }
 
-function renderAllCollapse(){
-    for(let item of SelectAll("collapse[stat='tbr']")){
+/**
+ * 
+ * @param { boolean } strict 
+ */
+function renderAllCollapse(strict){
+    for(let item of strict?SelectAll("collapse[stat='tbr']"):SelectAll("collapse:not(collapse[stat='rdd'])")){
         renderCollapse(item);
     }
 }

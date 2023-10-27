@@ -10,7 +10,7 @@
     <body>
         <header>
             <banner>
-                Mata Toolkit DEMO - 更新于 v1.0
+                Mata Toolkit DEMO - 更新于 v1.1
             </banner>
             <nav>
                 <left>
@@ -30,8 +30,11 @@
             <Slide active="false" id="slide">
                 <Notice>本页面为演示页面，仅供参考!</Notice>
                 <Notice Outline>
-                    Mata toolkit 是一个开源 JavaScript 样式工具集.
+                    Mata toolkit 是一个开源 JavaScript + CSS 工具集.<br/>
                     其目标是提供一个可靠、高度自定义的样式渲染系统.
+                    <hr>
+                    GPL v3
+                    <hr>
                     源代码 : <a href=https://github.com/0xarch/mata-toolkit>Mata Toolkit</a>
                 </Notice>
             </Slide>
@@ -86,13 +89,26 @@
                         </Content>
                     </Tabs>
                     <Anchor anchor="anchor1"></Anchor>
-                    <Collapse title="折叠面板" id="collapse_demo" stat="tbr" opened="false">
-                        <h3>Collapse/折叠面板</h3>
+                </Line>
+                <Line class="fo_ai0 sp_mp">
+                    <Anchor anchor="demo_coll_anc"></Anchor>
+                    <Collapse type="accordion">
+                        <Panel header="Panel" opened="true">
+                            <h3>手风琴面板</h3>
+                            <pre>在Collapse中设置type="accordion"以启用手风琴面板.
+                            </pre>
+                        </Panel>
+                        <Panel header="Panel">
+                            <h3>Collapse Panel</h3>
+                        </Panel>
+                        <Panel header="Panel">
+                            <h3></h3>
+                        </Panel>
                     </Collapse>
                 </Line>
                 <Line>
-                        <Calendar id="calendar_demo" stat="tbr"></Calendar>
-                        <Calendar stat="tbr"></Calendar>
+                    <Calendar id="calendar_demo" stat="tbr"></Calendar>
+                    <Calendar stat="tbr"></Calendar>
                 </Line>
                 <Line>
                     <Component>

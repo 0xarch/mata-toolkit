@@ -74,18 +74,17 @@ class PaletteController {
     setSP(colPr, lightPr, colSc, lightSc) {
         let r1 = this.setPrimary(colPr, lightPr);
         let r2 = this.setSecondary(colSc, lightSc);
-        if (r1.is_ok() && r2.is_ok()) return new Result(Ok);
+        if (r1.testOk() && r2.testOk()) return new Result(Ok);
         else return new Result(Err);
     }
     /**
      * set the specific palette from a HSLColor
      * @param { string } name
      * @param { HSL } hsl
-     * @param { boolean } force_background whether to let background use this color or not
      * @returns { void }
      * @example setPaletteByHSL("primary",new HSL(0,0,0),true)
      */
-    setPaletteByHSL(name, hsl, force_background) {
+    setPaletteByHSL(name, hsl) {
         this.colns[name] = hsl ? hsl : this.colns[name];
         let v2 = this.colns[name];
         let v1 = v2.dl(-15),
@@ -99,11 +98,10 @@ class PaletteController {
         this.#Root.setStyle(`--${name}-text-1`, v1.textColor());
         this.#Root.setStyle(`--${name}-text-2`, v2.textColor());
         this.#Root.setStyle(`--${name}-text-3`, v3.textColor());
-        if(force_background==true){
-            this.colns["background"]=ColorUtils.BrowserIsDark()?v2.ds(-45).dl(-20):v2.ds(10).dl(40);
-            this.#Root.setStyle(`--background-colored`,this.colns["background"].CSS());
-            this.bgcoln=name;
-        }
+
+        this.colns["background"]=ColorUtils.BrowserIsDark()?v2.ds(-45).dl(-20):v2.ds(10).dl(40);
+        this.#Root.setStyle(`--${name}-background`,this.colns["background"].CSS());
+        this.bgcoln=name;
         return new Result(Ok);
     }
     /**

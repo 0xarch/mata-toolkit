@@ -10,7 +10,7 @@ tabs {
         padding: .5rem;
         min-height: 11rem;
         width:100%;
-        background-color: var(--background-colored);
+        background-color: var(--primary-background);
     }
     & >container{
         background-color: var(--primary-color-2);
