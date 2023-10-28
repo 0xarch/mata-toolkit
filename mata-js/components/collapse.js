@@ -25,9 +25,8 @@ class CollapseComponent{
         let Collapse = newElement("Collapse");
         Collapse.setAttribute("type",this.type);
         for(let item of this.json){
-            let Panel = newElement("panel");
+            let Panel = newElement("panel",[],item.content);
             Panel.setAttribute("header",item.header);
-            Panel.innerHTML=item.content;
             Panel.setAttribute("opened",item.active);
             Panel.setAttribute("stat",'tbr');
             Collapse.appendChild(Panel);
@@ -38,14 +37,18 @@ class CollapseComponent{
 
 function renderCollapse(Collapse){
     let type = Collapse.getAttribute("type");
-    for(let Panel of Collapse.querySelectorAll("panel")){
-        let Header = newElement("Container");
-        let Content = newElement("Content");
+    let i = 0;
+    let panels = [];
+    for(let item of Collapse.childNodes){
+        if(item.nodeType===1 && item.tagName=="PANEL") panels.push(item);
+    }
+    for(let Panel of panels){
+        let Header = newElement("Container",[],Panel.getAttribute("header"));
+        let Content = newElement("Content",[],Panel.innerHTML);
         let opened = Panel.getAttribute("opened");
 
-        Content.innerHTML = Panel.innerHTML;
-        Header.textContent = Panel.getAttribute("header");
         Panel.setAttribute("opened",opened=="true"?false:true);
+        Panel.setAttribute("serial",i);
         Panel.innerHTML="";
 
         Panel.appendChild(Header);
@@ -60,8 +63,8 @@ function renderCollapse(Collapse){
                 Panel.setAttribute("opened","false");
             }else{
                 if(type=="accordion"){
-                    for(let item of Collapse.querySelectorAll("&>panel")){
-                        if(item!=Panel){
+                    for(let item of panels){
+                        if(item.getAttribute("serial")!=i){
                             try{
                                 let _Content = item.querySelector("content");
                                 _Content.style.transform="scaleY(0)";
@@ -81,6 +84,7 @@ function renderCollapse(Collapse){
         }
 
         Header.click();
+        i++;
     }
     Collapse.setAttribute("stat","rdd");
 }

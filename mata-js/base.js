@@ -17,10 +17,30 @@ let GetActive = (element) => {
 /**
  * 
  * @param { string } tag 
+ * @param { Array.<string> } CSSclass
+ * @param { string|Array.<HTMLElement> } innerHTML
+ * @param { {} } attributes
+ * @param { Array.<HTMLElement> } childElements
  * @returns HTMLElement
  */
-function newElement(tag){
-    return document.createElement(tag);
+function newElement(tag,CSSclass,innerHTML,attributes){
+    let element = document.createElement(tag);
+    if(CSSclass!=undefined){
+        element.classList.add(...CSSclass);
+    }
+    if(innerHTML!=undefined){
+        if(typeof(innerHTML)!="object")
+            element.innerHTML=innerHTML;
+        else if(Array.isArray(innerHTML)){
+            for(let item of innerHTML){
+                element.append(item);
+            }
+        }
+    }
+    for(let item in attributes){
+        element.setAttribute(item,attributes[item]);
+    }
+    return element;
 }
 
 const ColorUtils = {

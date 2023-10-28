@@ -45,6 +45,33 @@ calendar {
     }
 }
 
+calendar>label>label.text{
+    &>.arrows{
+        flex:.6;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        &>button:hover{
+            background-color: var(--primary-color-2);
+            color:var(--primary-text-2);
+        }
+        &>button:first-child{
+            margin-right: 0px;
+            border-top-right-radius: 0px;
+            border-bottom-right-radius: 0px;
+        }
+        &>button:last-child{
+            margin-left: 0px;
+            border-top-left-radius: 0px;
+            border-bottom-left-radius: 0px;
+        }
+    }
+    &>label.months{
+        flex:1;
+        font-size: 1.15rem;
+    }
+}
+
 dayblank,
 dayaction {
     box-shadow: var(--m-medium-shadow);

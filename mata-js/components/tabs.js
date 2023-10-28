@@ -42,8 +42,7 @@ class TabsComponent{
         let tab_active;
 
         if(this.title!=null && this.title!=undefined){
-            let TabLabel = newElement("label");
-            TabLabel.textContent = this.title;
+            let TabLabel = newElement("label",[],this.title);
             TabContainer.appendChild(TabLabel);
             TabContainer.appendChild(TabsBox);
             TabContainer.style.setProperty("flex-direction","column");
@@ -55,9 +54,8 @@ class TabsComponent{
 
         for(let tab of this.tabs){
             let tab_name = tab.tab;
-            let Tab = newElement("tab");
-            let Content = newElement("content");
-            Tab.textContent = tab_name;
+            let Tab = newElement("tab",[],tab_name);
+            let Content = newElement("content",[],tab.content);
             if(tab.active) tab_active=Tab;
             Tab.onclick=function(){
                 for(let item of containing_tabs.childNodes){
@@ -68,7 +66,6 @@ class TabsComponent{
                 Tabs.querySelector(`*[tab="${tab_name}"]`).style.display="block";
             }
             containing_tabs.appendChild(Tab);
-            Content.innerHTML=tab.content;
             Content.setAttribute("tab",tab_name);
             Tabs.appendChild(Content);
         }

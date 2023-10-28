@@ -17,8 +17,6 @@ window.onload=()=>{
             renderAllCalendar();
         })
     });
-    // WidgetConstructor.Calendar("calendar_today").unwrap();
-    WidgetConstructor.ActionTitle();
     buildTabs("tabs_demo");
     buildTabsJSON("tabs_json_demo");
     buildPaginationJSON("pagination_demo");

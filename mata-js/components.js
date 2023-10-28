@@ -25,9 +25,8 @@ class CollapseComponent{
         let Collapse = newElement("Collapse");
         Collapse.setAttribute("type",this.type);
         for(let item of this.json){
-            let Panel = newElement("panel");
+            let Panel = newElement("panel",[],item.content);
             Panel.setAttribute("header",item.header);
-            Panel.innerHTML=item.content;
             Panel.setAttribute("opened",item.active);
             Panel.setAttribute("stat",'tbr');
             Collapse.appendChild(Panel);
@@ -38,14 +37,18 @@ class CollapseComponent{
 
 function renderCollapse(Collapse){
     let type = Collapse.getAttribute("type");
-    for(let Panel of Collapse.querySelectorAll("panel")){
-        let Header = newElement("Container");
-        let Content = newElement("Content");
+    let i = 0;
+    let panels = [];
+    for(let item of Collapse.childNodes){
+        if(item.nodeType===1 && item.tagName=="PANEL") panels.push(item);
+    }
+    for(let Panel of panels){
+        let Header = newElement("Container",[],Panel.getAttribute("header"));
+        let Content = newElement("Content",[],Panel.innerHTML);
         let opened = Panel.getAttribute("opened");
 
-        Content.innerHTML = Panel.innerHTML;
-        Header.textContent = Panel.getAttribute("header");
         Panel.setAttribute("opened",opened=="true"?false:true);
+        Panel.setAttribute("serial",i);
         Panel.innerHTML="";
 
         Panel.appendChild(Header);
@@ -60,8 +63,8 @@ function renderCollapse(Collapse){
                 Panel.setAttribute("opened","false");
             }else{
                 if(type=="accordion"){
-                    for(let item of Collapse.querySelectorAll("&>panel")){
-                        if(item!=Panel){
+                    for(let item of panels){
+                        if(item.getAttribute("serial")!=i){
                             try{
                                 let _Content = item.querySelector("content");
                                 _Content.style.transform="scaleY(0)";
@@ -81,6 +84,7 @@ function renderCollapse(Collapse){
         }
 
         Header.click();
+        i++;
     }
     Collapse.setAttribute("stat","rdd");
 }
@@ -140,8 +144,7 @@ class TabsComponent{
         let tab_active;
 
         if(this.title!=null && this.title!=undefined){
-            let TabLabel = newElement("label");
-            TabLabel.textContent = this.title;
+            let TabLabel = newElement("label",[],this.title);
             TabContainer.appendChild(TabLabel);
             TabContainer.appendChild(TabsBox);
             TabContainer.style.setProperty("flex-direction","column");
@@ -153,9 +156,8 @@ class TabsComponent{
 
         for(let tab of this.tabs){
             let tab_name = tab.tab;
-            let Tab = newElement("tab");
-            let Content = newElement("content");
-            Tab.textContent = tab_name;
+            let Tab = newElement("tab",[],tab_name);
+            let Content = newElement("content",[],tab.content);
             if(tab.active) tab_active=Tab;
             Tab.onclick=function(){
                 for(let item of containing_tabs.childNodes){
@@ -166,7 +168,6 @@ class TabsComponent{
                 Tabs.querySelector(`*[tab="${tab_name}"]`).style.display="block";
             }
             containing_tabs.appendChild(Tab);
-            Content.innerHTML=tab.content;
             Content.setAttribute("tab",tab_name);
             Tabs.appendChild(Content);
         }
@@ -240,31 +241,20 @@ function renderCalendar(Calendar) {
     // Element Creating
 
     // Calendar Label
-    let Label = newElement("Label");
-    let TextLabel = newElement("Label");
-    let DayLabel = newElement("Label");
-    Label.appendChild(TextLabel);
-    Label.appendChild(DayLabel);
-    let LeftArrow = newElement("Arrow"), RightArrow = newElement("Arrow");
-    let MonthLabel = newElement("Label");
-    LeftArrow.textContent="<";
-    RightArrow.textContent=">";
-    MonthLabel.classList.add("months");
-    DayLabel.classList.add("days");
-    TextLabel.classList.add("fo_fd0");
-    TextLabel.appendChild(LeftArrow);
-    TextLabel.appendChild(MonthLabel);
-    TextLabel.appendChild(RightArrow);
+    let DayLabel = newElement("Label",["days"]);
+    let LeftArrow = newElement("Button",["left"],"<"),
+        RightArrow = newElement("Button",["right"],">");
+    let MonthLabel = newElement("Label",["months"]);
+    let ArrowLabel = newElement("Label",["arrows"],[LeftArrow,RightArrow]);
+    let TextLabel = newElement("Label",["fo_fd0","text"],[MonthLabel,ArrowLabel]);
     for (let item of ['日', '一', '二', '三', '四', '五', '六']) {
-        let DayP = newElement("p");
-        DayP.textContent = item;
+        let DayP = newElement("p",[],item);
         DayLabel.appendChild(DayP);
     }
+    let Label = newElement("Label",[],[TextLabel,DayLabel]);
 
     // Calendar Box
-    let Container = newElement("Container");
-    Container.setAttribute("year",year);
-    Container.setAttribute("month",month);
+    let Container = newElement("Container",[],"",{"year":year,"month":month});
 
     const e_dd_test = (e_dd, day) => {
         try {
@@ -332,15 +322,13 @@ function renderCalendar(Calendar) {
         }
         let day_count = DatetimeUtils.dayCountOf(year,month);
         for (var i = 1; i <= day_count; i++) {
-            let day_action = newElement('dayaction');
-            day_action.textContent = i;
+            let day_action = newElement('dayaction',[],i);
             if (test_day(year, month, i, day_conf['mark']))
                 day_action.setAttribute('marked', true)
             let hover = test_day(year, month, i, day_conf['text']);
             if (hover[0]) {
                 day_action.setAttribute('textfilled', true);
-                let text = newElement("tx");
-                text.textContent = hover[1];
+                let text = newElement("tx",[],hover[1]);
                 day_action.appendChild(text);
             }
             let clickevent = test_day(year, month, i, day_conf['click']);
@@ -350,11 +338,10 @@ function renderCalendar(Calendar) {
                     eval(clickevent[1])
                 }
             }
-            if (day_conf['showtoday']) {
+            if (day_conf['showtoday'] || config["ShowToday"]==true) {
                 if (today_year == year && today_month == Container.getAttribute('month') && today_date == i) {
                     day_action.setAttribute('textfilled', true);
-                    let text = newElement("tx");
-                    text.textContent = "今天";
+                    let text = newElement("tx",[],"今天");
                     day_action.appendChild(text);
                 }
             }

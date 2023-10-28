@@ -4,13 +4,28 @@ collapse>panel{
     min-width: 20vw;
     overflow: hidden;
     border-radius: var(--m-medium-round);
+    background-color: var(--primary-background);
 }
 
 collapse>panel>container{
     margin: 0px;
+    padding: .65rem;
+    padding-left: 2.65rem;
+    font-size:1.15rem;
     background-color: var(--primary-color-2);
     color: var(--primary-text-2);
     border-color: var(--primary-color-2);
+    justify-content: start;
+}
+
+collapse[size="0"]>panel>container{
+    font-size: 1rem;
+}
+
+collapse[size="2"]>panel>container{
+    padding: .75rem;
+    padding-left: 2.75rem;
+    font-size: 1.3rem;
 }
 
 collapse>panel>container::before{
@@ -41,7 +56,6 @@ collapse>panel>content{
     margin: 0px;
     padding: 0px;
     transition: max-height .2s ease-in-out,padding .2s ease-in-out;
-    background-color: var(--primary-background);
 }
 
 collapse>panel:not(:first-child){

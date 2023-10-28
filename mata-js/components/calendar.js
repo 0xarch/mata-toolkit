@@ -30,31 +30,20 @@ function renderCalendar(Calendar) {
     // Element Creating
 
     // Calendar Label
-    let Label = newElement("Label");
-    let TextLabel = newElement("Label");
-    let DayLabel = newElement("Label");
-    Label.appendChild(TextLabel);
-    Label.appendChild(DayLabel);
-    let LeftArrow = newElement("Arrow"), RightArrow = newElement("Arrow");
-    let MonthLabel = newElement("Label");
-    LeftArrow.textContent="<";
-    RightArrow.textContent=">";
-    MonthLabel.classList.add("months");
-    DayLabel.classList.add("days");
-    TextLabel.classList.add("fo_fd0");
-    TextLabel.appendChild(LeftArrow);
-    TextLabel.appendChild(MonthLabel);
-    TextLabel.appendChild(RightArrow);
+    let DayLabel = newElement("Label",["days"]);
+    let LeftArrow = newElement("Button",["left"],"<"),
+        RightArrow = newElement("Button",["right"],">");
+    let MonthLabel = newElement("Label",["months"]);
+    let ArrowLabel = newElement("Label",["arrows"],[LeftArrow,RightArrow]);
+    let TextLabel = newElement("Label",["fo_fd0","text"],[MonthLabel,ArrowLabel]);
     for (let item of ['日', '一', '二', '三', '四', '五', '六']) {
-        let DayP = newElement("p");
-        DayP.textContent = item;
+        let DayP = newElement("p",[],item);
         DayLabel.appendChild(DayP);
     }
+    let Label = newElement("Label",[],[TextLabel,DayLabel]);
 
     // Calendar Box
-    let Container = newElement("Container");
-    Container.setAttribute("year",year);
-    Container.setAttribute("month",month);
+    let Container = newElement("Container",[],"",{"year":year,"month":month});
 
     const e_dd_test = (e_dd, day) => {
         try {
@@ -122,15 +111,13 @@ function renderCalendar(Calendar) {
         }
         let day_count = DatetimeUtils.dayCountOf(year,month);
         for (var i = 1; i <= day_count; i++) {
-            let day_action = newElement('dayaction');
-            day_action.textContent = i;
+            let day_action = newElement('dayaction',[],i);
             if (test_day(year, month, i, day_conf['mark']))
                 day_action.setAttribute('marked', true)
             let hover = test_day(year, month, i, day_conf['text']);
             if (hover[0]) {
                 day_action.setAttribute('textfilled', true);
-                let text = newElement("tx");
-                text.textContent = hover[1];
+                let text = newElement("tx",[],hover[1]);
                 day_action.appendChild(text);
             }
             let clickevent = test_day(year, month, i, day_conf['click']);
@@ -140,11 +127,10 @@ function renderCalendar(Calendar) {
                     eval(clickevent[1])
                 }
             }
-            if (day_conf['showtoday']) {
+            if (day_conf['showtoday'] || config["ShowToday"]==true) {
                 if (today_year == year && today_month == Container.getAttribute('month') && today_date == i) {
                     day_action.setAttribute('textfilled', true);
-                    let text = newElement("tx");
-                    text.textContent = "今天";
+                    let text = newElement("tx",[],"今天");
                     day_action.appendChild(text);
                 }
             }
