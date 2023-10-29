@@ -5,71 +5,74 @@ calendar {
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    & >label{
-        width: 100%;
-        & >label{
-            width: 100%;
-        }
-        & >label>arrow{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        & label.days{
-            font-weight: bold;
-            flex-direction: row;
-            & >p{
-                flex:1;
-                text-align: center;
-            }
-        }
-        & label.months{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            line-height: 1.12rem;
-            font-weight: bold;
-        }
-    }
-    & >container{
-        margin: 0px;
-        padding: 0px;
-	    width:100%;
-        display:grid;
-        grid: auto-flow / repeat(7,calc(100% / 7));
-        & >dayaction{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-    }
 }
 
-calendar>label>label.text{
-    &>.arrows{
-        flex:.6;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        &>button:hover{
-            background-color: var(--primary-color-2);
-            color:var(--primary-text-2);
-        }
-        &>button:first-child{
-            margin-right: 0px;
-            border-top-right-radius: 0px;
-            border-bottom-right-radius: 0px;
-        }
-        &>button:last-child{
-            margin-left: 0px;
-            border-top-left-radius: 0px;
-            border-bottom-left-radius: 0px;
-        }
-    }
-    &>label.months{
-        flex:1;
-        font-size: 1.15rem;
-    }
+calendar>label,calendar>label>label{
+    width: 100%;
+}
+
+calendar label.arrows>arrow{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+calendar label.days{
+    font-weight: bold;
+    flex-direction: row;
+}
+
+calendar label.days>p{
+    flex:1;
+    text-align: center;
+}
+
+calendar label.months{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.12rem;
+    font-weight: bold;
+    flex:1;
+    font-size: 1.15rem;
+}
+
+calendar>container{
+    margin: 0px;
+    padding: 0px;
+    width:100%;
+    display:grid;
+    grid: auto-flow / repeat(7,calc(100% / 7));
+}
+
+calendar dayaction{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+calendar label.arrows{
+    flex:.6;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+calendar label.arrows>button:hover{
+    background-color: var(--primary-color-2);
+    color:var(--primary-text-2);
+}
+
+calendar label.arrows>button:first-child{
+    margin-right: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+calendar label.arrows>button:last-child{
+    margin-left: 0px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
 }
 
 dayblank,

@@ -13,14 +13,12 @@ window.onload=()=>{
         data.text().then(data=>{
             data = JSON.parse(data);
             Select("#calendar_demo").innerHTML=JSON.stringify(data['calendar_demo']);
-            // WidgetConstructor.Calendar("calendar_demo").unwrap();
             renderAllCalendar();
         })
     });
     buildTabs("tabs_demo");
     buildTabsJSON("tabs_json_demo");
     buildPaginationJSON("pagination_demo");
-    Em3et.render(Select("em3et"),"plain");
     let tabs_json = [
         {
             "tab":"文本",

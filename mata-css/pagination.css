@@ -2,40 +2,47 @@ pagination{
     display: flex;
     align-items: center;
     justify-content: center;
-    & >a{
-        width: 2rem;
-        height: 2rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: .25rem;
-        padding: .5rem;
-        text-decoration: none;
-        font-weight: bolder;
-        border:none;
-        border-radius: var(--m-small-round);
-    }
-    & >a.page{
-        color:var(--primary-color-2);
-    }
-    & >a:hover{
-        background-color: var(--primary-color-3);
-        color: var(--primary-text-3);
-    }
-    & >a.page.this{
-        background-color: var(--primary-color-1);
-        color:var(--primary-text-1);
-    }
-    & >a.prev,& >a.next{
-        color:var(--primary-color-1);
-    }
-    & >a.disabled{
-        opacity: .5;
-    }
-    & >space{
-        width: 4rem;
-        height: .25rem;
-        opacity: .5;
-        background-color: var(--primary-color-1);
-    }
+}
+
+pagination>a{
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: .25rem;
+    padding: .5rem;
+    text-decoration: none;
+    font-weight: bolder;
+    border:none;
+    border-radius: var(--m-small-round);
+}
+
+pagination>a.page{
+    color:var(--primary-color-2);
+}
+
+pagination>a:hover{
+    background-color: var(--primary-color-3);
+    color: var(--primary-text-3);
+}
+
+pagination>a.page.this{
+    background-color: var(--primary-color-1);
+    color:var(--primary-text-1);
+}
+
+pagination>a.prev,pagination>a.next{
+    color:var(--primary-color-1);
+}
+
+pagination>a.disabled{
+    opacity: .5;
+}
+
+pagination>space{
+    width: 4rem;
+    height: .25rem;
+    opacity: .5;
+    background-color: var(--primary-color-1);
 }
