@@ -28,7 +28,7 @@ collapse[size="2"]>panel>container{
     font-size: 1.3rem;
 }
 
-collapse>panel>container::before{
+collapse>panel:not([indicator="false"])>container::before{
     position: absolute;
     display: block;
     left: 1rem;
@@ -43,7 +43,7 @@ collapse>panel>container::before{
     opacity: .75;
 }
 
-collapse>panel[opened=true]>container::before{
+collapse>panel[opened=true]:not([indicator="false"])>container::before{
     transform: scaleY(1);
 }
 
