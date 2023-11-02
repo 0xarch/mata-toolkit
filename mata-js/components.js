@@ -222,12 +222,12 @@ function renderCalendar(Calendar) {
         }
     }
     let day_conf = !config['config'] ? {} : config['config'];
+    // let daysConfig = !config['config'] ? {} : config['config'];
 
     // Read date
     let date = new Date();
     let year = parseInt(config['year'] && config['year'] != "this" ? config['year'] : date.getFullYear());
     let month = parseInt(config['month'] && config['month'] != "this" ? config['month'] : date.getMonth() + 1);
-    month = month<10 ? '0' + month : month;
 
     let _conf_clickevent = config['clickevent'];
     let conf_clickevent = {};
@@ -244,9 +244,80 @@ function renderCalendar(Calendar) {
     let DayLabel = newElement("Label",["days"]);
     let LeftArrow = newElement("Button",["left"],"<"),
         RightArrow = newElement("Button",["right"],">");
-    let MonthLabel = newElement("Label",["months"]);
     let ArrowLabel = newElement("Label",["arrows"],[LeftArrow,RightArrow]);
-    let TextLabel = newElement("Label",["fo_fd0","text"],[MonthLabel,ArrowLabel]);
+    let YearEntry = newElement("select",["year_select"]);
+    let MonthEntry = newElement("select",["month_select"]);
+
+    // Re-generate YearEntry and MonthEntry
+    function _MLocal_RefreshYM(y){
+        for(let i=y-10;y-10<=i,i<y+10;i++){
+            let Option = newElement("Option",[],i+"年",{"value":i});
+            YearEntry.appendChild(Option);
+        }
+        for(let i=1;i<=12;i++){
+            let Option = newElement("Option",[],i+"月",{"value":i});
+            MonthEntry.appendChild(Option);
+        }
+    }
+    // Go to previous month
+    function _MLocal_GoLastM() {
+        let month = parseInt(MonthEntry.value),
+            year = parseInt(YearEntry.value);
+        if (month == 1) {
+            month = 12; year -= 1
+        } else month -= 1;
+        MonthEntry.value = month;
+        YearEntry.value = year;
+        refresh_calendarbox();
+    }
+    // Go to next month
+    function _MLocal_GoNextM(){
+        let month = parseInt(MonthEntry.value),
+            year = parseInt(YearEntry.value);
+        if (month == 12) {
+            month = 1; year += 1
+        } else month += 1;
+        MonthEntry.value = month;
+        YearEntry.value = year;
+        refresh_calendarbox();
+    }
+    /** day is in config:some(obj{})
+     * @returns {string|false}
+     */
+    function _MLocTs_Incld(f,y,m,d){
+        if(config[f]!=undefined)
+            if(config[f][y]!=undefined
+            && config[f][y][m]!=undefined
+            && config[f][y][m][d]!=undefined)
+                return config[f][y][m][d]
+            else if(config[f]["EachYear"]!=undefined
+                 && config[f]["EachYear"][m]!=undefined
+                 && config[f]["EachYear"][m][d]!=undefined)
+                    return config[f]["EachYear"][m][d]
+            else return false
+        else return false
+    }
+    /** day is in config:some(array)
+     * @returns {boolean}
+     */
+    function _MLocTs_IncAr(f,y,m,d){
+        let ret;
+        try{
+        if(config[f][y][m].includes(d)
+        || config[f]["EachYear"][m].includes(d))
+            ret = true
+        else ret = false
+        }catch(e){ ret = false }
+        finally{ return ret }
+    }
+
+    _MLocal_RefreshYM(year);
+
+    YearEntry.value = year;
+    MonthEntry.value = month;
+
+    let YearMonthLabel = newElement("Label",["months"],[YearEntry,MonthEntry]);
+    let TextLabel = newElement("Label",["fo_fd0","text"],[YearMonthLabel,ArrowLabel]);
     for (let item of ['日', '一', '二', '三', '四', '五', '六']) {
         let DayP = newElement("p",[],item);
         DayLabel.appendChild(DayP);
@@ -255,6 +326,9 @@ function renderCalendar(Calendar) {
 
     // Calendar Box
     let Container = newElement("Container",[],"",{"year":year,"month":month});
+
+    Calendar.appendChild(Label);
+    Calendar.appendChild(Container);
 
     const e_dd_test = (e_dd, day) => {
         try {
@@ -303,15 +377,25 @@ function renderCalendar(Calendar) {
         return false
     }
     let refresh_calendarbox = function() {
-        let month = parseInt(Container.getAttribute('month')),
-            year = parseInt(Container.getAttribute('year'));
-        month = month<10 ? '0' + month : month;
-        // first day Blank
+        Container.innerHTML="";
+        let month = parseInt(MonthEntry.value),
+            year = parseInt(YearEntry.value);
+        let _l_year = parseInt(YearEntry.value),
+            _l_month = parseInt(MonthEntry.value);
+
+        YearEntry.innerHTML="";
+        MonthEntry.innerHTML="";
+        _MLocal_RefreshYM(_l_year);
+        YearEntry.value = _l_year, MonthEntry.value = _l_month;
+
+        // day blank for last month
         let first_day = DatetimeUtils.firstDayOf(year,month).getDay();
         if (first_day != 0)
-            for (var i = 0; i < first_day; i++)
-                Container.appendChild(newElement('dayblank'));
-        MonthLabel.textContent = year + '年' + month + '月';
+            for (var i = 0; i < first_day; i++){
+                let DayBlank = newElement("DayBlank");
+                DayBlank.onclick = function(){_MLocal_GoLastM()};
+                Container.appendChild(DayBlank);
+        }
 
         // append day elements
         if (day_conf['showtoday']) {
@@ -323,21 +407,22 @@ function renderCalendar(Calendar) {
         let day_count = DatetimeUtils.dayCountOf(year,month);
         for (var i = 1; i <= day_count; i++) {
             let day_action = newElement('dayaction',[],i);
-            if (test_day(year, month, i, day_conf['mark']))
-                day_action.setAttribute('marked', true)
-            let hover = test_day(year, month, i, day_conf['text']);
-            if (hover[0]) {
-                day_action.setAttribute('textfilled', true);
-                let text = newElement("tx",[],hover[1]);
+            let hasText = _MLocTs_Incld("Text",_l_year,_l_month,i),
+                hasClickEvent = _MLocTs_Incld("ClickEvent",_l_year,_l_month,i);
+            if(hasText){
+                day_action.classList.add("hasText");
+                let text = newElement("Tx",[],hasText);
                 day_action.appendChild(text);
             }
-            let clickevent = test_day(year, month, i, day_conf['click']);
-            if (clickevent[0]) {
-                day_action.setAttribute('clickevented', true);
+            if(hasClickEvent){
+                day_action.classList.add("hasClickEvent");
                 day_action.onclick = function() {
-                    eval(clickevent[1])
+                    eval(hasClickEvent)
                 }
             }
+            console.log(_MLocTs_IncAr("Marked",_l_year,_l_month,i));
+            if(_MLocTs_IncAr("Marked",_l_year,_l_month,i))
+                day_action.classList.add("hasMarked");
             if (day_conf['showtoday'] || config["ShowToday"]==true) {
                 if (today_year == year && today_month == Container.getAttribute('month') && today_date == i) {
                     day_action.setAttribute('textfilled', true);
@@ -347,35 +432,20 @@ function renderCalendar(Calendar) {
             }
             Container.appendChild(day_action);
         }
+        let _lastDayCount = 42 - first_day - day_count;
+        if (_lastDayCount != 0)
+            for (var i = 0; i < _lastDayCount; i++){
+                let DayBlank = newElement("DayBlank");
+                DayBlank.onclick = function(){_MLocal_GoNextM()};
+                Container.appendChild(DayBlank);
+        }
     }
     // write arrow functions
-    LeftArrow.onclick = function() {
-        Container.innerHTML = '';
-        let month = parseInt(Container.getAttribute('month')),
-            year = parseInt(Container.getAttribute('year'));
-        if (month == 1) {
-            month = 12, year -= 1
-        } else month -= 1;
-        Container.setAttribute('month', month);
-        Container.setAttribute('year', year);
-        refresh_calendarbox();
-    }
-    RightArrow.onclick = function() {
-        Container.innerHTML = '';
-        let month = parseInt(Container.getAttribute('month')),
-            year = parseInt(Container.getAttribute('year'));
-        if (month == 12) {
-            month = 1, year += 1
-        } else month += 1;
-        Container.setAttribute('month', month);
-        Container.setAttribute('year', year);
-        refresh_calendarbox();
-    }
+    LeftArrow.onclick = function(){_MLocal_GoLastM()};
+    RightArrow.onclick = function() {_MLocal_GoNextM()};
+    YearEntry.onchange = function(){refresh_calendarbox()};
+    MonthEntry.onchange = function(){refresh_calendarbox()};
     refresh_calendarbox();
-
-    // Final Process
-    Calendar.appendChild(Label);
-    Calendar.appendChild(Container);
 }
 
 function renderAllCalendar(){

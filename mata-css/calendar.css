@@ -5,9 +5,20 @@ calendar {
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    min-width: 35rem;
+    min-height:42rem;
 }
 
-calendar>label,calendar>label>label{
+calendar[type="mini"]{
+    min-width: unset;
+    min-height: unset;
+}
+
+calendar>label{
+    flex: .1;
+}
+
+calendar>label,calendar label.text{
     width: 100%;
 }
 
@@ -20,6 +31,7 @@ calendar label.arrows>arrow{
 calendar label.days{
     font-weight: bold;
     flex-direction: row;
+    width: 100%;
 }
 
 calendar label.days>p{
@@ -31,10 +43,19 @@ calendar label.months{
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: row;
+    margin:0px .5rem;
     line-height: 1.12rem;
     font-weight: bold;
     flex:1;
     font-size: 1.15rem;
+}
+
+calendar .month_select,calendar .year_select{
+    min-height: unset;
+    padding: .25rem;
+    background-color: var(--primary-background);
+    margin: .25rem;
 }
 
 calendar>container{
@@ -43,12 +64,16 @@ calendar>container{
     width:100%;
     display:grid;
     grid: auto-flow / repeat(7,calc(100% / 7));
+    flex: 1;
 }
 
 calendar dayaction{
     display: flex;
     align-items: center;
     justify-content: center;
+    font-weight: bold;
+    position: relative;
+    flex-direction: column;
 }
 
 calendar label.arrows{
@@ -80,22 +105,21 @@ dayaction {
     box-shadow: var(--m-medium-shadow);
     box-sizing: border-box;
     padding: 1rem;
+    height: 6rem;
+}
+
+calendar[type="mini"] dayblank,
+calendar[type="mini"] dayaction{
+    height: 3rem;
 }
 
 dayblank {
-    height:100%;
     filter: grayscale(1);
     box-shadow: var(--m-small-shadow);
-    opacity: .5;
+    opacity: .3;
 }
 
-dayaction {
-    font-weight: bold;
-    position: relative;
-    flex-direction: column;
-}
-
-dayaction[textfilled]>tx {
+dayaction.hasText>tx {
     height: 0px;
     margin: 0px;
     padding: 0px;
@@ -103,11 +127,15 @@ dayaction[textfilled]>tx {
     font-size: .75rem;
     min-width: 3rem;
     text-align: center;
-    position: relative;
-    top: .3rem;
+    position: absolute;
+    bottom: .45rem;
 }
 
-dayaction[clickevented] {
+dayaction.hasClickEvent {
     filter: saturate(120%);
     box-shadow: 0px 1px 3px 1px var(--primary-color-3);
+}
+
+dayaction.hasMarked {
+    background-color: var(--primary-background);
 }

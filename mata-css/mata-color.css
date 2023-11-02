@@ -1,7 +1,5 @@
 /* Solid Color */
 banner,
-action:hover,.action:hover,
-bselect[active=true],
 dayaction:hover,
 dayaction[marked]:hover,
 dayaction[clickevented]:hover,
@@ -12,13 +10,10 @@ dayaction[textfilled]:hover {
 }
 
 nav,
-action,
-.action,
 notice,
 toggle,
 toggle[active=true],
-label,
-dayaction[marked] {
+label {
     background-color: var(--primary-color-2);
     color: var(--primary-text-2);
     border-color: var(--primary-color-2);
@@ -26,7 +21,6 @@ dayaction[marked] {
 
 blank.primary-light,
 toggle:hover,
-bselect[active=false]:hover,
 dayblank,
 dayaction[clickevented] {
     color: var(--primary-text-3);
@@ -53,16 +47,12 @@ blank.secondary-light {
 }
 
 /* Outline Color */
-blank.primary-dark.outline,
-action[Outline]:hover,
-.action[Outline]:hover{
+blank.primary-dark.outline{
     color: var(--primary-color-1);
     border-color: var(--primary-color-1);
 }
 
 blank.primary-main.outline,
-action[Outline],
-.action[Outline],
 notice[Outline] {
     color: var(--primary-color-2);
     border-color: var(--primary-color-2);

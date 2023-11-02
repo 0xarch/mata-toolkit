@@ -12,7 +12,7 @@ window.onload=()=>{
     fetch("demo.json").then(data=>{
         data.text().then(data=>{
             data = JSON.parse(data);
-            Select("#calendar_demo").innerHTML=JSON.stringify(data['calendar_demo']);
+            Select("#calendar_demo").innerHTML=JSON.stringify(data['_MDemo_Calendar']);
             renderAllCalendar();
         })
     });

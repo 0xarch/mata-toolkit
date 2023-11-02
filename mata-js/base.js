@@ -20,7 +20,6 @@ let GetActive = (element) => {
  * @param { Array.<string> } CSSclass
  * @param { string|Array.<HTMLElement> } innerHTML
  * @param { {} } attributes
- * @param { Array.<HTMLElement> } childElements
  * @returns HTMLElement
  */
 function newElement(tag,CSSclass,innerHTML,attributes){
