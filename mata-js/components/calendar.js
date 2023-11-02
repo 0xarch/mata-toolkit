@@ -74,17 +74,15 @@ function renderCalendar(Calendar) {
      * @returns {string|false}
      */
     function _MLocTs_Incld(f,y,m,d){
-        if(config[f]!=undefined)
-            if(config[f][y]!=undefined
-            && config[f][y][m]!=undefined
-            && config[f][y][m][d]!=undefined)
-                return config[f][y][m][d]
-            else if(config[f]["EachYear"]!=undefined
-                 && config[f]["EachYear"][m]!=undefined
-                 && config[f]["EachYear"][m][d]!=undefined)
-                    return config[f]["EachYear"][m][d]
-            else return false
-        else return false
+        let ret;
+        try{
+            ret = config[f][y][m][d];
+        }catch(_){ 
+            try{
+                ret = config[f]["EachYear"][m][d];
+            }
+            catch(_){ ret = false }
+        }finally{ return ret }
     }
     /** day is in config:some(array)
      * @returns {boolean}
@@ -96,7 +94,7 @@ function renderCalendar(Calendar) {
         || config[f]["EachYear"][m].includes(d))
             ret = true
         else ret = false
-        }catch(e){ ret = false }
+        }catch(_){ ret = false }
         finally{ return ret }
     }
 
@@ -118,53 +116,6 @@ function renderCalendar(Calendar) {
 
     Calendar.appendChild(Label);
     Calendar.appendChild(Container);
-
-    const e_dd_test = (e_dd, day) => {
-        try {
-            if (e_dd.includes(day))
-                return true
-        } catch (_) {
-            for (let item in e_dd) {
-                if (item == day)
-                    return [true, e_dd[item]]
-            }
-        }
-        return undefined
-    }
-    /**
-     * @param { string } year
-     * @param { string } month
-     * @param { number } day
-     * @param { object } day_conf_selected
-     * @returns { boolean }
-     */
-    let test_day = function(year, month, day, day_conf_selected) {
-        if (!day_conf_selected) return false;
-        month = parseInt(month);
-        if (day_conf_selected['each']) {
-            let e_dc = day_conf_selected['each'];
-            if (e_dc['each']) {
-                let result = e_dd_test(e_dc['each'], day);
-                if (result) return result;
-            }
-            if (e_dc[month]) {
-                let result = e_dd_test(e_dc[month], day);
-                if (result) return result;
-            }
-        }
-        if (day_conf_selected[year]) {
-            let e_dc = day_conf_selected[year];
-            if (e_dc['each']) {
-                let result = e_dd_test(e_dc['each'], day);
-                if (result) return result;
-            }
-            if (e_dc[month]) {
-                let result = e_dd_test(e_dc[month], day);
-                if (result) return result;
-            }
-        }
-        return false
-    }
     let refresh_calendarbox = function() {
         Container.innerHTML="";
         let month = parseInt(MonthEntry.value),
@@ -187,7 +138,7 @@ function renderCalendar(Calendar) {
         }
 
         // append day elements
-        if (day_conf['showtoday']) {
+        if (config['showToday']) {
             var today = new Date();
             var today_year = today.getFullYear(),
                 today_month = today.getMonth() + 1,
@@ -211,10 +162,11 @@ function renderCalendar(Calendar) {
             }
             if(_MLocTs_IncAr("Marked",_l_year,_l_month,i))
                 day_action.classList.add("hasMarked");
-            if (day_conf['showtoday'] || config["ShowToday"]==true) {
-                if (today_year == year && today_month == Container.getAttribute('month') && today_date == i) {
+            if (config["showToday"]==true) {
+                if (today_year == _l_year && today_month == _l_month && today_date == i) {
+                    console.log(1);
                     day_action.classList.add("hasText");
-                    day_action.appendChild(newElement("tx",[],"今天"));
+                    day_action.appendChild(newElement("tx",['up'],"今天"));
                 }
             }
             Container.appendChild(day_action);

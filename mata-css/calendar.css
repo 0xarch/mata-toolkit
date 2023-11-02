@@ -125,10 +125,15 @@ dayaction.hasText>tx {
     padding: 0px;
     opacity: .6;
     font-size: .75rem;
-    min-width: 3rem;
     text-align: center;
     position: absolute;
     bottom: .45rem;
+    width: 100%;
+}
+
+dayaction.hasText>tx.up{
+    bottom: unset;
+    top: .5rem;
 }
 
 dayaction.hasClickEvent {
