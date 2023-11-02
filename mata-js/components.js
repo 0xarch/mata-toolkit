@@ -420,14 +420,12 @@ function renderCalendar(Calendar) {
                     eval(hasClickEvent)
                 }
             }
-            console.log(_MLocTs_IncAr("Marked",_l_year,_l_month,i));
             if(_MLocTs_IncAr("Marked",_l_year,_l_month,i))
                 day_action.classList.add("hasMarked");
             if (day_conf['showtoday'] || config["ShowToday"]==true) {
                 if (today_year == year && today_month == Container.getAttribute('month') && today_date == i) {
-                    day_action.setAttribute('textfilled', true);
-                    let text = newElement("tx",[],"今天");
-                    day_action.appendChild(text);
+                    day_action.classList.add("hasText");
+                    day_action.appendChild(newElement("tx",[],"今天"));
                 }
             }
             Container.appendChild(day_action);

@@ -213,9 +213,8 @@ function renderCalendar(Calendar) {
                 day_action.classList.add("hasMarked");
             if (day_conf['showtoday'] || config["ShowToday"]==true) {
                 if (today_year == year && today_month == Container.getAttribute('month') && today_date == i) {
-                    day_action.setAttribute('textfilled', true);
-                    let text = newElement("tx",[],"今天");
-                    day_action.appendChild(text);
+                    day_action.classList.add("hasText");
+                    day_action.appendChild(newElement("tx",[],"今天"));
                 }
             }
             Container.appendChild(day_action);
