@@ -46,4 +46,5 @@ button.hover.lf,.button.hover.lf,.M3tk-HoverSymButton{
     margin: var(--g-margin);
     text-decoration: none;
     width: fit-content;
+    overflow: hidden;
 }
