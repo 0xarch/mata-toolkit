@@ -360,13 +360,13 @@ const $ = {
     parseString(str){
         return str.replace(/ /,"_")
     },
-    loadAll(){
+    loadAll(hascontent){
         if($.isMobile()){
             Select("body").classList.add("mobile");
         }
         renderAllCalendar();
         renderToolbar(Select("uiheader>toolbar"));
         evalCSS();
-        generateContent(Select(".M3tk-ContentBox"),Select(".M3tk-R-Content"));
+        if(hascontent) generateContent(Select(".M3tk-ContentBox"),Select(".M3tk-R-Content"));
     }
 }
