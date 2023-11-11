@@ -62,17 +62,17 @@ html {
     font-weight: 400;
     line-height: 1.43;
     letter-spacing: 0.01em;
-    background-color: var(--g-background);
-    color: var(--g-color);
 }
 
 body{
     font-size: var(--g-font-size);
+    background-color: var(--g-background);
+    color: var(--g-color);
 }
 
 @media(prefers-color-scheme:dark) {
     :root {
-        --g-background: #121212;
+        --g-background: #212121;
         --g-color: #fff;
         --background-backdrop: #333;
     }
