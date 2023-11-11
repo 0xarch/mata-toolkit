@@ -137,3 +137,12 @@
 *[background~=transparent],.bg_trs{
     background: transparent;
 }
+.M-display_inlineFlex{
+    display: inline-flex;
+}
+.M-display_flex{
+    display: flex;
+}
+.M-textDeco_none{
+    text-decoration: none;
+}

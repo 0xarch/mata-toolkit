@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="mata-css/mata.css">
+        <script src="mata-js/main.js"></script>
+        <script src="mata-js/components.js"></script>
+        <title>Mata Toolkit</title>
+    </head>
+    <body>
+        <UIHeader>
+            <Banner>
+                Mata Toolkit v1.1 发布!
+            </Banner>
+            <ToolBar class="M3tk-Toolbar">
+                <LBtn F="callNav #left_nav svg Label"></LBtn>
+                <RBtn F="changeColor"></RBtn>
+                <RBtn F="link https://github.com/mata-toolkit i fa-brands,fa-github"></RBtn>
+                <RBtn F="callDrop svg Grid">
+                    <Drop>
+                        <Menu>菜单项 1</Menu>
+                        <Menu>菜单项 2</Menu>
+                        <hr>
+                        <Menu>菜单项 3</Menu>
+                    </Drop>
+                </RBtn>
+                <RBtn F="changeDayNight"></RBtn>
+                <RBtn F="switchReadDirection"></RBtn>
+            </ToolBar>
+        </UIHeader>
+        <Paper>
+            <div class="M3tk-ContentBox">
+                <h1>MATA TOOLKIT</h1>
+                <h2>这是什么？</h2>
+                <pre>
+                    <p>Mata toolkit 是一个开源 JavaScript + CSS 工具集.
+其目标是提供一个可靠、高度自定义的样式渲染系统.
+                    </p>
+                </pre>
+                <ImageRoller time="3000" id="in_imageroller">
+                    <img src="https://pic2.zhimg.com/v2-45249e82081900c9ec94cd1a3ec1ab5e_r.jpg?source=12a79843"/>
+                    <img src="https://ts1.cn.mm.bing.net/th/id/R-C.95d4ab3898b58066b97b7bdeffb46da2?rik=kFBRaayIG3TgOQ&riu=http%3a%2f%2fpic.qt6.com%2fup%2f2021-5%2f16199211459203322.jpg&ehk=2AxlasGE2yw3mHtYNRty23mjieRxh2yseQcnQXUL6vM%3d&risl=&pid=ImgRaw&r=0"/>
+                    <img src="https://upload-bbs.mihoyo.com/upload/2021/07/10/278678644/00185141732cb0f85adcf0ee68754554_8318448679343513426.jpg"/>
+                </ImageRoller>
+                <h2>关于 Mata Toolkit ...</h2>
+                <a class="M3tk-Button M3tk-HlClick">查看代码</a>
+            </div>
+        </Paper>
+        <PaperContent>
+            您正在使用 <b id="ua_show"></b> 浏览此页面.<br/>
+            使用移动端: <b id="mobile_show"></b>
+            <div class="M3tk-R-Content">
+
+            </div>
+        </PaperContent>
+        <Nav id="left_nav">
+            1
+        </Nav>
+    </body>
+    <script>
+        const Palette=new PaletteController(MataPalette);
+        Palette.setPaletteFrom("primary","LIGHTBLUE",500);
+        Palette.setPaletteFrom("secondary","BLUE",450);
+        Select("#ua_show").textContent = $.getPlatform();
+        Select("#mobile_show").textContent = $.isMobile();
+        renderImageRoller(Select("#in_imageroller"));
+        $.loadAll();
+    </script>
+</html>
+

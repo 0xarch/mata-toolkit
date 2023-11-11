@@ -1,7 +1,7 @@
 const Palette=new PaletteController(MataPalette);
 
-Palette.setPaletteFrom("primary","TEAL",500,true);
-Palette.setPaletteFrom("secondary","RED",450);
+Palette.setPaletteFrom("primary","LIGHTBLUE",500,true);
+Palette.setPaletteFrom("secondary","BLUE",450);
 
 function e_toggleSlide(element){
     Toggle(element);
@@ -33,4 +33,5 @@ window.onload=()=>{
     ReplaceAnchorWith("demo_coll_anc",Collapse);
     renderAllCollapse();
     ReplaceAnchorWith("anchor1",new TabsComponent(tabs_json,"JSON Tab").render());
+    Select("#ua_show").textContent = $.getPlatform();
 }

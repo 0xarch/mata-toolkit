@@ -1,7 +1,8 @@
- const ResultType = {
+const ResultType = {
     Ok: Symbol(1),
     Err: Symbol(2)
 };
+const _DOMParser = new DOMParser();
 const Ok = ResultType.Ok,
     Err = ResultType.Err;
 let GetActive = (element) => {
@@ -310,6 +311,65 @@ class ElementController {
     }
 }
 
+const $ = {
+    userAgent: navigator.userAgent,
+    isMobile(){
+        for(let keyword of ["Android","iPhone","iPad"]){
+            if(this.userAgent.includes(keyword))
+                return true
+        }
+        return false
+    },
+    getPlatform(){
+        for(let keyword of ["Android","iPhone","iPad","Linux","Windows","Mac OS X"]){
+            if(this.userAgent.includes(keyword))
+                return keyword
+        }
+    },
+    /**
+     * 
+     * @param { string } tag 
+     * @param { string } id
+     * @param { Array.<string> } CSSclass
+     * @param { string|Array.<HTMLElement> } innerHTML
+     * @param { {} } attributes
+     * @returns {HTMLElement}
+     */
+    createElement(tag,id,CSSclass,innerHTML,attributes){
+        let element = document.createElement(tag);
+        if(id){
+            element.id = id;
+        }
+        if(CSSclass){
+            element.classList.add(...CSSclass);
+        }
+        if(innerHTML!=undefined){
+            if(typeof(innerHTML)!="object")
+                element.innerHTML=innerHTML;
+            else if(Array.isArray(innerHTML)){
+                for(let item of innerHTML){
+                    element.append(item);
+                }
+            }
+        }
+        for(let item in attributes){
+            element.setAttribute(item,attributes[item]);
+        }
+        return element;
+    },
+    parseString(str){
+        return str.replace(/ /,"_")
+    },
+    loadAll(){
+        if($.isMobile()){
+            Select("body").classList.add("mobile");
+        }
+        renderAllCalendar();
+        renderToolbar(Select("uiheader>toolbar"));
+        evalCSS();
+        generateContent(Select(".M3tk-ContentBox"),Select(".M3tk-R-Content"));
+    }
+}
 
 const getIDFromArgument=(arg)=>'#'+arg.replace('#','');
 const getConfigFromID=(id)=>{
@@ -618,150 +678,39 @@ class PaletteController {
 }
 
 
-const Em3et={
-    /**
-     * @param { element } element
-     * @param { string } type
-     */
-    render(element,type){
-        let stack = this.AST(element.innerHTML);
-        let parsed_text = this.Compile(stack);
-        if(type=='plain') element.textContent=parsed_text;
-        else element.innerHTML=parsed_text;
-    },
-    /**
-    *
-    * @param { string } raw_string
-    * @returns { Array }
-    */
-    AST(raw_string){
-        let quo = false;
-        let stack = [];
-        let raw_chars = raw_string.split("");
-        let i = 0,len = raw_chars.length;
-        while(i<len){
-            let _char_now = raw_chars[i];
-            if(/[A-Za-z]/.test(_char_now)){
-                let _str = _char_now;
-                i++;
-                while(i<len){
-                    let __char_now = raw_chars[i];
-                    if(/[A-Za-z ]/.test(__char_now)){
-                        _str = _str+__char_now;
-                        i++;
-                    }else{
-                        stack.push(_str);
-                        i--;
-                        break;
-                    }
-                }
-            }else
-            if(['(',':','%','*','"',"'"].includes(_char_now)){
-                if(!['"',"'"].includes(_char_now)) stack.push(_char_now);
-                let _str = "";
-                let _end_char = _char_now!='('?_char_now:')';
-                i++;
-                while(i<len){
-                    let __char_now = raw_chars[i];
-                    if(__char_now!=_end_char){
-                        if(__char_now!='\\'){
-                            _str += __char_now;
-                        }else{
-                            _str += raw_chars[++i];
-                        }
-                        i++;
-                    }else{
-                        stack.push(_str);
-                        break;
-                    }
-                }
-            }else
-            if(_char_now==','){
-                if(quo){
-                    stack.push('}');
-                    quo=false;
-                }else{
-                    stack.push('{');
-                    quo=true;
-                }
-            }else
-            if(!/[ \n]/.test(_char_now)) stack.push(_char_now);
-            i++;
-        }
-        return stack
-    },
-    /**
-    *
-    * @param { Array } stack
-    * @returns { String }
-    */
-    Compile(stack){
-        let result = new String;
-        let i=0,len = stack.length;
-        let element_stack = new Array;
-        result = 'let str = new String; str+=`';
-        let in_command = false, in_variable = false;
-        while(i<len){
-            let text = stack[i];
-            if(/[A-Za-z]+/.test(text)){
-                result = result+'<'+text;
-                element_stack.push(text);
-            }else{
-                switch(text){
-                    case '{':
-                    case '[':
-                        result +='>';
-                        break;
-                    case '}':
-                    case ']':
-                        result = `${result}</${element_stack.pop()}>`;
-                        break;
-                    case '!':
-                    case '/':
-                        element_stack.pop();
-                        result += '/>';
-                        break;
-                    case ':':
-                        i++;
-                        result = result+stack[i];
-                        break;
-                    case '(':
-                        i++;
-                        result = result+' '+stack[i];
-                        break;
-                    case '#':
-                        i++;
-                        result = `${result} id="${stack[i]}"`;
-                        break;
-                    case '.':
-                        i++;
-                        result = `${result} class="${stack[i]}"`;
-                        break;
-                    case '%':
-                        i++;
-                        if(in_command){
-                            result += '`'+stack[i]+';str+=`';
-                            in_command = false;
-                        }else{
-                            result = result+'`;'+stack[i]+'str+=`';
-                            in_command = true;
-                        }
-                        break;
-                    case '$':
-                        if(in_variable){
-                            result += '}';
-                            in_variable=false;
-                        }else{
-                            i++;
-                            result += '${'+stack[i];
-                            in_variable=true;
-                        }
-                        break;
-                }
-            }
-            i++;
-        }
-        result += '`';
-        return eval(result)
+const SVGs = {
+    Grid:`<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="grid" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 72C0 49.9 17.9 32 40 32H88c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H40c-22.1 0-40-17.9-40-40V72zM0 232c0-22.1 17.9-40 40-40H88c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H40c-22.1 0-40-17.9-40-40V232zM128 392v48c0 22.1-17.9 40-40 40H40c-22.1 0-40-17.9-40-40V392c0-22.1 17.9-40 40-40H88c22.1 0 40 17.9 40 40zM160 72c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H200c-22.1 0-40-17.9-40-40V72zM288 232v48c0 22.1-17.9 40-40 40H200c-22.1 0-40-17.9-40-40V232c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40zM160 392c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H200c-22.1 0-40-17.9-40-40V392zM448 72v48c0 22.1-17.9 40-40 40H360c-22.1 0-40-17.9-40-40V72c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40zM320 232c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H360c-22.1 0-40-17.9-40-40V232zM448 392v48c0 22.1-17.9 40-40 40H360c-22.1 0-40-17.9-40-40V392c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40z"></path></svg>`,
+    Label:`<svg focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg>`,
+}
+
+function evalCSS(){
+    for(let element of document.querySelectorAll(".M3tk-HlClick")){
+        element.addEventListener("mousedown",function(e){
+            const Ripple = document.createElement("fake");
+            Ripple.style.setProperty("--o-x",e.offsetX+"px");
+            Ripple.style.setProperty("--o-y",e.offsetY+"px");
+            Ripple.classList.add("M3tk-RippleFake");
+            setTimeout(()=>Ripple.remove(),500);
+            element.appendChild(Ripple);
+        });
+    }
+}
+
+/**
+ * 
+ * @param { HTMLElement } from 
+ * @param { HTMLElement } to 
+ */
+function generateContent(from,to){
+    for(let item of from.querySelectorAll(":is(h1,h2,h3,h4,h5,h6)")){
+        let ID = $.parseString(item.textContent);
+        let NavAnchor = document.createElement("a");
+        NavAnchor.href="#"+ID;
+        NavAnchor.textContent = item.textContent;
+        NavAnchor.classList.add("M3tk-LC_"+item.tagName,"M-textDeco_none");
+        // item.id = ID;
+        item.classList.add("M3tk-M");
+        item.parentNode.insertBefore(newElement("invisible",["M3tk-E-Anchor"],'',{"id":ID}),item);
+        to.appendChild(NavAnchor);
     }
 }

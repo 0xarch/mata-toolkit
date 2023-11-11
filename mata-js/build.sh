@@ -6,7 +6,9 @@ echo -e "\n" >> main.js
 cat constructor.js >> main.js
 echo -e "\n" >> main.js
 cat palette.js >> main.js
+# echo -e "\n" >> main.js
+# cat em3et.js >> main.js
 echo -e "\n" >> main.js
-cat em3et.js >> main.js
+cat init.js  >> main.js
 
 sh ./build_components.sh

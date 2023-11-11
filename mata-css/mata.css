@@ -2,13 +2,20 @@
 @import url("mw-notice.css");
 @import url("mw-selector.css");
 @import url("mata-color.css");
+@import url("anim.css");
+@import url("frame.css");
 @import url("calendar.css");
-@import url("attribute.css");
 @import url("tabs.css");
 @import url("button.css");
 @import url("toggle.css");
 @import url("collapse.css");
 @import url("pagination.css");
+@import url("image-roller.css");
+@import url("content.css");
+@import url("toolbar.css");
+@import url("attribute.css");
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap");
+@import url("https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.2/css/all.min.css");
 
 * {
     transition: all .25s ease-in-out;
@@ -30,25 +37,52 @@
     color:var(--color);
 }
 
+body{
+    --g-padding: 8px;
+    --g-margin: 8px;
+    --g-font-size: 1rem;
+    --g-unit: 8px;
+    --g-font-weight: 400;
+    --g-line-height:1.43;
+    font-family: 'Roboto',sans-serif;
+}
+
+body.mobile{
+    --g-font-size: 2rem;
+    --g-unit: 16px;
+}
+
+html,
+body {
+    margin: 0;
+}
+
+html {
+    font-size: 0.875em;
+    font-weight: 400;
+    line-height: 1.43;
+    letter-spacing: 0.01em;
+    background-color: var(--g-background);
+    color: var(--g-color);
+}
+
+body{
+    font-size: var(--g-font-size);
+}
+
 @media(prefers-color-scheme:dark) {
     :root {
-        --background: #121212;
+        --g-background: #121212;
+        --g-color: #fff;
         --background-backdrop: #333;
-        --color: #fff;
     }
 }
 
 @media(prefers-color-scheme:light) {
     :root {
-        --background: #fff;
+        --g-background: #fff;
+        --g-color: #111;
         --background-backdrop: #f5f5f5;
-        --color: #111;
-    }
-}
-
-@media screen and (orientation:portrait) {
-    html {
-        font-size: 1.5em;
     }
 }
 

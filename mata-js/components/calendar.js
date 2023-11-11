@@ -10,9 +10,6 @@ function renderCalendar(Calendar) {
             return new Result(Err, 3);
         }
     }
-    let day_conf = !config['config'] ? {} : config['config'];
-    // let daysConfig = !config['config'] ? {} : config['config'];
-
     // Read date
     let date = new Date();
     let year = parseInt(config['year'] && config['year'] != "this" ? config['year'] : date.getFullYear());
@@ -30,21 +27,21 @@ function renderCalendar(Calendar) {
     // Element Creating
 
     // Calendar Label
-    let DayLabel = newElement("Label",["days"]);
-    let LeftArrow = newElement("Button",["left"],"<"),
-        RightArrow = newElement("Button",["right"],">");
-    let ArrowLabel = newElement("Label",["arrows"],[LeftArrow,RightArrow]);
-    let YearEntry = newElement("select",["year_select"]);
-    let MonthEntry = newElement("select",["month_select"]);
+    let DayLabel   = $.createElement("Label",'',["days"]),
+        LeftArrow  = $.createElement("Button",'',["left"],"<"),
+        RightArrow = $.createElement("Button",'',["right"],">");
+    let ArrowLabel = $.createElement("Label",'',["arrows"],[LeftArrow,RightArrow]),
+        YearEntry  = $.createElement("select",'',["year_select"]),
+        MonthEntry = $.createElement("select",'',["month_select"]);
 
     // Re-generate YearEntry and MonthEntry
     function _MLocal_RefreshYM(y){
         for(let i=y-10;y-10<=i,i<y+10;i++){
-            let Option = newElement("Option",[],i+"年",{"value":i});
+            let Option = $.createElement("Option",'',[],i+"年",{"value":i});
             YearEntry.appendChild(Option);
         }
         for(let i=1;i<=12;i++){
-            let Option = newElement("Option",[],i+"月",{"value":i});
+            let Option = $.createElement("Option",'',[],i+"月",{"value":i});
             MonthEntry.appendChild(Option);
         }
     }

@@ -1,7 +1,8 @@
- const ResultType = {
+const ResultType = {
     Ok: Symbol(1),
     Err: Symbol(2)
 };
+const _DOMParser = new DOMParser();
 const Ok = ResultType.Ok,
     Err = ResultType.Err;
 let GetActive = (element) => {
@@ -307,5 +308,65 @@ class ElementController {
     remove() {
         this.element.remove();
         delete this;
+    }
+}
+
+const $ = {
+    userAgent: navigator.userAgent,
+    isMobile(){
+        for(let keyword of ["Android","iPhone","iPad"]){
+            if(this.userAgent.includes(keyword))
+                return true
+        }
+        return false
+    },
+    getPlatform(){
+        for(let keyword of ["Android","iPhone","iPad","Linux","Windows","Mac OS X"]){
+            if(this.userAgent.includes(keyword))
+                return keyword
+        }
+    },
+    /**
+     * 
+     * @param { string } tag 
+     * @param { string } id
+     * @param { Array.<string> } CSSclass
+     * @param { string|Array.<HTMLElement> } innerHTML
+     * @param { {} } attributes
+     * @returns {HTMLElement}
+     */
+    createElement(tag,id,CSSclass,innerHTML,attributes){
+        let element = document.createElement(tag);
+        if(id){
+            element.id = id;
+        }
+        if(CSSclass){
+            element.classList.add(...CSSclass);
+        }
+        if(innerHTML!=undefined){
+            if(typeof(innerHTML)!="object")
+                element.innerHTML=innerHTML;
+            else if(Array.isArray(innerHTML)){
+                for(let item of innerHTML){
+                    element.append(item);
+                }
+            }
+        }
+        for(let item in attributes){
+            element.setAttribute(item,attributes[item]);
+        }
+        return element;
+    },
+    parseString(str){
+        return str.replace(/ /,"_")
+    },
+    loadAll(){
+        if($.isMobile()){
+            Select("body").classList.add("mobile");
+        }
+        renderAllCalendar();
+        renderToolbar(Select("uiheader>toolbar"));
+        evalCSS();
+        generateContent(Select(".M3tk-ContentBox"),Select(".M3tk-R-Content"));
     }
 }

@@ -221,9 +221,6 @@ function renderCalendar(Calendar) {
             return new Result(Err, 3);
         }
     }
-    let day_conf = !config['config'] ? {} : config['config'];
-    // let daysConfig = !config['config'] ? {} : config['config'];
-
     // Read date
     let date = new Date();
     let year = parseInt(config['year'] && config['year'] != "this" ? config['year'] : date.getFullYear());
@@ -241,21 +238,21 @@ function renderCalendar(Calendar) {
     // Element Creating
 
     // Calendar Label
-    let DayLabel = newElement("Label",["days"]);
-    let LeftArrow = newElement("Button",["left"],"<"),
-        RightArrow = newElement("Button",["right"],">");
-    let ArrowLabel = newElement("Label",["arrows"],[LeftArrow,RightArrow]);
-    let YearEntry = newElement("select",["year_select"]);
-    let MonthEntry = newElement("select",["month_select"]);
+    let DayLabel   = $.createElement("Label",'',["days"]),
+        LeftArrow  = $.createElement("Button",'',["left"],"<"),
+        RightArrow = $.createElement("Button",'',["right"],">");
+    let ArrowLabel = $.createElement("Label",'',["arrows"],[LeftArrow,RightArrow]),
+        YearEntry  = $.createElement("select",'',["year_select"]),
+        MonthEntry = $.createElement("select",'',["month_select"]);
 
     // Re-generate YearEntry and MonthEntry
     function _MLocal_RefreshYM(y){
         for(let i=y-10;y-10<=i,i<y+10;i++){
-            let Option = newElement("Option",[],i+"年",{"value":i});
+            let Option = $.createElement("Option",'',[],i+"年",{"value":i});
             YearEntry.appendChild(Option);
         }
         for(let i=1;i<=12;i++){
-            let Option = newElement("Option",[],i+"月",{"value":i});
+            let Option = $.createElement("Option",'',[],i+"月",{"value":i});
             MonthEntry.appendChild(Option);
         }
     }
@@ -401,5 +398,112 @@ function renderCalendar(Calendar) {
 function renderAllCalendar(){
     for(let item of SelectAll("calendar[stat='tbr']")){
         renderCalendar(item);
+    }
+}
+
+
+function renderImageRoller(ImageRoller){
+    let Imgs = ImageRoller.querySelectorAll("img");
+    let len = Imgs.length;
+    ImageRoller.setAttribute("i",0);
+    setInterval(()=>{
+        if(ImageRoller.getAttribute("stopped")=="1") return;
+        let i = parseInt(ImageRoller.getAttribute("i"));
+        if(i<len){
+            try{
+                for(let I=0;I<len;I++){
+                    if(I==i){
+                        Imgs[I].style.display = "inline-block";
+                        Imgs[I].style.left="0px";
+                    }else if(I+1==i){
+                        // 在 i 的左面
+                        Imgs[I].style.display = "inline-block";
+                        Imgs[I].style.left="-100%";
+                    }else if(I-1==i || I+1==len){
+                        // 在 i 的右面
+                        Imgs[I].style.display = "inline-block";
+                        Imgs[I].style.left="100%";
+                    }else{
+                        Imgs[I].style.display = "none";
+                    }
+                }
+            }catch(e){
+                console.error(e);
+            }
+            i++;
+            if(i==len) i=0;
+        }else{
+            i=0;
+        }
+        ImageRoller.setAttribute("i",i);
+    },parseInt(ImageRoller.getAttribute("time")));
+}
+
+function toggleRollingImage(ImageRoller,force){
+    if(ImageRoller.getAttribute("stopped")=="0" || force){
+        ImageRoller.setAttribute("stopped","1");
+    }else{
+        ImageRoller.setAttribute("stopped","0");
+    }
+}
+
+function renderButton(Button){
+    let F = Button.getAttribute("F").split(" ");
+    console.log(F);
+    switch(F[0]){
+        case "callDrop":
+            let Drop = Button.querySelector("drop");
+            Drop.style.display = "none";
+            Button.onclick = function(){
+                Button.querySelector("drop").style.display="block";
+            };
+            Select("body").addEventListener("click",function(e){
+                var elem = e.target;
+                if(!Button.contains(elem)){
+                    Button.querySelector("drop").style.display="none";
+                }
+            });
+            Button.innerHTML += ___getInner(F[1],F[2]);
+            break;
+        case "link":
+            Button.onclick = function(){
+                window.open(F[1]);
+            };
+            Button.innerHTML=___getInner(F[2],F[3]);
+            break;
+        case "callNav":
+            let Nav = document.querySelector(F[1]);
+            let Cover = document.createElement("div");
+            Cover.classList.add("M3tk-A-darkAll");
+            Select("body").appendChild(Cover);
+            Button.onclick = function(){
+                Cover.style.display = "block";
+                Nav.style.left = "0px";
+                Cover.style.background="rgba(0,0,0,.25)";
+            }
+            Cover.onclick = function(){
+                Nav.style.left = "calc(-30*var(--g-unit))";
+                Cover.style.background = "transparent";
+                setTimeout(()=>{
+                    Cover.style.display = "none";
+                },500);
+            }
+            Button.innerHTML=___getInner(F[2],F[3]);
+            break;
+    }
+    Button.removeAttribute("F");
+}
+
+function ___getInner(ty,content){
+    if(ty=="svg"){
+        return SVGs[content];
+    }else if(ty=="i"){
+        return `<i class="${content.split(",").join(" ")}"></i>`;
+    }
+}
+
+function renderToolbar(Toolbar){
+    for(let item of Toolbar.querySelectorAll(":is(lbtn,rbtn)")){
+        renderButton(item);
     }
 }

@@ -1,4 +1,4 @@
-button,.button {
+button,.button,.M3tk-Button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -14,23 +14,23 @@ button,.button {
     border-color: var(--primary-color-2);
 }
 
-button:hover,.button:hover{
+button:hover,.button:hover,.M3tk-Button:hover{
     background-color: var(--primary-color-1);
     color: var(--primary-text-1);
     border-color: var(--primary-color-1);
 }
 
-button.outline,.button.outline{
+button.outline,.button.outline,.M3tk-OutlineButton{
     background-color: transparent;
     color: var(--primary-color-2);
     box-shadow: none;
 }
 
-button.outline:hover,.button.outline:hover{
+button.outline:hover,.button.outline:hover,.M3tk-OutlineButton:hover{
     color: var(--primary-color-1);
 }
 
-button.hover,.button.hover {
+button.hover,.button.hover,.M3tk-HoverButton {
     height: 4.5rem;
     min-width: 4.5rem;
     width: 4.5rem;
@@ -38,6 +38,12 @@ button.hover,.button.hover {
     box-shadow: var(--m-large-shadow);
 }
 
-button.hover.lf,.button.hover.lf{
+button.hover.lf,.button.hover.lf,.M3tk-HoverSymButton{
     font-size:xx-large;
+}
+
+.M3tk-Button {
+    margin: var(--g-margin);
+    text-decoration: none;
+    width: fit-content;
 }

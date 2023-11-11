@@ -9,7 +9,6 @@ dayaction[textfilled]:hover {
     border-color: var(--primary-color-1);
 }
 
-nav,
 notice,
 toggle,
 toggle[active=true],

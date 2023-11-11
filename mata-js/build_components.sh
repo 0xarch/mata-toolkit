@@ -7,3 +7,7 @@ echo -e "\n" >> ./components.js
 cat ./components/anchor.js >> ./components.js
 echo -e "\n" >> ./components.js
 cat ./components/calendar.js >> ./components.js
+echo -e "\n" >> ./components.js
+cat ./components/image-roller.js >> ./components.js
+echo -e "\n" >> ./components.js
+cat ./components/toolbar.js >> ./components.js
