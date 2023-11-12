@@ -50,6 +50,8 @@ function ___getInner(ty,content){
         return SVGs[content];
     }else if(ty=="i"){
         return `<i class="${content.split(",").join(" ")}"></i>`;
+    }else if(ty=="text"){
+        return content;
     }
 }
 

@@ -406,6 +406,7 @@ function renderImageRoller(ImageRoller){
     let Imgs = ImageRoller.querySelectorAll("img");
     let len = Imgs.length;
     ImageRoller.setAttribute("i",0);
+    ImageRoller.setAttribute("stopped","0");
     setInterval(()=>{
         if(ImageRoller.getAttribute("stopped")=="1") return;
         let i = parseInt(ImageRoller.getAttribute("i"));
@@ -499,6 +500,8 @@ function ___getInner(ty,content){
         return SVGs[content];
     }else if(ty=="i"){
         return `<i class="${content.split(",").join(" ")}"></i>`;
+    }else if(ty=="text"){
+        return content;
     }
 }
 

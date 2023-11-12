@@ -20,12 +20,12 @@ function generateContent(from,to){
     for(let item of from.querySelectorAll(":is(h1,h2,h3,h4,h5,h6)")){
         let ID = $.parseString(item.textContent);
         let NavAnchor = document.createElement("a");
-        NavAnchor.href="#"+ID;
+        NavAnchor.href="#M3tk-EA-"+ID;
         NavAnchor.textContent = item.textContent;
         NavAnchor.classList.add("M3tk-LC_"+item.tagName,"M-textDeco_none");
         // item.id = ID;
         item.classList.add("M3tk-M");
-        item.parentNode.insertBefore(newElement("invisible",["M3tk-E-Anchor"],'',{"id":ID}),item);
+        item.parentNode.insertBefore(newElement("fake",["M3tk-E-Anchor"],'',{"id":"M3tk-EA-"+ID}),item);
         to.appendChild(NavAnchor);
     }
 }

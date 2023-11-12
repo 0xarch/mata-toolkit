@@ -47,7 +47,7 @@ a.M3tk-LC_H2{
     margin-left: 4px;
     margin-bottom: 2px;
 }
-invisible.M3tk-E-Anchor{
+fake.M3tk-E-Anchor{
     position: relative;
-    top: calc(0 - var(--m-banner-h) - var(--m-toolbar-h));
+    top: calc(0px - var(--m-banner-h) - var(--m-toolbar-h));
 }
