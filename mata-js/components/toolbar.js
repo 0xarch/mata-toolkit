@@ -65,10 +65,7 @@ function ___getInner(ty,content){
         case "i":
             return `<i class="${content.split(",").join(" ")}"></i>`;
         case "text":
-            return content;
-        case "svg2":
-
-            break;
+            return `<p>${content}</p>`;
     }
 }
 
