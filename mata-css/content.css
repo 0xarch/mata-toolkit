@@ -45,6 +45,13 @@ a.M3tk-LC_H2{
     display: block;
     opacity: .7;
     margin-left: 4px;
+    margin-bottom: 4px;
+}
+a.M3tk-LC_H3{
+    color: var(--g-color);
+    display: block;
+    opacity: .7;
+    margin-left: 8px;
     margin-bottom: 2px;
 }
 fake.M3tk-E-Anchor{

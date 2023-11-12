@@ -25,10 +25,7 @@ class CollapseComponent{
         let Collapse = newElement("Collapse");
         Collapse.setAttribute("type",this.type);
         for(let item of this.json){
-            let Panel = newElement("panel",[],item.content);
-            Panel.setAttribute("header",item.header);
-            Panel.setAttribute("opened",item.active);
-            Panel.setAttribute("stat",'tbr');
+            let Panel = newElement("div",["M3tk-E-Panel"],item.content,{"header":item.header,"opened":item.active,"stat":'tbr'});
             Collapse.appendChild(Panel);
         }
         return Collapse;
@@ -238,12 +235,12 @@ function renderCalendar(Calendar) {
     // Element Creating
 
     // Calendar Label
-    let DayLabel   = $.createElement("Label",'',["days"]),
+    let DayLabel   = $.createElementC("Label",["days"]),
         LeftArrow  = $.createElement("Button",'',["left"],"<"),
         RightArrow = $.createElement("Button",'',["right"],">");
     let ArrowLabel = $.createElement("Label",'',["arrows"],[LeftArrow,RightArrow]),
-        YearEntry  = $.createElement("select",'',["year_select"]),
-        MonthEntry = $.createElement("select",'',["month_select"]);
+        YearEntry  = $.createElementC("select",["year_select"]),
+        MonthEntry = $.createElementC("select",["month_select"]);
 
     // Re-generate YearEntry and MonthEntry
     function _MLocal_RefreshYM(y){
@@ -311,13 +308,13 @@ function renderCalendar(Calendar) {
     YearEntry.value = year;
     MonthEntry.value = month;
 
-    let YearMonthLabel = newElement("Label",["months"],[YearEntry,MonthEntry]);
-    let TextLabel = newElement("Label",["fo_fd0","text"],[YearMonthLabel,ArrowLabel]);
+    let YearMonthLabel = $.createElementCT("Label",["months"],[YearEntry,MonthEntry]);
+    let TextLabel = $.createElementCT("Label",["fo_fd0","text"],[YearMonthLabel,ArrowLabel]);
     for (let item of ['日', '一', '二', '三', '四', '五', '六']) {
-        let DayP = newElement("p",[],item);
+        let DayP = $.createElementCT("p",[],item);
         DayLabel.appendChild(DayP);
     }
-    let Label = newElement("Label",[],[TextLabel,DayLabel]);
+    let Label = $.createElementCT("Label",[],[TextLabel,DayLabel]);
 
     // Calendar Box
     let Container = newElement("Container",[],"",{"year":year,"month":month});
@@ -491,17 +488,58 @@ function renderButton(Button){
             }
             Button.innerHTML=___getInner(F[2],F[3]);
             break;
+        case "changeDayNight":
+            if(matchMedia('(prefers-color-scheme:light)').matches) Button.innerHTML = SVGs['Sun'];
+            else Button.innerHTML = SVGs['Moon'];
+            Button.addEventListener("click",function(){
+                if(document.querySelector("body.MA-light")){
+                    Button.innerHTML = SVGs['Moon'];
+                    $.toggleLD(false);
+                }else{
+                    Button.innerHTML = SVGs['Sun'];
+                    $.toggleLD(true);
+                }
+            });
+            break;
     }
     Button.removeAttribute("F");
 }
 
 function ___getInner(ty,content){
-    if(ty=="svg"){
-        return SVGs[content];
-    }else if(ty=="i"){
-        return `<i class="${content.split(",").join(" ")}"></i>`;
-    }else if(ty=="text"){
-        return content;
+    switch(ty){
+        case "svg":
+            return SVGs[content];
+        case "i":
+            return `<i class="${content.split(",").join(" ")}"></i>`;
+        case "text":
+            return content;
+        case "svg2":
+
+            break;
+    }
+}
+
+function ___Inner(elem,ty,content){
+    switch(ty){
+        case "svg":
+            elem.innerHTML = SVGs[content];
+            break;
+        case "i":
+            elem.appendChild($.createElementC("i",content.split(",")));
+            break;
+        case "text":
+            elem.innerHTML = content;
+            break;
+        case "svg2":
+            let arr = content.split(",");
+            elem.innerHTML = SVGs[arr[0]];
+            elem.addEventListener("click",function(){
+                if(elem.innerHTML == SVGs[arr[0]])
+                    elem.innerHTML = SVGs[arr[1]]
+                else
+                    elem.innerHTML = SVGs[arr[0]]
+            });
+            break;
     }
 }
 
@@ -509,4 +547,55 @@ function renderToolbar(Toolbar){
     for(let item of Toolbar.querySelectorAll(":is(lbtn,rbtn)")){
         renderButton(item);
     }
+}
+
+function renderPaginationJSON(Pagination){
+    let config = Pagination.innerHTML;
+    Pagination.innerHTML = "";
+    let page =parseInt(config.page),now=parseInt(config.now);
+    let haveSeparator = page>5;
+    let builds = [];
+
+    let GoPrev = newElement("a"),GoNext = newElement("a");
+    GoPrev.textContent="<";
+    GoNext.textContent=">";
+    GoPrev.classList.add("prev");
+    GoNext.classList.add("next");
+    if(now==1) GoPrev.classList.add("disabled");
+    else {
+        let i = now-1;
+        GoPrev.setAttribute("href",eval('`'+config.link+'`'));
+    }
+    if(now==page) GoNext.classList.add("disabled");
+    else {
+        let i = now+1;
+        GoNext.setAttribute("href",eval('`'+config.link+'`'));
+    }
+    Pagination.appendChild(GoPrev);
+
+    for(let i=1;i<=page;i++){
+        if([1,now-1,now,now+1,page].includes(i)){
+            builds.push(i);
+        }else if(haveSeparator){
+            if(builds.at(-1)!="space")
+                builds.push("space");
+        }
+    }
+    for(let item of builds){
+        if(item=="space"){
+            Pagination.appendChild(newElement("space"));
+            continue;
+        }
+        let i = item;
+        let Page = newElement("a");
+        Page.textContent=i;
+        Page.classList.add("page");
+        if(i==now){
+            Page.classList.add("this");
+        }
+        Page.setAttribute("href",eval('`'+config.link+'`'));
+        Pagination.appendChild(Page);
+        
+    }
+    Pagination.appendChild(GoNext);
 }

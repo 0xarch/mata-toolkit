@@ -27,12 +27,12 @@ function renderCalendar(Calendar) {
     // Element Creating
 
     // Calendar Label
-    let DayLabel   = $.createElement("Label",'',["days"]),
+    let DayLabel   = $.createElementC("Label",["days"]),
         LeftArrow  = $.createElement("Button",'',["left"],"<"),
         RightArrow = $.createElement("Button",'',["right"],">");
     let ArrowLabel = $.createElement("Label",'',["arrows"],[LeftArrow,RightArrow]),
-        YearEntry  = $.createElement("select",'',["year_select"]),
-        MonthEntry = $.createElement("select",'',["month_select"]);
+        YearEntry  = $.createElementC("select",["year_select"]),
+        MonthEntry = $.createElementC("select",["month_select"]);
 
     // Re-generate YearEntry and MonthEntry
     function _MLocal_RefreshYM(y){
@@ -100,13 +100,13 @@ function renderCalendar(Calendar) {
     YearEntry.value = year;
     MonthEntry.value = month;
 
-    let YearMonthLabel = newElement("Label",["months"],[YearEntry,MonthEntry]);
-    let TextLabel = newElement("Label",["fo_fd0","text"],[YearMonthLabel,ArrowLabel]);
+    let YearMonthLabel = $.createElementCT("Label",["months"],[YearEntry,MonthEntry]);
+    let TextLabel = $.createElementCT("Label",["fo_fd0","text"],[YearMonthLabel,ArrowLabel]);
     for (let item of ['日', '一', '二', '三', '四', '五', '六']) {
-        let DayP = newElement("p",[],item);
+        let DayP = $.createElementCT("p",[],item);
         DayLabel.appendChild(DayP);
     }
-    let Label = newElement("Label",[],[TextLabel,DayLabel]);
+    let Label = $.createElementCT("Label",[],[TextLabel,DayLabel]);
 
     // Calendar Box
     let Container = newElement("Container",[],"",{"year":year,"month":month});

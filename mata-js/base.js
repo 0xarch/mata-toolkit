@@ -357,8 +357,51 @@ const $ = {
         }
         return element;
     },
+    createElementT(tag,innerHTML){
+        let element = document.createElement(tag);
+        if(typeof(innerHTML)!="object")
+            element.innerHTML=innerHTML;
+        else if(Array.isArray(innerHTML)){
+            for(let item of innerHTML){
+                element.append(item);
+            }
+        }
+        return element
+    },
+    createElementC(tag,CSSclass){
+        let element = document.createElement(tag);
+        element.classList.add(...CSSclass);
+        return element
+    },
+    createElementCT(tag,CSSclass,innerHTML){
+        let element = document.createElement(tag);
+        if(typeof(innerHTML)!="object")
+            element.innerHTML=innerHTML;
+        else if(Array.isArray(innerHTML)){
+            for(let item of innerHTML){
+                element.append(item);
+            }
+        }
+        element.classList.add(...CSSclass);
+        return element
+    },
     parseString(str){
         return str.replace(/ /,"_")
+    },
+    toggleLD(force){
+        let judge = false;
+        if(force!=undefined){
+            judge = force;
+        }else{
+            judge = !matchMedia('(prefers-color-scheme:dark)').matches;
+        }
+        if(judge){
+            document.body.classList.add("MA-light");
+            document.body.classList.remove("MA-dark");
+        }else{
+            document.body.classList.add("MA-dark");
+            document.body.classList.remove("MA-light");
+        }
     },
     loadAll(hascontent){
         if($.isMobile()){
@@ -367,6 +410,10 @@ const $ = {
         renderAllCalendar();
         renderToolbar(Select("uiheader>toolbar"));
         evalCSS();
+        $.toggleLD();
         if(hascontent) generateContent(Select(".M3tk-ContentBox"),Select(".M3tk-R-Content"));
+        matchMedia('(prefers-color-scheme:dark)').onchange = () => {
+            $.toggleLD();
+        };
     }
 }

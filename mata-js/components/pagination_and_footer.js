@@ -1,9 +1,6 @@
 function renderPaginationJSON(Pagination){
-    // let PaginationID = getIDFromArgument(id);
-    // let Pagination = Select(PaginationID);
     let config = Pagination.innerHTML;
     Pagination.innerHTML = "";
-    // getConfigFromID(PaginationID);
     let page =parseInt(config.page),now=parseInt(config.now);
     let haveSeparator = page>5;
     let builds = [];

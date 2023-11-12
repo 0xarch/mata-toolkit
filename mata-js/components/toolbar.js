@@ -41,17 +41,58 @@ function renderButton(Button){
             }
             Button.innerHTML=___getInner(F[2],F[3]);
             break;
+        case "changeDayNight":
+            if(matchMedia('(prefers-color-scheme:light)').matches) Button.innerHTML = SVGs['Sun'];
+            else Button.innerHTML = SVGs['Moon'];
+            Button.addEventListener("click",function(){
+                if(document.querySelector("body.MA-light")){
+                    Button.innerHTML = SVGs['Moon'];
+                    $.toggleLD(false);
+                }else{
+                    Button.innerHTML = SVGs['Sun'];
+                    $.toggleLD(true);
+                }
+            });
+            break;
     }
     Button.removeAttribute("F");
 }
 
 function ___getInner(ty,content){
-    if(ty=="svg"){
-        return SVGs[content];
-    }else if(ty=="i"){
-        return `<i class="${content.split(",").join(" ")}"></i>`;
-    }else if(ty=="text"){
-        return content;
+    switch(ty){
+        case "svg":
+            return SVGs[content];
+        case "i":
+            return `<i class="${content.split(",").join(" ")}"></i>`;
+        case "text":
+            return content;
+        case "svg2":
+
+            break;
+    }
+}
+
+function ___Inner(elem,ty,content){
+    switch(ty){
+        case "svg":
+            elem.innerHTML = SVGs[content];
+            break;
+        case "i":
+            elem.appendChild($.createElementC("i",content.split(",")));
+            break;
+        case "text":
+            elem.innerHTML = content;
+            break;
+        case "svg2":
+            let arr = content.split(",");
+            elem.innerHTML = SVGs[arr[0]];
+            elem.addEventListener("click",function(){
+                if(elem.innerHTML == SVGs[arr[0]])
+                    elem.innerHTML = SVGs[arr[1]]
+                else
+                    elem.innerHTML = SVGs[arr[0]]
+            });
+            break;
     }
 }
 

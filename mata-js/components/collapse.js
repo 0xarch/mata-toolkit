@@ -25,10 +25,7 @@ class CollapseComponent{
         let Collapse = newElement("Collapse");
         Collapse.setAttribute("type",this.type);
         for(let item of this.json){
-            let Panel = newElement("panel",[],item.content);
-            Panel.setAttribute("header",item.header);
-            Panel.setAttribute("opened",item.active);
-            Panel.setAttribute("stat",'tbr');
+            let Panel = newElement("div",["M3tk-E-Panel"],item.content,{"header":item.header,"opened":item.active,"stat":'tbr'});
             Collapse.appendChild(Panel);
         }
         return Collapse;

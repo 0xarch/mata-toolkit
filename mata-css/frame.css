@@ -88,3 +88,33 @@ body.mobile:has(>uiheader>toolbar){
 body.mobile:has(>uiheader>banner){
     --m-banner-h:72px;
 }
+
+footer.M3tk-E-footer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 24px 32px;
+}
+
+footer.M3tk-E-footer>a{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+footer.M3tk-E-footer>a.-Prev::before{
+    left: -24px;
+    content:'\f060';
+}
+footer.M3tk-E-footer>a.-Next::before{
+    content:'\f061';
+    right: -24px;
+}
+footer.M3tk-E-footer>:is(a.-Next,a.-Prev)::before{
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    font-size: 16px;
+    position: absolute;
+}
+footer.M3tk-E-footer>a>t{
+    opacity: .75;
+}

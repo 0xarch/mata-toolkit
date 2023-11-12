@@ -73,7 +73,7 @@ body{
 @media(prefers-color-scheme:dark) {
     :root {
         --g-background: #212121;
-        --g-color: #fff;
+        --g-color: rgba(255,255,255,1);
         --background-backdrop: #333;
     }
 }
@@ -81,9 +81,21 @@ body{
 @media(prefers-color-scheme:light) {
     :root {
         --g-background: #fff;
-        --g-color: #111;
+        --g-color: rgba(0,0,0,1);
         --background-backdrop: #f5f5f5;
     }
+}
+
+body.MA-light{
+    --g-background: #fff;
+    --g-color: rgba(0,0,0,1);
+    --background-backdrop: #f5f5f5;
+}
+
+body.MA-dark{
+    --g-background: #212121;
+    --g-color: rgba(255,255,255,1);
+    --background-backdrop: #333;
 }
 
 /* Keyword Defintion */

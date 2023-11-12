@@ -357,8 +357,51 @@ const $ = {
         }
         return element;
     },
+    createElementT(tag,innerHTML){
+        let element = document.createElement(tag);
+        if(typeof(innerHTML)!="object")
+            element.innerHTML=innerHTML;
+        else if(Array.isArray(innerHTML)){
+            for(let item of innerHTML){
+                element.append(item);
+            }
+        }
+        return element
+    },
+    createElementC(tag,CSSclass){
+        let element = document.createElement(tag);
+        element.classList.add(...CSSclass);
+        return element
+    },
+    createElementCT(tag,CSSclass,innerHTML){
+        let element = document.createElement(tag);
+        if(typeof(innerHTML)!="object")
+            element.innerHTML=innerHTML;
+        else if(Array.isArray(innerHTML)){
+            for(let item of innerHTML){
+                element.append(item);
+            }
+        }
+        element.classList.add(...CSSclass);
+        return element
+    },
     parseString(str){
         return str.replace(/ /,"_")
+    },
+    toggleLD(force){
+        let judge = false;
+        if(force!=undefined){
+            judge = force;
+        }else{
+            judge = !matchMedia('(prefers-color-scheme:dark)').matches;
+        }
+        if(judge){
+            document.body.classList.add("MA-light");
+            document.body.classList.remove("MA-dark");
+        }else{
+            document.body.classList.add("MA-dark");
+            document.body.classList.remove("MA-light");
+        }
     },
     loadAll(hascontent){
         if($.isMobile()){
@@ -367,7 +410,11 @@ const $ = {
         renderAllCalendar();
         renderToolbar(Select("uiheader>toolbar"));
         evalCSS();
+        $.toggleLD();
         if(hascontent) generateContent(Select(".M3tk-ContentBox"),Select(".M3tk-R-Content"));
+        matchMedia('(prefers-color-scheme:dark)').onchange = () => {
+            $.toggleLD();
+        };
     }
 }
 
@@ -679,8 +726,11 @@ class PaletteController {
 
 
 const SVGs = {
-    Grid:`<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="grid" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 72C0 49.9 17.9 32 40 32H88c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H40c-22.1 0-40-17.9-40-40V72zM0 232c0-22.1 17.9-40 40-40H88c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H40c-22.1 0-40-17.9-40-40V232zM128 392v48c0 22.1-17.9 40-40 40H40c-22.1 0-40-17.9-40-40V392c0-22.1 17.9-40 40-40H88c22.1 0 40 17.9 40 40zM160 72c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H200c-22.1 0-40-17.9-40-40V72zM288 232v48c0 22.1-17.9 40-40 40H200c-22.1 0-40-17.9-40-40V232c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40zM160 392c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H200c-22.1 0-40-17.9-40-40V392zM448 72v48c0 22.1-17.9 40-40 40H360c-22.1 0-40-17.9-40-40V72c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40zM320 232c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H360c-22.1 0-40-17.9-40-40V232zM448 392v48c0 22.1-17.9 40-40 40H360c-22.1 0-40-17.9-40-40V392c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40z"></path></svg>`,
+    Grid:`<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="grid" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M0 72C0 49.9 17.9 32 40 32H88c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H40c-22.1 0-40-17.9-40-40V72zM0 232c0-22.1 17.9-40 40-40H88c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H40c-22.1 0-40-17.9-40-40V232zM128 392v48c0 22.1-17.9 40-40 40H40c-22.1 0-40-17.9-40-40V392c0-22.1 17.9-40 40-40H88c22.1 0 40 17.9 40 40zM160 72c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H200c-22.1 0-40-17.9-40-40V72zM288 232v48c0 22.1-17.9 40-40 40H200c-22.1 0-40-17.9-40-40V232c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40zM160 392c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H200c-22.1 0-40-17.9-40-40V392zM448 72v48c0 22.1-17.9 40-40 40H360c-22.1 0-40-17.9-40-40V72c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40zM320 232c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H360c-22.1 0-40-17.9-40-40V232zM448 392v48c0 22.1-17.9 40-40 40H360c-22.1 0-40-17.9-40-40V392c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40z"></path></svg>`,
     Label:`<svg focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg>`,
+    Sun:`<svg focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69zM12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-10c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z"></path></svg>`,
+    Moon:`<svg focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69zM12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6c3.31 0 6 2.69 6 6s-2.69 6-6 6z"></path></svg>`,
+
 }
 
 function evalCSS(){
@@ -694,6 +744,8 @@ function evalCSS(){
             element.appendChild(Ripple);
         });
     }
+    const CSS = ``;
+    document.head.appendChild($.createElementT("style",CSS));
 }
 
 /**
@@ -707,10 +759,9 @@ function generateContent(from,to){
         let NavAnchor = document.createElement("a");
         NavAnchor.href="#M3tk-EA-"+ID;
         NavAnchor.textContent = item.textContent;
-        NavAnchor.classList.add("M3tk-LC_"+item.tagName,"M-textDeco_none");
-        // item.id = ID;
+        NavAnchor.classList.add("M3tk-LC_"+item.tagName,"MA-textDeco_none");
         item.classList.add("M3tk-M");
-        item.parentNode.insertBefore(newElement("fake",["M3tk-E-Anchor"],'',{"id":"M3tk-EA-"+ID}),item);
+        item.parentNode.insertBefore($.createElement("fake","M3tk-EA-"+ID,["M3tk-E-Anchor"]),item);
         to.appendChild(NavAnchor);
     }
 }

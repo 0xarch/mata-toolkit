@@ -9,6 +9,8 @@ function evalCSS(){
             element.appendChild(Ripple);
         });
     }
+    const CSS = ``;
+    document.head.appendChild($.createElementT("style",CSS));
 }
 
 /**
@@ -22,10 +24,9 @@ function generateContent(from,to){
         let NavAnchor = document.createElement("a");
         NavAnchor.href="#M3tk-EA-"+ID;
         NavAnchor.textContent = item.textContent;
-        NavAnchor.classList.add("M3tk-LC_"+item.tagName,"M-textDeco_none");
-        // item.id = ID;
+        NavAnchor.classList.add("M3tk-LC_"+item.tagName,"MA-textDeco_none");
         item.classList.add("M3tk-M");
-        item.parentNode.insertBefore(newElement("fake",["M3tk-E-Anchor"],'',{"id":"M3tk-EA-"+ID}),item);
+        item.parentNode.insertBefore($.createElement("fake","M3tk-EA-"+ID,["M3tk-E-Anchor"]),item);
         to.appendChild(NavAnchor);
     }
 }

@@ -1,4 +1,4 @@
-collapse>panel{
+collapse>:is(panel,.M3tk-E-Panel){
     display: flex;
     flex-direction: column;
     min-width: 20vw;
@@ -7,7 +7,7 @@ collapse>panel{
     background-color: var(--primary-background);
 }
 
-collapse>panel>container{
+collapse>:is(panel,.M3tk-E-Panel)>container{
     margin: 0px;
     padding: .65rem;
     padding-left: 2.65rem;
@@ -18,17 +18,17 @@ collapse>panel>container{
     justify-content: start;
 }
 
-collapse[size="0"]>panel>container{
+collapse[size="0"]>:is(panel,.M3tk-E-Panel)>container{
     font-size: 1rem;
 }
 
-collapse[size="2"]>panel>container{
+collapse[size="2"]>:is(panel,.M3tk-E-Panel)>container{
     padding: .75rem;
     padding-left: 2.75rem;
     font-size: 1.3rem;
 }
 
-collapse>panel:not([indicator="false"])>container::before{
+collapse>:is(panel,.M3tk-E-Panel):not([indicator="false"])>container::before{
     position: absolute;
     display: block;
     left: 1rem;
@@ -43,32 +43,32 @@ collapse>panel:not([indicator="false"])>container::before{
     opacity: .75;
 }
 
-collapse>panel[opened=true]:not([indicator="false"])>container::before{
+collapse>:is(panel,.M3tk-E-Panel)[opened=true]:not([indicator="false"])>container::before{
     transform: scaleY(1);
 }
 
-collapse>panel[opened=true]>content{
+collapse>:is(panel,.M3tk-E-Panel)[opened=true]>content{
     padding: .5rem;
 }
 
-collapse>panel>content{
+collapse>:is(panel,.M3tk-E-Panel)>content{
     position: relative;
     margin: 0px;
     padding: 0px;
     transition: max-height .2s ease-in-out,padding .2s ease-in-out;
 }
 
-collapse>panel:not(:first-child){
+collapse>:is(panel,.M3tk-E-Panel):not(:first-child){
     border-top-right-radius: 0px;
     border-top-left-radius: 0px;
 }
 
-collapse>panel:not(:last-child){
+collapse>:is(panel,.M3tk-E-Panel):not(:last-child){
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
 }
 
-collapse>panel:not(:last-child):not([opened=true]){
+collapse>:is(panel,.M3tk-E-Panel):not(:last-child):not([opened=true]){
     border-bottom:1px solid var(--primary-color-1);   
 }
 

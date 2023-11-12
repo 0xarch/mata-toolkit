@@ -34,6 +34,7 @@ toolbar drop{
 toolbar>:is(lbtn,rbtn)>i{
     width: 100%;
     margin: calc(1.5*var(--g-unit));
+    color: var(--g-color);
 }
 toolbar>:is(lbtn,rbtn)>i::before{
     font-size: calc(3*var(--g-unit));
@@ -43,4 +44,5 @@ toolbar>:is(lbtn,rbtn)>svg{
     width: calc(3*var(--g-unit));
     margin: calc(1.5*var(--g-unit));
     pointer-events: none;
+    fill: var(--g-color);
 }
