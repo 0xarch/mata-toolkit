@@ -20,6 +20,7 @@ function evalCSS(){
  */
 function generateContent(from,to){
     for(let item of from.querySelectorAll(":is(h1,h2,h3,h4,h5,h6)")){
+        if(item.parentNode!=from) continue;
         let ID = $.parseString(item.textContent);
         let NavAnchor = document.createElement("a");
         NavAnchor.href="#M3tk-EA-"+ID;
