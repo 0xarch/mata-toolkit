@@ -24,14 +24,14 @@ class PaletteController {
      * initialize a palette processer from specific color palettes
      * @constructor
      * @param { Object } palettesJson
-     * @example let palette_processer = new MPaletteProcesser(MataPalette)
+     * @example let palette_processer = new PaletteController(MataPalette)
      */
     constructor(palettesJson) {
         this.palettes = palettesJson;
         this.colns = {};
         matchMedia('(prefers-color-scheme:dark)').onchange = () => {
             for (let item in this.colns) {
-                this.setPaletteByHSL(item, this.colns[item],this.bgcoln==item);
+                this.setPaletteByHSL(item, this.colns[item]);
             }
         };
     }
@@ -89,7 +89,7 @@ class PaletteController {
         let v2 = this.colns[name];
         let v1 = v2.dl(-15),
             v3 = v2.dl(12);
-        if (ColorUtils.BrowserIsDark()) {
+        if (document.body.classList.contains("MA-dark")) {
             v1 = v1.dl(-18), v2 = v2.dl(-18), v3 = v3.dl(-17);
         }
         this.#Root.setStyle(`--${name}-color-1`, v1.CSS());
@@ -99,7 +99,7 @@ class PaletteController {
         this.#Root.setStyle(`--${name}-text-2`, v2.textColor());
         this.#Root.setStyle(`--${name}-text-3`, v3.textColor());
 
-        this.colns["background"]=ColorUtils.BrowserIsDark()?v2.ds(-45).dl(-20):v2.ds(10).dl(40);
+        this.colns["background"]=document.body.classList.contains("MA-dark")?v2.ds(-45).dl(-20):v2.ds(10).dl(40);
         this.#Root.setStyle(`--${name}-background`,this.colns["background"].CSS());
         this.bgcoln=name;
         return new Result(Ok);

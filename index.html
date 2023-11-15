@@ -42,7 +42,7 @@
                     <img src="https://upload-bbs.mihoyo.com/upload/2021/07/10/278678644/00185141732cb0f85adcf0ee68754554_8318448679343513426.jpg"/>
                 </ImageRoller>
                 <h2>关于 Mata Toolkit ...</h2>
-                <a class="M3tk-Button M3tk-HlClick">查看代码</a>
+                <a class="M3tk-Button M3tk-HlClick" href="https://github.com/0xarch/mata-toolkit">查看代码</a>
             </div>
             <hr>
             <footer class="M3tk-E-footer">
@@ -68,13 +68,15 @@
         </Nav>
     </body>
     <script>
-        const Palette=new PaletteController(MataPalette);
-        Palette.setPaletteFrom("primary","LIGHTBLUE",500);
-        Palette.setPaletteFrom("secondary","BLUE",450);
-        Select("#ua_show").textContent = $.getPlatform();
-        Select("#mobile_show").textContent = $.isMobile();
-        renderImageRoller(Select("#in_imageroller"));
-        $.loadAll(true);
+        window.onload=()=>{
+            const Palette=new PaletteController(MataPalette);
+            Palette.setPaletteFrom("primary","LIGHTBLUE",500);
+            Palette.setPaletteFrom("secondary","BLUE",450);
+            Select("#ua_show").textContent = $.getPlatform();
+            Select("#mobile_show").textContent = $.isMobile();
+            renderImageRoller(Select("#in_imageroller"));
+            $.loadAll(true);
+        }
     </script>
 </html>
 

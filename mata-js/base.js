@@ -313,6 +313,7 @@ class ElementController {
 
 const $ = {
     userAgent: navigator.userAgent,
+    body: document.body,
     isMobile(){
         for(let keyword of ["Android","iPhone","iPad"]){
             if(this.userAgent.includes(keyword))
@@ -396,16 +397,14 @@ const $ = {
             judge = !matchMedia('(prefers-color-scheme:dark)').matches;
         }
         if(judge){
-            document.body.classList.add("MA-light");
-            document.body.classList.remove("MA-dark");
+            document.body.classList.replace("MA-dark","MA-light");
         }else{
-            document.body.classList.add("MA-dark");
-            document.body.classList.remove("MA-light");
+            document.body.classList.add("MA-light","MA-dark");
         }
     },
     loadAll(hascontent){
         if($.isMobile()){
-            Select("body").classList.add("mobile");
+            document.body.classList.add("mobile");
         }
         renderAllCalendar();
         renderToolbar(Select("uiheader>toolbar"));

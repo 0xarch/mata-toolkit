@@ -152,3 +152,6 @@
 .MA-textDeco_none{
     text-decoration: none;
 }
+.MA-disabled{
+    opacity: .75;
+}

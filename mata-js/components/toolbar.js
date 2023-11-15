@@ -1,6 +1,5 @@
 function renderButton(Button){
     let F = Button.getAttribute("F").split(" ");
-    console.log(F);
     switch(F[0]){
         case "callDrop":
             let Drop = Button.querySelector("drop");
