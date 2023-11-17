@@ -1,0 +1,82 @@
+collapse>:is(panel,.M3tk-E-Panel){
+    display: flex;
+    flex-direction: column;
+    min-width: 20vw;
+    overflow: hidden;
+    border-radius: var(--m-medium-round);
+    background-color: var(--primary-background);
+}
+
+collapse>:is(panel,.M3tk-E-Panel)>container{
+    margin: 0px;
+    padding: .65rem;
+    padding-left: 2.65rem;
+    font-size:1.15rem;
+    background-color: var(--primary-color-2);
+    color: var(--primary-text-2);
+    border-color: var(--primary-color-2);
+    justify-content: start;
+}
+
+collapse[size="0"]>:is(panel,.M3tk-E-Panel)>container{
+    font-size: 1rem;
+}
+
+collapse[size="2"]>:is(panel,.M3tk-E-Panel)>container{
+    padding: .75rem;
+    padding-left: 2.75rem;
+    font-size: 1.3rem;
+}
+
+collapse>:is(panel,.M3tk-E-Panel):not([indicator="false"])>container::before{
+    position: absolute;
+    display: block;
+    left: 1rem;
+    top: calc(50% - .5rem);
+    height: 1rem;
+    width: 1rem;
+    border-radius:100px;
+    transform: scaleY(.1);
+    transition: transform .2s ease-in-out;
+    background-color: var(--primary-text-2);
+    content:'';
+    opacity: .75;
+}
+
+collapse>:is(panel,.M3tk-E-Panel)[opened=true]:not([indicator="false"])>container::before{
+    transform: scaleY(1);
+}
+
+collapse>:is(panel,.M3tk-E-Panel)[opened=true]>content{
+    padding: .5rem;
+}
+
+collapse>:is(panel,.M3tk-E-Panel)>content{
+    position: relative;
+    margin: 0px;
+    padding: 0px;
+    transition: max-height .2s ease-in-out,padding .2s ease-in-out;
+}
+
+collapse>:is(panel,.M3tk-E-Panel):not(:first-child){
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+}
+
+collapse>:is(panel,.M3tk-E-Panel):not(:last-child){
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+collapse>:is(panel,.M3tk-E-Panel):not(:last-child):not([opened=true]){
+    border-bottom:1px solid var(--primary-color-1);   
+}
+
+collapse{
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--m-medium-round);
+    box-shadow: var(--m-large-shadow);
+    min-width: 20vw;
+    margin: .75rem;
+}

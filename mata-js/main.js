@@ -313,7 +313,6 @@ class ElementController {
 
 const $ = {
     userAgent: navigator.userAgent,
-    body: document.body,
     isMobile(){
         for(let keyword of ["Android","iPhone","iPad"]){
             if(this.userAgent.includes(keyword))
@@ -394,12 +393,12 @@ const $ = {
         if(force!=undefined){
             judge = force;
         }else{
-            judge = !matchMedia('(prefers-color-scheme:dark)').matches;
+            judge = matchMedia('(prefers-color-scheme:light)').matches;
         }
-        if(judge){
-            document.body.classList.replace("MA-dark","MA-light");
+        if(judge == true){
+            jMata('body').roaClass('MA-dark','MA-light');
         }else{
-            document.body.classList.add("MA-light","MA-dark");
+            jMata('body').roaClass('MA-light','MA-dark');
         }
     },
     loadAll(hascontent){
@@ -407,7 +406,7 @@ const $ = {
             document.body.classList.add("mobile");
         }
         renderAllCalendar();
-        renderToolbar(Select("uiheader>toolbar"));
+        // renderToolbar(Select("uiheader>toolbar"));
         evalCSS();
         $.toggleLD();
         if(hascontent) generateContent(Select(".M3tk-ContentBox"),Select(".M3tk-R-Content"));
@@ -415,7 +414,322 @@ const $ = {
             $.toggleLD();
         };
     }
-}
+};
+
+(function(window,undefined){
+
+    function _local_appendTextOrChildsToElement(element,innerHTML){
+        if(typeof(innerHTML)!="object")
+            element.innerHTML=innerHTML;
+        else if(Array.isArray(innerHTML)){
+            for(let item of innerHTML){
+                element.append(item);
+            }
+        }
+    }
+
+    function _local_JudgeReturnsByNodeList(nodeList){
+        if(nodeList.length == 1){
+            return new jMataSingleElement(nodeList[0]);
+        }else{
+            return new jMataBase(nodeList);
+        }
+    }
+    
+    function _local_JudgeReturnsByQuery(query,element){
+        let selected = undefined;
+        if(element != undefined){
+            selected = element.querySelectorAll(query);
+        }else{
+            selected = document.querySelectorAll(query);
+        }
+        return _local_JudgeReturnsByNodeList(selected);
+    }
+
+    var jMata = (selector) => {
+        if(selector != undefined){
+            return _local_JudgeReturnsByQuery(selector);
+        }else{
+            return window.jMata;
+        }
+    };
+
+    var jFrom = (element) => {
+        return new jMataSingleElement(element);
+    }
+
+    var macros = {
+        element: (tag)=> document.createElement(tag),
+        elementC: function(tag,classes){
+            return jCreateElement(tag).class(classes).finish();
+        },
+        elementT: function(tag,innerHTML){
+            return jCreateElement(tag).inner(innerHTML).finish();
+        },
+        elementCT: function(tag,classes,innerHTML){
+            return jCreateElement(tag).class(classes).inner(innerHTML).finish();
+        },
+        elementU : function(tag,id,CSSclass,innerHTML,attributes){
+            let element = document.createElement(tag);
+            if(id != undefined){
+                element.id = id;
+            }
+            if(CSSclass != undefined){
+                element.classList.add(...CSSclass);
+            }
+            if(innerHTML != undefined){
+                if(typeof(innerHTML)!="object")
+                    element.innerHTML=innerHTML;
+                else if(Array.isArray(innerHTML)){
+                    for(let item of innerHTML){
+                        element.append(item);
+                    }
+                }
+            }
+            for(let item in attributes){
+                element.setAttribute(item,attributes[item]);
+            }
+            return element;
+        }
+    }
+
+    function jCreateElement(tag){
+        this.tag = tag;
+        this.CSSclass = [];
+        this.attributes = {};
+        this.fns = {};
+        this.contentType = undefined;
+        this.content = undefined;
+
+        this.class = function(...classes){
+            this.CSSclass = classes;
+            return this;
+        }
+
+        this.inner = function(innerHTML){
+            this.content = innerHTML;
+            if(typeof(innerHTML)!="object")
+                this.contentType = "string";
+            else if(Array.isArray(innerHTML)){
+                this.contentType = "childArray";
+            }
+            return this;
+        }
+
+        this.id = function(id){
+            this.attributes['id'] = id;
+            return this;
+        }
+
+        this.fn = function(name,fn){
+            this.fns[name] = fn;
+            return this;
+        }
+
+        this.attr = function(attr,val){
+            this.attributes[attr] = val;
+            return this;
+        }
+
+        this.finish = function(){
+            let element = document.createElement(this.tag);
+            if(this.CSSclass.length!=0)
+                element.classList.add(...this.CSSclass);
+            for(let item in this.attributes){
+                element.setAttribute(item,this.attributes[item]);
+            }
+            for(let item in this.fns){
+                element.addEventListener(item,this.fns[item]);
+            }
+            if(this.content != undefined){
+                _local_appendTextOrChildsToElement(element,this.innerHTML);
+            }
+            return element;
+        }
+    }
+
+    function jNewElement(){
+        let arg_len = arguments.length;
+        let elem = document.createElement(arguments[0]);
+        switch(arg_len){
+            case 4:
+                _local_appendTextOrChildsToElement(elem,arguments[3]);
+            case 3:
+                elem.id = arguments[2];
+            case 2:
+                elem.classList.add(...arguments[1]);
+            case 1:
+            default:
+                return elem;
+        }
+    }
+
+    function jSelectIterable(query){
+        return document.querySelectorAll(query);
+    }
+
+    function jSelect(query){
+        let queried = document.querySelectorAll(query);
+        if(queried.length == 1)
+            return queried[0];
+        else return queried;
+    }
+
+    function jMataBase(provided_elements){
+        this.elements = [];
+        this.current = -1;
+
+        if(provided_elements != undefined){
+            this.elements = provided_elements;
+        }
+
+        this.each_or_current = (fn) => {
+            if(this.current == -1){
+                this.elements.forEach(fn);
+            }else{
+                fn(this.elements[this.current]);
+            }
+        }
+
+        this.select = (index)=> new jMataSingleElement(this.elements[index]);
+        
+        this.$ = function(selector){
+            let elements = document.querySelectorAll(selector);
+            this.elements.push(...elements);
+            return this;
+        }
+
+        this.css = function(attr,val){
+            this.each_or_current((elem)=>{
+                elem.style.setProperty(attr,val);
+            });
+            return this;
+        }
+
+        this.class = function(...classes){
+            this.elements.forEach((element)=>{
+                element.classList.add(classes);
+            });
+            return this;
+        }
+
+        this.removeClass = function(...classes){
+            this.elements.forEach((element)=>{
+                element.classList.remove(classes);
+            });
+            return this;
+        }
+
+        this.replaceClass = function(oldClass,newClass){
+            this.elements.forEach((element)=>{
+                element.classList.replace(oldClass,newClass);
+            });
+            return this;
+        }
+
+        this.toggleClass = function(className){
+            this.elements.forEach((element)=>{
+                element.classList.toggle(className);
+            })
+        }
+
+        this.eq = (index) => {
+            this.current = index;
+            return this;
+        }
+
+        this.req = () => {
+            this.current = -1;
+            return this;
+        }
+
+        this.event = function(eventName,eventFn){
+            this.elements.forEach((element)=>{
+                element.addEventListener(eventName,eventFn);
+            });
+            return this;
+        }
+    }
+
+    function jMataSingleElement(provided_element){
+        this.element = provided_element;
+
+        this.css = function(attr,val){
+            this.element.style.setProperty(attr,val);
+            return this;
+        }
+
+        this.event = function(trig,fn){
+            this.element.addEventListener(trig,fn);
+            return this;
+        }
+
+        this.inner = function(inner){
+            if(inner != undefined){
+                _local_appendTextOrChildsToElement(this.element,inner);
+                return this;
+            }else{
+                return this.element.innerHTML;
+            }
+        }
+        this.addClass = (...className) => {
+            this.element.classList.add(...className);
+            return this;
+        }
+        this.removeClass = (...className) => {
+            this.element.classList.remove(...className);
+            return this;
+        }
+        this.replaceClass = (oldClass,newClass) => {
+            this.element.classList.replace(oldClass,newClass);
+            return this;
+        }
+        this.hasClass = (className) =>{
+            return this.element.classList.contains(className);
+        }
+        this.roaClass = (oldClass,newClass) => {
+            if(this.hasClass(oldClass)){
+                this.replaceClass(oldClass,newClass);
+            }else{
+                this.addClass(newClass);
+            }
+            return this;
+        }
+        this.select = (selector) => _local_JudgeReturnsByQuery(selector,this.element);
+    }
+
+    jMata['isMobile'] = () => {
+        for(let keyword of ["Android","iPhone","iPad"]){
+            if(this.userAgent.includes(keyword))
+                return true
+        }
+        return false
+    };
+    jMata['getPlatform'] = () => {
+        for(let keyword of ["Android","iPhone","iPad","Linux","Windows","Mac OS X"]){
+            if(this.userAgent.includes(keyword))
+                return keyword
+        }
+    };
+
+    jMata['from'] = jFrom;
+    jMata['macros'] = macros;
+    jMata['createElement'] = jCreateElement;
+    jMata['select'] = jSelect;
+    jMata['select_iter'] = jSelectIterable;
+    jMata['new'] = jNewElement;
+
+    window.jMata = jMata;
+    window.Mata = jMata;
+
+    // window.jMata.macros = macros;
+    // window.jMata.createElement = jCreateElement;
+    // window.jMata.select = jSelect;
+})( window );
+
+
+
+
 
 const getIDFromArgument=(arg)=>'#'+arg.replace('#','');
 const getConfigFromID=(id)=>{
@@ -724,13 +1038,144 @@ class PaletteController {
 }
 
 
-const SVGs = {
-    Grid:`<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="grid" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M0 72C0 49.9 17.9 32 40 32H88c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H40c-22.1 0-40-17.9-40-40V72zM0 232c0-22.1 17.9-40 40-40H88c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H40c-22.1 0-40-17.9-40-40V232zM128 392v48c0 22.1-17.9 40-40 40H40c-22.1 0-40-17.9-40-40V392c0-22.1 17.9-40 40-40H88c22.1 0 40 17.9 40 40zM160 72c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H200c-22.1 0-40-17.9-40-40V72zM288 232v48c0 22.1-17.9 40-40 40H200c-22.1 0-40-17.9-40-40V232c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40zM160 392c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H200c-22.1 0-40-17.9-40-40V392zM448 72v48c0 22.1-17.9 40-40 40H360c-22.1 0-40-17.9-40-40V72c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40zM320 232c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H360c-22.1 0-40-17.9-40-40V232zM448 392v48c0 22.1-17.9 40-40 40H360c-22.1 0-40-17.9-40-40V392c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40z"></path></svg>`,
-    Label:`<svg focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg>`,
-    Sun:`<svg focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69zM12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-10c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z"></path></svg>`,
-    Moon:`<svg focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69zM12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6c3.31 0 6 2.69 6 6s-2.69 6-6 6z"></path></svg>`,
+(function(){
+    const jColor = {
+        getTextColor: (r,g,b) =>{
+            let gray = r * 3 + g * 6 + b + 5;
+            if (gray > 1200) return "#000"
+            else return "#FFF"
+        },
+        jHSLtoRGB(jhsl){
+            return this.HSLtoRGB(jhsl.h,jhsl.s,jhsl.l);
+        },
+        HSLtoRGB(H,s,l, textmode = false) {
+            let S = s / 100,
+                L = l / 100;
+            const C = (1 - Math.abs(2 * L - 1)) * S;
+            const X = C * (1 - Math.abs(((H / 60) % 2) - 1));
+            const m = L - C / 2;
+            const vRGB = [];
+            if (H >= 0 && H < 60) vRGB.push(C, X, 0);
+            else if (H >= 60 && H < 120) vRGB.push(X, C, 0);
+            else if (H >= 120 && H < 180) vRGB.push(0, C, X);
+            else if (H >= 180 && H < 240) vRGB.push(0, X, C);
+            else if (H >= 240 && H < 300) vRGB.push(X, 0, C);
+            else if (H >= 300 && H < 360) vRGB.push(C, 0, X);
+            const [vR, vG, vB] = vRGB;
+            const R = 255 * (vR + m);
+            const G = 255 * (vG + m);
+            const B = 255 * (vB + m);
+            if (textmode) return `rgb(${R},${G},${B})`;
+            else return {
+                r: R,
+                g: G,
+                b: B
+            };
+        },
+        /**
+         * convert RGB to HSL
+         * @param {*} r Red
+         * @param {*} g Green
+         * @param {*} b Blue
+         * @returns { HSL }
+         */
+        RGBtoHSL(r, g, b) {
+            let R = r / 255,
+                G = g / 255,
+                B = b / 255;
+            let min = Math.min(r, g, b),
+                max = Math.max(r, g, b);
+            let l = (min + max) / 2,
+                d = max - min;
+            let H, S, L = l;
+            if (max == min) H = S = 0;
+            else {
+                S = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                switch (max) {
+                    case R:
+                        H = (g - b) / d + (g < b ? 6 : 0);
+                        break;
+                    case G:
+                        H = 2.0 + (b - r) / d;
+                        break;
+                    case B:
+                        H = 4.0 + (r - g) / d;
+                        break;
+                }
+                H = Math.round(H * 60);
+            }
+            S = Math.round(S * 100), L = Math.round(L * 100);
+            return {h:H,s:S,l:L};
+        }
+    }
 
-}
+    var jHSL = function(h,s,l){
+        this.h = parseInt(h);
+        this.s = parseInt(s);
+        this.l = parseInt(l);
+        this.ds = (s)=>{
+            let _s = this.s + s;
+            _s = _s > 100 ?100 :_s;
+            _s = _s <0 ?0 :_s;
+            return new jHSL(this.h,_s,this.l);
+        }
+        this.dl = (l)=>{
+            let _l = this.l + l;
+            _l = _l > 100 ?100 :_l;
+            _l = _l <0 ?0 :_l;
+            return new jHSL(this.h,this.s,_l);
+        }
+        this.css = () => `hsl(${this.h},${this.s}%,${this.l}%)`;
+        this.toRGB = () => jColor.jHSLtoRGB(this);
+    }
+
+    var setPalette = (paletteName,paletteColor,colorLight) => {
+        let name = paletteName;
+        let root = jMata('body');
+        let hue = parseInt(paletteColor[0]), saturation = parseInt(paletteColor[1]), lightness = parseInt(colorLight) /10;
+        // let color_medium = {h:hue,s:saturation,l:lightness};
+        // let color_darker = {h:hue,s:saturation,l:lightness-15};
+        // let color_lighter = {h:hue,s:saturation,l:lightness+12};
+
+        let color_medium = new jHSL(hue,saturation,lightness);
+        let color_darker = color_medium.dl(-15);
+        let color_lighter = color_medium.dl(12);
+
+        const _hsl2css = (hsl)=>`hsl(${hsl.h},${hsl.s}%,${hsl.l}%)`
+
+        if (document.body.classList.contains("MA-dark")) {
+            color_lighter.l -= 17;
+            color_medium.l -= 18;
+            color_darker.l -= 18;
+        }
+        root.css(`--${name}-color-1`, color_darker.css());
+        root.css(`--${name}-color-2`, color_medium.css());
+        root.css(`--${name}-color-3`, color_lighter.css());
+        root.css(`--${name}-text-1`, jColor.getTextColor(color_darker.toRGB()));
+        root.css(`--${name}-text-2`, jColor.getTextColor(color_medium.toRGB()));
+        root.css(`--${name}-text-3`, jColor.getTextColor(color_lighter.toRGB()));
+
+        // let bg_hsl = {h:paletteColor[0],s: saturation+10,l:lightness+40};
+        let bg_hsl = color_medium.ds(10).dl(40);
+        if(jMata('body').hasClass('MA-dark')){
+            bg_hsl = color_medium.ds(-45).dl(-20);
+        }
+        root.css(`--${name}-background`,bg_hsl.css());
+    }
+
+    const SVGs = {
+        Grid:`<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="grid" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M0 72C0 49.9 17.9 32 40 32H88c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H40c-22.1 0-40-17.9-40-40V72zM0 232c0-22.1 17.9-40 40-40H88c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H40c-22.1 0-40-17.9-40-40V232zM128 392v48c0 22.1-17.9 40-40 40H40c-22.1 0-40-17.9-40-40V392c0-22.1 17.9-40 40-40H88c22.1 0 40 17.9 40 40zM160 72c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H200c-22.1 0-40-17.9-40-40V72zM288 232v48c0 22.1-17.9 40-40 40H200c-22.1 0-40-17.9-40-40V232c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40zM160 392c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H200c-22.1 0-40-17.9-40-40V392zM448 72v48c0 22.1-17.9 40-40 40H360c-22.1 0-40-17.9-40-40V72c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40zM320 232c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H360c-22.1 0-40-17.9-40-40V232zM448 392v48c0 22.1-17.9 40-40 40H360c-22.1 0-40-17.9-40-40V392c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40z"></path></svg>`,
+        Label:`<svg focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg>`,
+        Sun:`<svg focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69zM12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-10c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z"></path></svg>`,
+        Moon:`<svg focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69zM12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6c3.31 0 6 2.69 6 6s-2.69 6-6 6z"></path></svg>`,
+
+    }
+
+    window.jMata.SVGs = SVGs;
+    window.jMata.setPalette = setPalette;
+    window.jMata.color = jColor;
+
+})( window );
 
 function evalCSS(){
     for(let element of document.querySelectorAll(".M3tk-HlClick")){

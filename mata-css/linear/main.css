@@ -1,0 +1,79 @@
+@import url("../frame.css");
+@import url("../attribute.css");
+@import url("select.css");
+@import url("anim.css");
+@import url("calendar.css");
+@import url("tabs.css");
+@import url("button.css");
+@import url("toggle.css");
+@import url("collapse.css");
+@import url("pagination.css");
+@import url("image-roller.css");
+@import url("content.css");
+@import url("ui_header.css");
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap");
+@import url("https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.2/css/all.min.css");
+
+* {
+    transition: all .25s ease-in-out;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    position: relative;
+}
+
+:root {
+    --m-small-round: 6px;
+    --m-medium-round: 9px;
+    --m-large-round: 12px;
+    --m-larger-round: 15px;
+    --m-xlarge-round: 18px;
+    --m-small-shadow: 0px 1px 1px -3px rgba(60, 60, 60, 0.1), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+    --m-medium-shadow: 0px 2px 3px -1px rgba(60, 60, 60, 0.4);
+    --m-large-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+    color:var(--g-color);
+}
+
+body.mobile{
+    --g-font-size: 2rem;
+    --g-unit: 16px;
+}
+
+html,
+body {
+    margin: 0;
+}
+
+html {
+    font-size: 0.875em;
+    font-weight: 400;
+    line-height: 1.43;
+    letter-spacing: 0.01em;
+}
+
+body{
+    --g-padding: 8px;
+    --g-margin: 8px;
+    --g-font-size: 1rem;
+    --g-unit: 8px;
+    --g-font-weight: 400;
+    --g-line-height:1.43;
+    font-family: 'Roboto',sans-serif;
+    font-size: var(--g-font-size);
+    background: linear-gradient(#010314,#060e30,#010314);
+    color: var(--g-color);
+}
+
+body{
+    --g-background: #313641;
+    --g-color: rgba(255,255,255,1);
+    --background-backdrop: #333;
+    --selection-bg: #4f52b4;
+    --half-color: rgba(255,255,255,.25);
+    --half-bg : rgba(7, 13, 36, 0.467);
+    --half-light-bg: rgba(7, 13, 36, 0.336);
+    --primary-color-1: hsl(230,10%,17%);
+    --primary-color-2: hsl(230,10%,32%);
+    --primary-color-3: hsl(230,10%,45%);
+    --primary-background: hsl(230,-35%,20%);
+}

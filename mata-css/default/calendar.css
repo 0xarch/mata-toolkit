@@ -14,32 +14,67 @@ calendar[type="mini"]{
     min-height: unset;
 }
 
-calendar>label{
+calendar>.MMi_root{
     flex: .1;
+    background-color: var(--primary-color-2);
 }
 
-calendar>label,calendar label.text{
+calendar .MMi_option{
+    display: flex;
+    justify-content: flex-end;
+    padding-right: var(--g-unit);
+}
+
+calendar>.MMi_root,calendar .MMi_option{
     width: 100%;
 }
 
-calendar label.arrows>arrow{
+/* Arrow Area */
+calendar .MMi_arrows{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+calendar .MMi_arrows>button{
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-calendar label.days{
+calendar .MMi_arrows>button:hover{
+    background-color: var(--primary-color-2);
+    color:var(--primary-text-2);
+}
+
+calendar .MMi_arrows>button:first-child{
+    margin-right: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+calendar .MMi_arrows>button:last-child{
+    margin-left: 0px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+/* Day Area */
+calendar .Mi_days{
     font-weight: bold;
     flex-direction: row;
     width: 100%;
+    display: flex;
 }
 
-calendar label.days>p{
+calendar .Mi_days>p{
     flex:1;
     text-align: center;
 }
 
-calendar label.months{
+/* Year & Month Area */
+calendar .MMi_months{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -47,11 +82,10 @@ calendar label.months{
     margin:0px .5rem;
     line-height: 1.12rem;
     font-weight: bold;
-    flex:1;
     font-size: 1.15rem;
 }
 
-calendar .month_select,calendar .year_select{
+calendar :is(.month_select,.year_select){
     min-height: unset;
     padding: .25rem;
     background-color: var(--primary-background);
@@ -65,6 +99,7 @@ calendar>container{
     display:grid;
     grid: auto-flow / repeat(7,calc(100% / 7));
     flex: 1;
+    background-color: var(--primary-background);
 }
 
 calendar dayaction{
@@ -74,30 +109,6 @@ calendar dayaction{
     font-weight: bold;
     position: relative;
     flex-direction: column;
-}
-
-calendar label.arrows{
-    flex:.6;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-}
-
-calendar label.arrows>button:hover{
-    background-color: var(--primary-color-2);
-    color:var(--primary-text-2);
-}
-
-calendar label.arrows>button:first-child{
-    margin-right: 0px;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 0px;
-}
-
-calendar label.arrows>button:last-child{
-    margin-left: 0px;
-    border-top-left-radius: 0px;
-    border-bottom-left-radius: 0px;
 }
 
 dayblank,
@@ -138,9 +149,9 @@ dayaction.hasText>tx.up{
 
 dayaction.hasClickEvent {
     filter: saturate(120%);
-    box-shadow: 0px 1px 3px 1px var(--primary-color-3);
+    box-shadow: 0px 1px 3px 1px var(--primary-color-1);
 }
 
 dayaction.hasMarked {
-    background-color: var(--primary-background);
+    background-color: var(--primary-color-3);
 }

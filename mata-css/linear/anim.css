@@ -1,0 +1,35 @@
+.M3tk-RippleFake{
+    position: absolute;
+    left: var(--o-x,-100%);
+    top: var(--o-y,-100%);
+    border-radius: 50%;
+    padding-top: 100%;
+    margin-left: -50%;
+    margin-top: -50%;
+    width: 100%;
+    background: transparent;
+    animation: M3tk-KF-RippleIn .75s;
+    pointer-events: none;
+}
+
+@keyframes M3tk-KF-RippleIn{
+    from{
+        transform: scale(0);
+        background-color: rgba(255, 255, 255, 0.25);
+    }
+    to{
+        transform: scale(1.5);
+        background: transparent;
+    }
+}
+
+@keyframes M3tk-KF-RippleOut{
+    from{
+        transform: scale(0);
+        background-color: rgba(255, 255, 255, 0.25);
+    }
+    to{
+        transform: scale(1.5);
+        background: transparent;
+    }
+}

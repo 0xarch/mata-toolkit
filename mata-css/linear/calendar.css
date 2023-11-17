@@ -1,0 +1,157 @@
+/* Calendar */
+calendar {
+    border-radius: calc(2*var(--g-unit));
+    box-shadow: var(--m-small-shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-width: 35rem;
+    min-height:42rem;
+    backdrop-filter: blur(6px);
+}
+
+calendar[type="mini"]{
+    min-width: unset;
+    min-height: unset;
+}
+
+calendar>.MMi_root{
+    flex: .1;
+    padding-top: var(--g-unit);
+    background-color: var(--half-bg);
+}
+
+calendar .MMi_option{
+    display: flex;
+    justify-content: flex-end;
+    padding-right: var(--g-unit);
+}
+
+calendar>.MMi_root,calendar .MMi_option{
+    width: 100%;
+}
+
+/* Arrow Area */
+calendar .MMi_arrows{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+calendar .MMi_arrows>button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+calendar .MMi_arrows>button:hover{
+    background-color: var(--selection-bg);
+}
+
+calendar .MMi_arrows>button:first-child{
+    margin-right: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+calendar .MMi_arrows>button:last-child{
+    margin-left: 0px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+/* Day Area */
+calendar .Mi_days{
+    font-weight: bold;
+    flex-direction: row;
+    width: 100%;
+    display: flex;
+}
+
+calendar .Mi_days>p{
+    flex:1;
+    text-align: center;
+}
+
+/* Year & Month Area */
+calendar .MMi_months{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    margin:0px .5rem;
+    line-height: 1.12rem;
+    font-weight: bold;
+    font-size: 1.15rem;
+}
+
+calendar :is(.month_select,.year_select){
+    min-height: unset;
+    padding: .25rem;
+    background-color: var(--primary-background);
+    margin: .25rem;
+}
+
+calendar>container{
+    margin: 0px;
+    padding: 0px;
+    width:100%;
+    display:grid;
+    grid: auto-flow / repeat(7,calc(100% / 7));
+    flex: 1;
+}
+
+calendar dayaction{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    position: relative;
+    flex-direction: column;
+}
+
+dayblank,
+dayaction {
+    box-shadow: var(--m-medium-shadow);
+    box-sizing: border-box;
+    padding: 1rem;
+    height: 6rem;
+}
+
+calendar[type="mini"] dayblank,
+calendar[type="mini"] dayaction{
+    height: 3rem;
+}
+
+dayblank {
+    filter: grayscale(1);
+    box-shadow: var(--m-small-shadow);
+    opacity: .3;
+}
+
+dayaction.hasText>tx {
+    height: 0px;
+    margin: 0px;
+    padding: 0px;
+    opacity: .6;
+    font-size: .75rem;
+    text-align: center;
+    position: absolute;
+    bottom: .45rem;
+    width: 100%;
+}
+
+dayaction.hasText>tx.up{
+    bottom: unset;
+    top: .5rem;
+}
+
+dayaction.hasClickEvent {
+    filter: saturate(120%);
+    box-shadow: 0px 1px 3px 1px var(--primary-color-1);
+}
+
+dayaction.hasMarked {
+    background-color: var(--primary-color-3);
+}

@@ -1,0 +1,23 @@
+imageroller{
+    display: block;
+    height: 35vw;
+    width: 100%;
+    border-radius: var(--m-large-round);
+    box-shadow: var(--m-large-shadow);
+    overflow: hidden;
+    margin: var(--g-margin);
+}
+
+body.mobile imageroller{
+    height: 50vw;
+}
+
+imageroller>img{
+    width: 100%;
+    object-fit: cover;
+    transition: all .5s ease-in-out;
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    z-index: -1;
+}

@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="mata-css/mata.css">
+        <link rel="stylesheet" href="mata-css/linear/main.css">
         <script src="mata-js/main.js"></script>
         <script src="mata-js/components.js"></script>
         <title>Mata Toolkit</title>
     </head>
     <body>
-        <UIHeader>
-            <Banner>
+        <header class="M3tk-E-RootBar">
+            <div class="M3tk-E-Banner">
                 Mata Toolkit v1.1 发布!
-            </Banner>
-            <ToolBar class="M3tk-Toolbar">
+            </div>
+            <div class="M3tk-E-Toolbar">
                 <LBtn F="callNav #left_nav svg Label"></LBtn>
                 <RBtn F="changeColor"></RBtn>
                 <RBtn F="link https://github.com/mata-toolkit i fa-brands,fa-github"></RBtn>
@@ -25,24 +25,45 @@
                 </RBtn>
                 <RBtn F="changeDayNight"></RBtn>
                 <RBtn F="switchReadDirection"></RBtn>
-            </ToolBar>
-        </UIHeader>
-        <Paper>
+            </div>
+        </header>
+        <div class="M3tk-E-PaperL">
             <div class="M3tk-ContentBox">
-                <h1>MATA TOOLKIT</h1>
-                <h2>这是什么？</h2>
+                <h1>这是什么？</h1>
                 <pre>
-                    <p>Mata toolkit 是一个开源 JavaScript + CSS 工具集.
-其目标是提供一个可靠、高度自定义的样式渲染系统.
+                    <p>Mata Toolkit，又称M3kit，是一个开源的静态 Web 工具集.
+<strike>jQuery 2</strike>
                     </p>
                 </pre>
+                <h2>组成...</h2>
+                <p>
+                    <h3>ES 6+</h3>
+                    <li>DOM 工具集</li>
+                    <li>[可选] 基于JS的 CSS 色盘控制器</li>
+                    <li>[可选] [Working] 预编写的 HTML 常用组件生成器</li>
+                    <li>[其他] [Working] 为 Node.js 后端适配的 HTML 常用组件生成器</li>
+                    <h3>CSS 3</h3>
+                    <li>[默认] Material-like 样式表</li>
+                    <li>[可选] [Working] 类 Linear 样式表</li>
+                    <li>[可选] [Working] 类 Libadwaita 样式表</li>
+                </p>
                 <ImageRoller time="3000" id="in_imageroller">
                     <img src="https://pic2.zhimg.com/v2-45249e82081900c9ec94cd1a3ec1ab5e_r.jpg?source=12a79843"/>
                     <img src="https://ts1.cn.mm.bing.net/th/id/R-C.95d4ab3898b58066b97b7bdeffb46da2?rik=kFBRaayIG3TgOQ&riu=http%3a%2f%2fpic.qt6.com%2fup%2f2021-5%2f16199211459203322.jpg&ehk=2AxlasGE2yw3mHtYNRty23mjieRxh2yseQcnQXUL6vM%3d&risl=&pid=ImgRaw&r=0"/>
                     <img src="https://upload-bbs.mihoyo.com/upload/2021/07/10/278678644/00185141732cb0f85adcf0ee68754554_8318448679343513426.jpg"/>
                 </ImageRoller>
-                <h2>关于 Mata Toolkit ...</h2>
-                <a class="M3tk-Button M3tk-HlClick" href="https://github.com/0xarch/mata-toolkit">查看代码</a>
+                <h1>关于 Mata Toolkit</h1>
+                <h2>活跃日期</h2>
+                <Calendar>
+                    {
+                        "Marked":{
+                            "2023":{
+                                "11":[16,17,18]
+                            }
+                        }
+                    }
+                </Calendar>
+                <a class="M3tk-E-Button M3tk-HlClick" href="https://github.com/0xarch/mata-toolkit">查看代码</a>
             </div>
             <hr>
             <footer class="M3tk-E-footer">
@@ -55,26 +76,26 @@
                     <t>点了也没用哦</t>
                 </a>
             </footer>
-        </Paper>
-        <PaperContent>
+        </div>
+        <div class="M3tk-E-PaperR">
             您正在使用 <b id="ua_show"></b> 浏览此页面.<br/>
             使用移动端: <b id="mobile_show"></b>
             <div class="M3tk-R-Content">
 
             </div>
-        </PaperContent>
+        </div>
         <Nav id="left_nav">
             1
         </Nav>
     </body>
     <script>
         window.onload=()=>{
-            const Palette=new PaletteController(MataPalette);
-            Palette.setPaletteFrom("primary","LIGHTBLUE",500);
-            Palette.setPaletteFrom("secondary","BLUE",450);
+            /*jMata.setPalette("primary",MataPalette["LIGHTBLUE"],500);
+            jMata.setPalette("secondary",MataPalette["BLUE"],450);*/
             Select("#ua_show").textContent = $.getPlatform();
             Select("#mobile_show").textContent = $.isMobile();
             renderImageRoller(Select("#in_imageroller"));
+            renderToolbar(jMata.select('.M3tk-E-Toolbar'));
             $.loadAll(true);
         }
     </script>

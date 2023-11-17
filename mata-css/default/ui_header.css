@@ -1,0 +1,74 @@
+/* Root Header */
+uiheader,.M3tk-E-RootBar{
+    display: flex;
+    width: 100%;
+    z-index: 900;
+    flex-direction: column;
+    top: 0;
+    left: 0;
+    right: auto;
+    position: fixed;
+    height: calc(var(--m-banner-h) + var(--m-toolbar-h));
+    box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12);
+}
+
+/* Banner */
+:is(uiheader,.M3tk-E-RootBar)>:is(banner,.M3tk-E-Banner){
+    padding: var(--g-padding);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-color-1);
+    color: var(--primary-text-1);
+    height: var(--m-banner-h);
+}
+
+/* Toolbar */
+:is(toolbar,.M3tk-E-Toolbar){
+    height: var(--m-toolbar-h);
+    display: flex;
+    padding: var(--g-padding);
+    background-color: var(--primary-color-2);
+    color: var(--primary-text-2);
+    align-items: center;
+}
+
+:is(toolbar,.M3tk-E-Toolbar)>:is(lbtn,rbtn){
+    display: inline-flex;
+    border-radius: 100%;
+    height: calc(6*var(--g-unit));
+    width: calc(6*var(--g-unit));
+    margin: 0px 4px;
+}
+:is(toolbar,.M3tk-E-Toolbar)>:is(lbtn,rbtn):hover{
+    background-color: var(--primary-color-3);
+}
+:is(toolbar,.M3tk-E-Toolbar)>rbtn:first-of-type{
+    margin-left: auto;
+}
+:is(toolbar,.M3tk-E-Toolbar) drop{
+    position: absolute;
+    display: block;
+    width: 15rem;
+    box-shadow: var(--m-medium-shadow);
+    border-radius: var(--m-large-round);
+    left: calc(-7.5rem + 50%);
+    top: calc(50px + .25rem);
+    background-color: var(--g-background);
+    z-index: 950;
+}
+:is(toolbar,.M3tk-E-Toolbar)>:is(lbtn,rbtn)>i{
+    width: 100%;
+    margin: calc(1.5*var(--g-unit));
+    color: var(--primary-text-2);
+}
+:is(toolbar,.M3tk-E-Toolbar)>:is(lbtn,rbtn)>i::before{
+    font-size: calc(3*var(--g-unit));
+}
+:is(toolbar,.M3tk-E-Toolbar)>:is(lbtn,rbtn)>svg{
+    height: calc(3*var(--g-unit));
+    width: calc(3*var(--g-unit));
+    margin: calc(1.5*var(--g-unit));
+    pointer-events: none;
+    fill: var(--primary-text-2);
+}

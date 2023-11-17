@@ -1,0 +1,13 @@
+/* Select */
+select {
+    border-radius: var(--m-small-round);
+    background-color: var(--background-backdrop);
+    border: none;
+    min-height: 2.5rem;
+    padding: .75rem;
+    color: var(--color);
+}
+
+option {
+    border-radius: var(--small-round);
+}

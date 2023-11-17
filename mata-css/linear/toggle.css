@@ -1,0 +1,51 @@
+toggle {
+    height: 1.8rem;
+    width: 3rem;
+    border-radius: 3rem;
+    border: none;
+    position: relative;
+}
+
+toggle::before {
+    content: '';
+    position: absolute;
+    display: block;
+    border-radius: 3rem;
+    height: 1.4rem;
+    width: 1.4rem;
+    top: 0.2rem;
+    transition: all .2s ease-in-out;
+    background-color: #fff !important;
+}
+
+toggle[active="false"] {
+    filter: saturate(0%)
+}
+
+toggle[active="false"]::before {
+    left: 0.2rem
+}
+
+toggle[active="true"]::before {
+    left: 1.4rem
+}
+
+toggle[rounded] {
+    height: 2rem;
+    min-width: 2rem;
+    width: max-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+toggle[rounded][active=false] {
+    filter: none
+}
+
+toggle[rounded]::before {
+    visibility: hidden
+}

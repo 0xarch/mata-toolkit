@@ -313,7 +313,6 @@ class ElementController {
 
 const $ = {
     userAgent: navigator.userAgent,
-    body: document.body,
     isMobile(){
         for(let keyword of ["Android","iPhone","iPad"]){
             if(this.userAgent.includes(keyword))
@@ -394,12 +393,12 @@ const $ = {
         if(force!=undefined){
             judge = force;
         }else{
-            judge = !matchMedia('(prefers-color-scheme:dark)').matches;
+            judge = matchMedia('(prefers-color-scheme:light)').matches;
         }
-        if(judge){
-            document.body.classList.replace("MA-dark","MA-light");
+        if(judge == true){
+            jMata('body').roaClass('MA-dark','MA-light');
         }else{
-            document.body.classList.add("MA-light","MA-dark");
+            jMata('body').roaClass('MA-light','MA-dark');
         }
     },
     loadAll(hascontent){
@@ -407,7 +406,7 @@ const $ = {
             document.body.classList.add("mobile");
         }
         renderAllCalendar();
-        renderToolbar(Select("uiheader>toolbar"));
+        // renderToolbar(Select("uiheader>toolbar"));
         evalCSS();
         $.toggleLD();
         if(hascontent) generateContent(Select(".M3tk-ContentBox"),Select(".M3tk-R-Content"));
@@ -415,4 +414,318 @@ const $ = {
             $.toggleLD();
         };
     }
-}
+};
+
+(function(window,undefined){
+
+    function _local_appendTextOrChildsToElement(element,innerHTML){
+        if(typeof(innerHTML)!="object")
+            element.innerHTML=innerHTML;
+        else if(Array.isArray(innerHTML)){
+            for(let item of innerHTML){
+                element.append(item);
+            }
+        }
+    }
+
+    function _local_JudgeReturnsByNodeList(nodeList){
+        if(nodeList.length == 1){
+            return new jMataSingleElement(nodeList[0]);
+        }else{
+            return new jMataBase(nodeList);
+        }
+    }
+    
+    function _local_JudgeReturnsByQuery(query,element){
+        let selected = undefined;
+        if(element != undefined){
+            selected = element.querySelectorAll(query);
+        }else{
+            selected = document.querySelectorAll(query);
+        }
+        return _local_JudgeReturnsByNodeList(selected);
+    }
+
+    var jMata = (selector) => {
+        if(selector != undefined){
+            return _local_JudgeReturnsByQuery(selector);
+        }else{
+            return window.jMata;
+        }
+    };
+
+    var jFrom = (element) => {
+        return new jMataSingleElement(element);
+    }
+
+    var macros = {
+        element: (tag)=> document.createElement(tag),
+        elementC: function(tag,classes){
+            return jCreateElement(tag).class(classes).finish();
+        },
+        elementT: function(tag,innerHTML){
+            return jCreateElement(tag).inner(innerHTML).finish();
+        },
+        elementCT: function(tag,classes,innerHTML){
+            return jCreateElement(tag).class(classes).inner(innerHTML).finish();
+        },
+        elementU : function(tag,id,CSSclass,innerHTML,attributes){
+            let element = document.createElement(tag);
+            if(id != undefined){
+                element.id = id;
+            }
+            if(CSSclass != undefined){
+                element.classList.add(...CSSclass);
+            }
+            if(innerHTML != undefined){
+                if(typeof(innerHTML)!="object")
+                    element.innerHTML=innerHTML;
+                else if(Array.isArray(innerHTML)){
+                    for(let item of innerHTML){
+                        element.append(item);
+                    }
+                }
+            }
+            for(let item in attributes){
+                element.setAttribute(item,attributes[item]);
+            }
+            return element;
+        }
+    }
+
+    function jCreateElement(tag){
+        this.tag = tag;
+        this.CSSclass = [];
+        this.attributes = {};
+        this.fns = {};
+        this.contentType = undefined;
+        this.content = undefined;
+
+        this.class = function(...classes){
+            this.CSSclass = classes;
+            return this;
+        }
+
+        this.inner = function(innerHTML){
+            this.content = innerHTML;
+            if(typeof(innerHTML)!="object")
+                this.contentType = "string";
+            else if(Array.isArray(innerHTML)){
+                this.contentType = "childArray";
+            }
+            return this;
+        }
+
+        this.id = function(id){
+            this.attributes['id'] = id;
+            return this;
+        }
+
+        this.fn = function(name,fn){
+            this.fns[name] = fn;
+            return this;
+        }
+
+        this.attr = function(attr,val){
+            this.attributes[attr] = val;
+            return this;
+        }
+
+        this.finish = function(){
+            let element = document.createElement(this.tag);
+            if(this.CSSclass.length!=0)
+                element.classList.add(...this.CSSclass);
+            for(let item in this.attributes){
+                element.setAttribute(item,this.attributes[item]);
+            }
+            for(let item in this.fns){
+                element.addEventListener(item,this.fns[item]);
+            }
+            if(this.content != undefined){
+                _local_appendTextOrChildsToElement(element,this.innerHTML);
+            }
+            return element;
+        }
+    }
+
+    function jNewElement(){
+        let arg_len = arguments.length;
+        let elem = document.createElement(arguments[0]);
+        switch(arg_len){
+            case 4:
+                _local_appendTextOrChildsToElement(elem,arguments[3]);
+            case 3:
+                elem.id = arguments[2];
+            case 2:
+                elem.classList.add(...arguments[1]);
+            case 1:
+            default:
+                return elem;
+        }
+    }
+
+    function jSelectIterable(query){
+        return document.querySelectorAll(query);
+    }
+
+    function jSelect(query){
+        let queried = document.querySelectorAll(query);
+        if(queried.length == 1)
+            return queried[0];
+        else return queried;
+    }
+
+    function jMataBase(provided_elements){
+        this.elements = [];
+        this.current = -1;
+
+        if(provided_elements != undefined){
+            this.elements = provided_elements;
+        }
+
+        this.each_or_current = (fn) => {
+            if(this.current == -1){
+                this.elements.forEach(fn);
+            }else{
+                fn(this.elements[this.current]);
+            }
+        }
+
+        this.select = (index)=> new jMataSingleElement(this.elements[index]);
+        
+        this.$ = function(selector){
+            let elements = document.querySelectorAll(selector);
+            this.elements.push(...elements);
+            return this;
+        }
+
+        this.css = function(attr,val){
+            this.each_or_current((elem)=>{
+                elem.style.setProperty(attr,val);
+            });
+            return this;
+        }
+
+        this.class = function(...classes){
+            this.elements.forEach((element)=>{
+                element.classList.add(classes);
+            });
+            return this;
+        }
+
+        this.removeClass = function(...classes){
+            this.elements.forEach((element)=>{
+                element.classList.remove(classes);
+            });
+            return this;
+        }
+
+        this.replaceClass = function(oldClass,newClass){
+            this.elements.forEach((element)=>{
+                element.classList.replace(oldClass,newClass);
+            });
+            return this;
+        }
+
+        this.toggleClass = function(className){
+            this.elements.forEach((element)=>{
+                element.classList.toggle(className);
+            })
+        }
+
+        this.eq = (index) => {
+            this.current = index;
+            return this;
+        }
+
+        this.req = () => {
+            this.current = -1;
+            return this;
+        }
+
+        this.event = function(eventName,eventFn){
+            this.elements.forEach((element)=>{
+                element.addEventListener(eventName,eventFn);
+            });
+            return this;
+        }
+    }
+
+    function jMataSingleElement(provided_element){
+        this.element = provided_element;
+
+        this.css = function(attr,val){
+            this.element.style.setProperty(attr,val);
+            return this;
+        }
+
+        this.event = function(trig,fn){
+            this.element.addEventListener(trig,fn);
+            return this;
+        }
+
+        this.inner = function(inner){
+            if(inner != undefined){
+                _local_appendTextOrChildsToElement(this.element,inner);
+                return this;
+            }else{
+                return this.element.innerHTML;
+            }
+        }
+        this.addClass = (...className) => {
+            this.element.classList.add(...className);
+            return this;
+        }
+        this.removeClass = (...className) => {
+            this.element.classList.remove(...className);
+            return this;
+        }
+        this.replaceClass = (oldClass,newClass) => {
+            this.element.classList.replace(oldClass,newClass);
+            return this;
+        }
+        this.hasClass = (className) =>{
+            return this.element.classList.contains(className);
+        }
+        this.roaClass = (oldClass,newClass) => {
+            if(this.hasClass(oldClass)){
+                this.replaceClass(oldClass,newClass);
+            }else{
+                this.addClass(newClass);
+            }
+            return this;
+        }
+        this.select = (selector) => _local_JudgeReturnsByQuery(selector,this.element);
+    }
+
+    jMata['isMobile'] = () => {
+        for(let keyword of ["Android","iPhone","iPad"]){
+            if(this.userAgent.includes(keyword))
+                return true
+        }
+        return false
+    };
+    jMata['getPlatform'] = () => {
+        for(let keyword of ["Android","iPhone","iPad","Linux","Windows","Mac OS X"]){
+            if(this.userAgent.includes(keyword))
+                return keyword
+        }
+    };
+
+    jMata['from'] = jFrom;
+    jMata['macros'] = macros;
+    jMata['createElement'] = jCreateElement;
+    jMata['select'] = jSelect;
+    jMata['select_iter'] = jSelectIterable;
+    jMata['new'] = jNewElement;
+
+    window.jMata = jMata;
+    window.Mata = jMata;
+
+    // window.jMata.macros = macros;
+    // window.jMata.createElement = jCreateElement;
+    // window.jMata.select = jSelect;
+})( window );
+
+
+

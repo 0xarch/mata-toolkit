@@ -1,0 +1,60 @@
+.M3tk-ContentBox{
+    padding: calc(2*var(--g-margin));
+    padding-top: 0px;
+}
+.M3tk-ContentBox>*{
+    margin-left: 0px;
+    margin-right: 0px;
+}
+h1.M3tk-M{
+    margin: calc(2*var(--g-margin)) 0px;
+    font-weight: bolder;
+}
+h1.M3tk-M::after{
+    position: absolute;
+    content:'';
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border-bottom: 1px solid rgba(0,0,0,.25);
+}
+h2.M3tk-M{
+    margin: calc(1.5*var(--g-margin)) 0px;
+}
+h2.M3tk-M::after{
+    position: absolute;
+    content:'';
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border-bottom: 1px outset rgba(0,0,0,.25);
+}
+h3.M3tk-M{
+    margin: var(--g-margin) 0px;
+    border-bottom: 1px solid rgba(0,0,0,.25);
+}
+a.M3tk-LC_H1{
+    font-size: large;
+    color: var(--g-color);
+    display: block;
+    margin-bottom: 4px;
+    margin-top: 8px;
+}
+a.M3tk-LC_H2{
+    color: var(--g-color);
+    display: block;
+    opacity: .7;
+    margin-left: 4px;
+    margin-bottom: 4px;
+}
+a.M3tk-LC_H3{
+    color: var(--g-color);
+    display: block;
+    opacity: .7;
+    margin-left: 8px;
+    margin-bottom: 2px;
+}
+fake.M3tk-E-Anchor{
+    position: relative;
+    top: calc(0px - var(--m-banner-h) - var(--m-toolbar-h));
+}

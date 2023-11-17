@@ -9,30 +9,32 @@ function renderCalendar(Calendar) {
         } catch (e) {
             return new Result(Err, 3);
         }
+    }else{
+        config = {};
     }
     // Read date
     let date = new Date();
     let year = parseInt(config['year'] && config['year'] != "this" ? config['year'] : date.getFullYear());
     let month = parseInt(config['month'] && config['month'] != "this" ? config['month'] : date.getMonth() + 1);
 
-    let _conf_clickevent = config['clickevent'];
+    /*let _conf_clickevent = config['clickevent'];
     let conf_clickevent = {};
     for (let i in _conf_clickevent) {
         let di;
         if (i[0] == '$') di = i.replace('$', `${year}-${month}-`);
         else di = i;
         conf_clickevent[di] = _conf_clickevent[i];
-    }
+    }*/
 
     // Element Creating
 
     // Calendar Label
-    let DayLabel   = $.createElementC("Label",["days"]),
-        LeftArrow  = $.createElement("Button",'',["left"],"<"),
-        RightArrow = $.createElement("Button",'',["right"],">");
-    let ArrowLabel = $.createElement("Label",'',["arrows"],[LeftArrow,RightArrow]),
-        YearEntry  = $.createElementC("select",["year_select"]),
-        MonthEntry = $.createElementC("select",["month_select"]);
+    let DayLabel   = jMata.new('div',["Mi_label","Mi_days"]),
+        LeftArrow  = jMata.new("button",["left"],'',"<"),
+        RightArrow = jMata.new("button",["right"],'',">");
+    let ArrowArea = jMata.new('div',["MMi_arrows"],'',[LeftArrow,RightArrow]),
+        YearEntry  = jMata.new("select",["year_select"]),
+        MonthEntry = jMata.new("select",["month_select"]);
 
     // Re-generate YearEntry and MonthEntry
     function _MLocal_RefreshYM(y){
@@ -100,13 +102,13 @@ function renderCalendar(Calendar) {
     YearEntry.value = year;
     MonthEntry.value = month;
 
-    let YearMonthLabel = $.createElementCT("Label",["months"],[YearEntry,MonthEntry]);
-    let TextLabel = $.createElementCT("Label",["fo_fd0","text"],[YearMonthLabel,ArrowLabel]);
+    let YearMonthArea = jMata.new("div",["MMi_months"],'',[YearEntry,MonthEntry]);
+    let TextLabel = jMata.new("div",["MMi_option"],'',[YearMonthArea,ArrowArea]);
     for (let item of ['日', '一', '二', '三', '四', '五', '六']) {
         let DayP = $.createElementCT("p",[],item);
         DayLabel.appendChild(DayP);
     }
-    let Label = $.createElementCT("Label",[],[TextLabel,DayLabel]);
+    let Label = jMata.new("div",["MMi_root"],'',[TextLabel,DayLabel]);
 
     // Calendar Box
     let Container = newElement("Container",[],"",{"year":year,"month":month});
@@ -129,7 +131,7 @@ function renderCalendar(Calendar) {
         let first_day = DatetimeUtils.firstDayOf(year,month).getDay();
         if (first_day != 0)
             for (var i = 0; i < first_day; i++){
-                let DayBlank = newElement("DayBlank");
+                let DayBlank = jMata.new("DayBlank");
                 DayBlank.onclick = function(){_MLocal_GoLastM()};
                 Container.appendChild(DayBlank);
         }
@@ -185,7 +187,7 @@ function renderCalendar(Calendar) {
 }
 
 function renderAllCalendar(){
-    for(let item of SelectAll("calendar[stat='tbr']")){
+    for(let item of jMata.select_iter('calendar:not([stat="rdd"])')){
         renderCalendar(item);
     }
 }

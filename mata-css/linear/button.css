@@ -1,0 +1,55 @@
+:is(button,.button,.M3tk-E-Button) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid;
+    font-weight: bold;
+    border-radius: var(--m-small-round);
+    box-shadow: var(--m-medium-shadow);
+    min-height: 3rem;
+    padding: 0.75rem;
+    margin: 0.25rem;
+    background-color: var(--selection-bg);
+    color: var(--g-color);
+    border-color: var(--selection-bg);
+    text-shadow: rgba(0,0,0,.25) 0px 3px 8px;
+}
+
+:is(button,.button,.M3tk-E-Button):not(.MA-noRounded){
+    border-radius: 100px;
+}
+
+button:hover,.button:hover,.M3tk-Button:hover{
+    background-color: var(--primary-color-1);
+    color: var(--primary-text-1);
+    border-color: var(--primary-color-1);
+}
+
+button.outline,.button.outline,.M3tk-OutlineButton{
+    background-color: transparent;
+    color: var(--primary-color-2);
+    box-shadow: none;
+}
+
+button.outline:hover,.button.outline:hover,.M3tk-OutlineButton:hover{
+    color: var(--primary-color-1);
+}
+
+button.hover,.button.hover,.M3tk-HoverButton {
+    height: 4.5rem;
+    min-width: 4.5rem;
+    width: 4.5rem;
+    text-align: center;
+    box-shadow: var(--m-large-shadow);
+}
+
+button.hover.lf,.button.hover.lf,.M3tk-HoverSymButton{
+    font-size:xx-large;
+}
+
+.M3tk-E-Button {
+    margin: var(--g-margin);
+    text-decoration: none;
+    width: fit-content;
+    overflow: hidden;
+}
