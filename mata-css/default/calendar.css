@@ -1,5 +1,5 @@
 /* Calendar */
-calendar {
+:is(calendar,.ME-Calendar) {
     border-radius: var(--m-small-round);
     box-shadow: var(--m-small-shadow);
     overflow: hidden;
@@ -9,72 +9,71 @@ calendar {
     min-height:42rem;
 }
 
-calendar[type="mini"]{
+:is(calendar,.ME-Calendar)[type="mini"]{
     min-width: unset;
     min-height: unset;
 }
 
-calendar>.MMi_root{
+:is(calendar,.ME-Calendar)>.MMi_root{
     flex: .1;
     background-color: var(--primary-color-2);
 }
-
-calendar .MMi_option{
+:is(calendar,.ME-Calendar) .MMi_option{
     display: flex;
     justify-content: flex-end;
     padding-right: var(--g-unit);
 }
 
-calendar>.MMi_root,calendar .MMi_option{
+:is(calendar,.ME-Calendar)>.MMi_root,:is(calendar,.ME-Calendar) .MMi_option{
     width: 100%;
 }
 
 /* Arrow Area */
-calendar .MMi_arrows{
+:is(calendar,.ME-Calendar) .MMi_arrows{
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
 }
 
-calendar .MMi_arrows>button{
+:is(calendar,.ME-Calendar) .MMi_arrows>button{
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-calendar .MMi_arrows>button:hover{
+:is(calendar,.ME-Calendar) .MMi_arrows>button:hover{
     background-color: var(--primary-color-2);
     color:var(--primary-text-2);
 }
 
-calendar .MMi_arrows>button:first-child{
+:is(calendar,.ME-Calendar) .MMi_arrows>button:first-child{
     margin-right: 0px;
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
 }
 
-calendar .MMi_arrows>button:last-child{
+:is(calendar,.ME-Calendar) .MMi_arrows>button:last-child{
     margin-left: 0px;
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
 }
 
 /* Day Area */
-calendar .Mi_days{
+:is(calendar,.ME-Calendar) .Mi_days{
     font-weight: bold;
     flex-direction: row;
     width: 100%;
     display: flex;
 }
 
-calendar .Mi_days>p{
+:is(calendar,.ME-Calendar) .Mi_days>p{
     flex:1;
     text-align: center;
 }
 
 /* Year & Month Area */
-calendar .MMi_months{
+:is(calendar,.ME-Calendar) .MMi_months{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -85,14 +84,14 @@ calendar .MMi_months{
     font-size: 1.15rem;
 }
 
-calendar :is(.month_select,.year_select){
+:is(calendar,.ME-Calendar) :is(.month_select,.year_select){
     min-height: unset;
     padding: .25rem;
     background-color: var(--primary-background);
     margin: .25rem;
 }
 
-calendar>container{
+:is(calendar,.ME-Calendar)>.ME-Container{
     margin: 0px;
     padding: 0px;
     width:100%;
@@ -102,7 +101,7 @@ calendar>container{
     background-color: var(--primary-background);
 }
 
-calendar dayaction{
+:is(calendar,.ME-Calendar) dayaction{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -119,8 +118,8 @@ dayaction {
     height: 6rem;
 }
 
-calendar[type="mini"] dayblank,
-calendar[type="mini"] dayaction{
+:is(calendar,.ME-Calendar)[type="mini"] dayblank,
+:is(calendar,.ME-Calendar)[type="mini"] dayaction{
     height: 3rem;
 }
 

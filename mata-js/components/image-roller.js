@@ -1,5 +1,5 @@
 function renderImageRoller(ImageRoller){
-    let Imgs = ImageRoller.querySelectorAll("img");
+    let Imgs = ImageRoller.querySelectorAll("a");
     let len = Imgs.length;
     ImageRoller.setAttribute("i",0);
     ImageRoller.setAttribute("stopped","0");

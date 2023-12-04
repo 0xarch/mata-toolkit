@@ -1,5 +1,5 @@
 /* Root Header */
-uiheader,.M3tk-E-RootBar,.ME-RootBar{
+uiheader,.ME-UIHeader,.ME-RootBar{
     display: flex;
     width: 100%;
     z-index: 900;
@@ -13,7 +13,7 @@ uiheader,.M3tk-E-RootBar,.ME-RootBar{
 }
 
 /* Banner */
-:is(uiheader,.M3tk-E-RootBar,.ME-RootBar)>:is(banner,.M3tk-E-Banner,.ME-Banner){
+:is(uiheader,.ME-UIHeader,.ME-RootBar)>:is(banner,.M3tk-E-Banner,.ME-Banner){
     padding: var(--g-padding);
     display: flex;
     align-items: center;
@@ -33,17 +33,18 @@ uiheader,.M3tk-E-RootBar,.ME-RootBar{
     align-items: center;
 }
 
-:is(toolbar,.M3tk-E-Toolbar,.ME-Toolbar)>:is(lbtn,rbtn){
+:is(toolbar,.M3tk-E-Toolbar,.ME-Toolbar)>:is(lbtn,rbtn,.ME-LBTN,.ME-RBTN){
     display: inline-flex;
     border-radius: 100%;
     height: calc(6*var(--g-unit));
     width: calc(6*var(--g-unit));
     margin: 0px 4px;
 }
-:is(toolbar,.M3tk-E-Toolbar,.ME-Toolbar)>:is(lbtn,rbtn):hover{
+:is(toolbar,.M3tk-E-Toolbar,.ME-Toolbar)>:is(lbtn,rbtn,.ME_LBTN,.ME-RBTN):hover{
     background-color: var(--primary-color-3);
 }
-:is(toolbar,.M3tk-E-Toolbar,.ME-Toolbar)>rbtn:first-of-type{
+:is(toolbar,.M3tk-E-Toolbar,.ME-Toolbar)>rbtn:first-of-type,
+:is(toolbar,.M3tk-E-Toolbar,.ME-Toolbar)>.ME-RBTN.MA-first{
     margin-left: auto;
 }
 :is(toolbar,.M3tk-E-Toolbar,.ME-Toolbar) drop{
@@ -57,15 +58,15 @@ uiheader,.M3tk-E-RootBar,.ME-RootBar{
     background-color: var(--g-background);
     z-index: 950;
 }
-:is(toolbar,.M3tk-E-Toolbar,.ME-Toolbar)>:is(lbtn,rbtn)>i{
+:is(toolbar,.M3tk-E-Toolbar,.ME-Toolbar)>:is(lbtn,rbtn,.ME-LBTN,.ME-RBTN)>i{
     width: 100%;
     margin: calc(1.5*var(--g-unit));
     color: var(--primary-text-2);
 }
-:is(toolbar,.M3tk-E-Toolbar,.ME-Toolbar)>:is(lbtn,rbtn)>i::before{
+:is(toolbar,.M3tk-E-Toolbar,.ME-Toolbar)>:is(lbtn,rbtn,.ME-LBTN,.ME-RBTN)>i::before{
     font-size: calc(3*var(--g-unit));
 }
-:is(toolbar,.M3tk-E-Toolbar,.ME-Toolbar)>:is(lbtn,rbtn)>svg{
+:is(toolbar,.M3tk-E-Toolbar,.ME-Toolbar)>:is(lbtn,rbtn,.ME-LBTN,.ME-RBTN)>svg{
     height: calc(3*var(--g-unit));
     width: calc(3*var(--g-unit));
     margin: calc(1.5*var(--g-unit));

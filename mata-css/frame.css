@@ -33,11 +33,11 @@ body{
     width: 100vw;
 }
 
-paper,.M3tk-E-PaperL,.ME-Paper{
+paper,.ME-Paper{
     flex: 3;
 }
 
-papercontent,.M3tk-E-PaperR,.ME-Sidebar{
+papercontent,.ME-Sidebar{
     flex: 1;
     position: sticky;
     top: calc(var(--m-banner-h) + var(--m-toolbar-h));
@@ -46,57 +46,57 @@ papercontent,.M3tk-E-PaperR,.ME-Sidebar{
     height: calc(100vh - var(--m-banner-h) - var(--m-toolbar-h));
 }
 
-body.mobile :is(papercontent,.M3tk-E-PaperR,.ME-Sidebar){
+body.mobile :is(sidebar,.ME-Sidebar){
     display: none;
 }
 
-:is(paper,.M3tk-E-PaperL,.ME-Paper,papercontent,.M3tk-E-PaperR,.ME-Sidebar,.M3tk-G_PTop){
+:is(paper,.ME-Paper,sidebar,.ME-Sidebar,.M3tk-G_PTop){
     padding: 16px;
     margin-top: calc(var(--m-banner-h) + var(--m-toolbar-h));
 }
 
-body:has(>:is(uiheader,.M3tk-E-RootBar,.ME-RootBar)>:is(toolbar,.M3tk-E-Toolbar,.ME-Toolbar)){
+body:has(>:is(uiheader,.ME-RootBar,.ME-UIHeader)>:is(toolbar,.M3tk-E-Toolbar,.ME-Toolbar)){
     --m-toolbar-h:64px;
 }
 
-body:has(>:is(uiheader,.M3tk-E-RootBar,.ME-RootBar)>:is(banner,.M3tk-E-Banner,.ME-Banner)){
+body:has(>:is(uiheader,.ME-RootBar,.ME-UIHeader)>:is(banner,.M3tk-E-Banner,.ME-Banner)){
     --m-banner-h:36px;
 }
 
-body.mobile:has(>:is(uiheader,.M3tk-E-RootBar,.ME-RootBar)>:is(toolbar,.M3tk-E-Toolbar,.ME-Toolbar)){
+body.mobile:has(>:is(uiheader,.ME-RootBar,.ME-UIHeader)>:is(toolbar,.M3tk-E-Toolbar,.ME-Toolbar)){
     --m-toolbar-h:128px;
 }
 
-body.mobile:has(>:is(uiheader,.M3tk-E-RootBar,.ME-RootBar)>:is(banner,.M3tk-E-Banner,.ME-Banner)){
+body.mobile:has(>:is(uiheader,.ME-RootBar,.ME-UIHeader)>:is(banner,.M3tk-E-Banner,.ME-Banner)){
     --m-banner-h:72px;
 }
 
-footer.M3tk-E-footer{
+:is(footer,.ME-Footer,.ME-footer){
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin: 24px 32px;
 }
 
-footer.M3tk-E-footer>a{
+:is(footer,.ME-Footer,.ME-footer)>a{
     display: flex;
     align-items: center;
     flex-direction: column;
 }
-footer.M3tk-E-footer>a.-Prev::before{
+:is(footer,.ME-Footer,.ME-footer)>a.-Prev::before{
     left: -24px;
     content:'\f060';
 }
-footer.M3tk-E-footer>a.-Next::before{
+:is(footer,.ME-Footer,.ME-footer)>a.-Next::before{
     content:'\f061';
     right: -24px;
 }
-footer.M3tk-E-footer>:is(a.-Next,a.-Prev)::before{
+:is(footer,.ME-Footer,.ME-footer)>:is(a.-Next,a.-Prev)::before{
     font-family: "Font Awesome 6 Free";
     font-weight: 900;
     font-size: 16px;
     position: absolute;
 }
-footer.M3tk-E-footer>a>t{
+:is(footer,.ME-Footer,.ME-footer)>a>t{
     opacity: .75;
 }

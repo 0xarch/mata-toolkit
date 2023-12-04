@@ -17,14 +17,6 @@ function renderCalendar(Calendar) {
     let year = parseInt(config['year'] && config['year'] != "this" ? config['year'] : date.getFullYear());
     let month = parseInt(config['month'] && config['month'] != "this" ? config['month'] : date.getMonth() + 1);
 
-    /*let _conf_clickevent = config['clickevent'];
-    let conf_clickevent = {};
-    for (let i in _conf_clickevent) {
-        let di;
-        if (i[0] == '$') di = i.replace('$', `${year}-${month}-`);
-        else di = i;
-        conf_clickevent[di] = _conf_clickevent[i];
-    }*/
 
     // Element Creating
 
@@ -111,7 +103,7 @@ function renderCalendar(Calendar) {
     let Label = jMata.new("div",["MMi_root"],'',[TextLabel,DayLabel]);
 
     // Calendar Box
-    let Container = newElement("Container",[],"",{"year":year,"month":month});
+    let Container = newElement("div",["ME-Container"],"",{"year":year,"month":month});
 
     Calendar.appendChild(Label);
     Calendar.appendChild(Container);
@@ -187,7 +179,7 @@ function renderCalendar(Calendar) {
 }
 
 function renderAllCalendar(){
-    for(let item of jMata.select_iter('calendar:not([stat="rdd"])')){
+    for(let item of jMata.select_iter('.ME-Calendar:not([stat="rdd"])')){
         renderCalendar(item);
     }
 }

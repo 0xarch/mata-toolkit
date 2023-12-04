@@ -12,10 +12,17 @@ body.mobile imageroller{
     height: 50vw;
 }
 
-imageroller>img{
+imageroller>a{
+    width: 100%;
+    transition: all .5s ease-in-out;
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    z-index: -1;
+}
+imageroller img{
     width: 100%;
     object-fit: cover;
-    transition: all .5s ease-in-out;
     top: 0px;
     left: 0px;
     position: absolute;

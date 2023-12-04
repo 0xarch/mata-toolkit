@@ -1,10 +1,10 @@
-pagination{
+.ME-Pagination{
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-pagination>a{
+.ME-Pagination>a{
     width: 2rem;
     height: 2rem;
     display: flex;
@@ -18,29 +18,29 @@ pagination>a{
     border-radius: var(--m-small-round);
 }
 
-pagination>a.page{
+.ME-Pagination>a.page{
     color:var(--primary-color-2);
 }
 
-pagination>a:hover{
+.ME-Pagination>a:hover{
     background-color: var(--primary-color-3);
     color: var(--primary-text-3);
 }
 
-pagination>a.page.this{
+.ME-Pagination>a.page.this{
     background-color: var(--primary-color-1);
     color:var(--primary-text-1);
 }
 
-pagination>a.prev,pagination>a.next{
+.ME-Pagination>:is(a.prev,a.next){
     color:var(--primary-color-1);
 }
 
-pagination>a.disabled{
+.ME-Pagination>a.disabled{
     opacity: .5;
 }
 
-pagination>space{
+.ME-Pagination>space{
     width: 4rem;
     height: .25rem;
     opacity: .5;

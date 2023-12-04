@@ -85,7 +85,7 @@ function ___Inner(elem,ty,content){
 }
 
 function renderToolbar(Toolbar){
-    for(let item of Toolbar.querySelectorAll(":is(lbtn,rbtn)")){
+    for(let item of Toolbar.querySelectorAll(":is(lbtn,rbtn,.ME-RBTN,.ME-LBTN)")){
         renderButton(item);
     }
 }

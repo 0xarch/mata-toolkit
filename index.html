@@ -7,27 +7,27 @@
         <title>Mata Toolkit</title>
     </head>
     <body>
-        <header class="M3tk-E-RootBar">
-            <div class="M3tk-E-Banner">
+        <header class="ME-UIHeader">
+            <div class="ME-Banner">
                 Mata Toolkit v1.1 发布!
             </div>
-            <div class="M3tk-E-Toolbar">
-                <LBtn F="callNav #left_nav svg Label"></LBtn>
-                <RBtn F="changeColor"></RBtn>
-                <RBtn F="link https://github.com/mata-toolkit i fa-brands,fa-github"></RBtn>
-                <RBtn F="callDrop svg Grid">
+            <div class="ME-Toolbar">
+                <div class="ME-LBTN" F="callNav #left_nav svg Label"></div>
+                <div class="ME-RBTN MA-first" F="changeColor"></div>
+                <div class="ME-RBTN" F="link https://github.com/mata-toolkit i fa-brands,fa-github"></div>
+                <div class="ME-RBTN" F="callDrop svg Grid">
                     <Drop>
                         <Menu>菜单项 1</Menu>
                         <Menu>菜单项 2</Menu>
                         <hr>
                         <Menu>菜单项 3</Menu>
                     </Drop>
-                </RBtn>
-                <RBtn F="changeDayNight"></RBtn>
-                <RBtn F="switchReadDirection"></RBtn>
+                </div>
+                <div class="ME-RBTN" F="changeDayNight"></div>
+                <div class="ME-RBTN" F="switchReadDirection"></div>
             </div>
         </header>
-        <div class="M3tk-E-PaperL">
+        <div class="ME-Paper">
             <div class="M3tk-ContentBox">
                 <h1>这是什么？</h1>
                 <pre>
@@ -41,32 +41,37 @@
                     <li>DOM 工具集</li>
                     <li>[可选] 基于JS的 CSS 色盘控制器</li>
                     <li>[可选] [Working] 预编写的 HTML 常用组件生成器</li>
-                    <li>[其他] [Working] 为 Node.js 后端适配的 HTML 常用组件生成器</li>
+                    <li>[其他] [Future] 为 Node.js 后端适配的 HTML 常用组件生成器</li>
                     <h3>CSS 3</h3>
-                    <li>[默认] Material-like 样式表</li>
+                    <li>[默认] Material2-like 样式表</li>
                     <li>[可选] [Working] 类 Linear 样式表</li>
-                    <li>[可选] [Working] 类 Libadwaita 样式表</li>
+                    <li>[可选] [Future] 类 Libadwaita 样式表</li>
                 </p>
                 <ImageRoller time="3000" id="in_imageroller">
-                    <img src="https://pic2.zhimg.com/v2-45249e82081900c9ec94cd1a3ec1ab5e_r.jpg?source=12a79843"/>
-                    <img src="https://ts1.cn.mm.bing.net/th/id/R-C.95d4ab3898b58066b97b7bdeffb46da2?rik=kFBRaayIG3TgOQ&riu=http%3a%2f%2fpic.qt6.com%2fup%2f2021-5%2f16199211459203322.jpg&ehk=2AxlasGE2yw3mHtYNRty23mjieRxh2yseQcnQXUL6vM%3d&risl=&pid=ImgRaw&r=0"/>
-                    <img src="https://upload-bbs.mihoyo.com/upload/2021/07/10/278678644/00185141732cb0f85adcf0ee68754554_8318448679343513426.jpg"/>
+                    <a><img src="https://pic2.zhimg.com/v2-45249e82081900c9ec94cd1a3ec1ab5e_r.jpg"/></a>
+                    <a><img src="https://ts1.cn.mm.bing.net/th/id/R-C.95d4ab3898b58066b97b7bdeffb46da2?rik=kFBRaayIG3TgOQ&riu=http%3a%2f%2fpic.qt6.com%2fup%2f2021-5%2f16199211459203322.jpg&ehk=2AxlasGE2yw3mHtYNRty23mjieRxh2yseQcnQXUL6vM%3d&risl=&pid=ImgRaw"/></a>
+                    <a><img src="https://upload-bbs.mihoyo.com/upload/2021/07/10/278678644/00185141732cb0f85adcf0ee68754554_8318448679343513426.jpg"/></a>
+                    
+                    
                 </ImageRoller>
                 <h1>关于 Mata Toolkit</h1>
                 <h2>活跃日期</h2>
-                <Calendar>
+                <div class="ME-Calendar">
                     {
                         "Marked":{
                             "2023":{
-                                "11":[16,17,18]
+                                "11":[16,17,18],
+                                "12":[3,4]
                             }
                         }
                     }
-                </Calendar>
-                <a class="M3tk-E-Button M3tk-HlClick" href="https://github.com/0xarch/mata-toolkit">查看代码</a>
+                </div>
+                <a class="ME-Button M3tk-HlClick" href="https://github.com/0xarch/mata-toolkit">查看代码</a>
+                <h2>未来...</h2>
+                <p>团队计划将M3kit的组件部分拆分，组件项目可能立为MEUI(Mata Envolved User Interface toolkit)</p>
             </div>
             <hr>
-            <footer class="M3tk-E-footer">
+            <footer class="ME-Footer">
                 <a class="-Prev">
                     <b>上一页(无内容)</b>
                     <t>点了没用哦</t>
@@ -77,7 +82,7 @@
                 </a>
             </footer>
         </div>
-        <div class="M3tk-E-PaperR">
+        <div class="ME-Sidebar">
             您正在使用 <b id="ua_show"></b> 浏览此页面.<br/>
             使用移动端: <b id="mobile_show"></b>
             <div class="M3tk-R-Content">
@@ -90,12 +95,12 @@
     </body>
     <script>
         window.onload=()=>{
-            /*jMata.setPalette("primary",MataPalette["LIGHTBLUE"],500);
-            jMata.setPalette("secondary",MataPalette["BLUE"],450);*/
+            jMata.setPalette("primary",MataPalette["LIGHTBLUE"],500);
+            jMata.setPalette("secondary",MataPalette["BLUE"],450);
             Select("#ua_show").textContent = $.getPlatform();
             Select("#mobile_show").textContent = $.isMobile();
             renderImageRoller(Select("#in_imageroller"));
-            renderToolbar(jMata.select('.M3tk-E-Toolbar'));
+            renderToolbar(jMata.select('.ME-Toolbar'));
             $.loadAll(true);
         }
     </script>
