@@ -1,10 +1,10 @@
 @import url("../frame.css");
 @import url("../attribute.css");
+@import url("button.css");
 @import url("select.css");
 @import url("anim.css");
 @import url("calendar.css");
 @import url("tabs.css");
-@import url("button.css");
 @import url("toggle.css");
 @import url("collapse.css");
 @import url("pagination.css");
@@ -53,7 +53,7 @@ html {
 
 body{
     --g-padding: 8px;
-    --g-margin: 8px;
+    --g-margin: calc(0.5 * var(--g-unit));
     --g-font-size: 1rem;
     --g-unit: 8px;
     --g-font-weight: 400;
@@ -69,9 +69,10 @@ body{
     --g-color: rgba(255,255,255,1);
     --background-backdrop: #333;
     --selection-bg: #4f52b4;
+    --selection-light-bg: #5f62b1;
     --half-color: rgba(255,255,255,.25);
-    --half-bg : rgba(7, 13, 36, 0.467);
-    --half-light-bg: rgba(7, 13, 36, 0.336);
+    --half-bg : rgba(26, 31, 51, 0.467);
+    --half-light-bg: rgba(7, 13, 36, 0.418);
     --primary-color-1: hsl(230,10%,17%);
     --primary-color-2: hsl(230,10%,32%);
     --primary-color-3: hsl(230,10%,45%);

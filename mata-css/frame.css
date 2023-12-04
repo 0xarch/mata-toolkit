@@ -33,11 +33,11 @@ body{
     width: 100vw;
 }
 
-paper,.M3tk-E-PaperL{
+paper,.M3tk-E-PaperL,.ME-Paper{
     flex: 3;
 }
 
-papercontent,.M3tk-E-PaperR{
+papercontent,.M3tk-E-PaperR,.ME-Sidebar{
     flex: 1;
     position: sticky;
     top: calc(var(--m-banner-h) + var(--m-toolbar-h));
@@ -46,28 +46,28 @@ papercontent,.M3tk-E-PaperR{
     height: calc(100vh - var(--m-banner-h) - var(--m-toolbar-h));
 }
 
-body.mobile :is(papercontent,.M3tk-E-PaperR){
+body.mobile :is(papercontent,.M3tk-E-PaperR,.ME-Sidebar){
     display: none;
 }
 
-:is(paper,.M3tk-E-PaperL,papercontent,.M3tk-E-PaperR,.M3tk-G_PTop){
+:is(paper,.M3tk-E-PaperL,.ME-Paper,papercontent,.M3tk-E-PaperR,.ME-Sidebar,.M3tk-G_PTop){
     padding: 16px;
     margin-top: calc(var(--m-banner-h) + var(--m-toolbar-h));
 }
 
-body:has(>:is(uiheader,.M3tk-E-RootBar)>:is(toolbar,.M3tk-E-Toolbar)){
+body:has(>:is(uiheader,.M3tk-E-RootBar,.ME-RootBar)>:is(toolbar,.M3tk-E-Toolbar,.ME-Toolbar)){
     --m-toolbar-h:64px;
 }
 
-body:has(>:is(uiheader,.M3tk-E-RootBar)>:is(banner,.M3tk-E-Banner)){
+body:has(>:is(uiheader,.M3tk-E-RootBar,.ME-RootBar)>:is(banner,.M3tk-E-Banner,.ME-Banner)){
     --m-banner-h:36px;
 }
 
-body.mobile:has(>:is(uiheader,.M3tk-E-RootBar)>:is(toolbar,.M3tk-E-Toolbar)){
+body.mobile:has(>:is(uiheader,.M3tk-E-RootBar,.ME-RootBar)>:is(toolbar,.M3tk-E-Toolbar,.ME-Toolbar)){
     --m-toolbar-h:128px;
 }
 
-body.mobile:has(>:is(uiheader,.M3tk-E-RootBar)>:is(banner,.M3tk-E-Banner)){
+body.mobile:has(>:is(uiheader,.M3tk-E-RootBar,.ME-RootBar)>:is(banner,.M3tk-E-Banner,.ME-Banner)){
     --m-banner-h:72px;
 }
 

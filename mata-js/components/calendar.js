@@ -30,8 +30,8 @@ function renderCalendar(Calendar) {
 
     // Calendar Label
     let DayLabel   = jMata.new('div',["Mi_label","Mi_days"]),
-        LeftArrow  = jMata.new("button",["left"],'',"<"),
-        RightArrow = jMata.new("button",["right"],'',">");
+        LeftArrow  = jMata.new("button",["MMi_arLeft"],'',"<"),
+        RightArrow = jMata.new("button",["MMi_arRight"],'',">");
     let ArrowArea = jMata.new('div',["MMi_arrows"],'',[LeftArrow,RightArrow]),
         YearEntry  = jMata.new("select",["year_select"]),
         MonthEntry = jMata.new("select",["month_select"]);

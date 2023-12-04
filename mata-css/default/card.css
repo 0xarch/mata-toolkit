@@ -1,0 +1,15 @@
+.ME-CardBody{
+    border-radius: 0.2rem;
+    min-width: 10rem;
+    min-height: 14rem;
+    box-shadow: var(--m-small-shadow);
+    width: fit-content;
+    height: fit-content;
+}
+
+.ME-CeramicBody{
+    min-width: 10rem;
+    min-height: 14rem;
+    width: fit-content;
+    height: fit-content;
+}

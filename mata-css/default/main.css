@@ -11,6 +11,7 @@
 @import url("image-roller.css");
 @import url("content.css");
 @import url("ui_header.css");
+@import url("card.css");
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap");
 @import url("https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.2/css/all.min.css");
 
@@ -42,6 +43,13 @@ body{
     --g-font-weight: 400;
     --g-line-height:1.43;
     font-family: 'Roboto',sans-serif;
+    font-size: 0.875em;
+    font-weight: 400;
+    line-height: 1.43;
+    letter-spacing: 0.01em;
+    font-size: var(--g-font-size);
+    background-color: var(--g-background);
+    color: var(--g-color);
 }
 
 body.mobile{
@@ -54,19 +62,6 @@ body {
     margin: 0;
 }
 
-html {
-    font-size: 0.875em;
-    font-weight: 400;
-    line-height: 1.43;
-    letter-spacing: 0.01em;
-}
-
-body{
-    font-size: var(--g-font-size);
-    background-color: var(--g-background);
-    color: var(--g-color);
-}
-
 body.MA-light{
     --g-background: #fff;
     --g-color: rgba(0,0,0,1);
@@ -77,32 +72,4 @@ body.MA-dark{
     --g-background: #212121;
     --g-color: rgba(255,255,255,1);
     --background-backdrop: #333;
-}
-
-/* Keyword Defintion */
-*[Outline],
-*[Outline]:hover {
-    background-color: transparent;
-}
-*[Rounded] {
-    border-radius: 128px;
-}
-._201{
-    background: var(--background-colored);
-}
-._210{
-    border-radius: 0px;
-}
-._211{
-    border-radius: var(--m-small-round);
-}
-._212{
-    border-radius: var(--m-medium-round);
-}
-._213{
-    border-radius: var(--m-large-round);
-}
-._220{
-    text-overflow: ellipsis;
-    overflow: hidden;
 }

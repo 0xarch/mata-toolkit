@@ -33,13 +33,13 @@ function renderButton(Button){
                 Nav.css('left','0px');
                 Cover.css('display','block').css('background','rgba(0,0,0,.25)');
             }
-            Cover.onclick = function(){
+            Cover.event("click",()=>{
                 Nav.css('left',"calc(-30*var(--g-unit))");
                 Cover.css('background','transparent');
                 setTimeout(()=>{
                     Cover.css('display','none');
                 },500);
-            }
+            });
             ___Inner(Button,F[2],F[3]);
             break;
         case "changeDayNight":

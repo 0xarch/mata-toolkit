@@ -1,5 +1,5 @@
 /* Root Header */
-uiheader,.M3tk-E-RootBar{
+uiheader,.M3tk-E-RootBar,.ME-RootBar{
     display: flex;
     width: 100%;
     z-index: 900;
@@ -13,7 +13,7 @@ uiheader,.M3tk-E-RootBar{
 }
 
 /* Banner */
-:is(uiheader,.M3tk-E-RootBar)>:is(banner,.M3tk-E-Banner){
+:is(uiheader,.M3tk-E-RootBar,.ME-RootBar)>:is(banner,.M3tk-E-Banner,.ME-Banner){
     padding: var(--g-padding);
     display: flex;
     align-items: center;
@@ -24,7 +24,7 @@ uiheader,.M3tk-E-RootBar{
 }
 
 /* Toolbar */
-:is(toolbar,.M3tk-E-Toolbar){
+:is(toolbar,.M3tk-E-Toolbar,.ME-Toolbar){
     height: var(--m-toolbar-h);
     display: flex;
     padding: var(--g-padding);
@@ -33,20 +33,20 @@ uiheader,.M3tk-E-RootBar{
     align-items: center;
 }
 
-:is(toolbar,.M3tk-E-Toolbar)>:is(lbtn,rbtn){
+:is(toolbar,.M3tk-E-Toolbar,.ME-Toolbar)>:is(lbtn,rbtn){
     display: inline-flex;
     border-radius: 100%;
     height: calc(6*var(--g-unit));
     width: calc(6*var(--g-unit));
     margin: 0px 4px;
 }
-:is(toolbar,.M3tk-E-Toolbar)>:is(lbtn,rbtn):hover{
+:is(toolbar,.M3tk-E-Toolbar,.ME-Toolbar)>:is(lbtn,rbtn):hover{
     background-color: var(--primary-color-3);
 }
-:is(toolbar,.M3tk-E-Toolbar)>rbtn:first-of-type{
+:is(toolbar,.M3tk-E-Toolbar,.ME-Toolbar)>rbtn:first-of-type{
     margin-left: auto;
 }
-:is(toolbar,.M3tk-E-Toolbar) drop{
+:is(toolbar,.M3tk-E-Toolbar,.ME-Toolbar) drop{
     position: absolute;
     display: block;
     width: 15rem;
@@ -57,15 +57,15 @@ uiheader,.M3tk-E-RootBar{
     background-color: var(--g-background);
     z-index: 950;
 }
-:is(toolbar,.M3tk-E-Toolbar)>:is(lbtn,rbtn)>i{
+:is(toolbar,.M3tk-E-Toolbar,.ME-Toolbar)>:is(lbtn,rbtn)>i{
     width: 100%;
     margin: calc(1.5*var(--g-unit));
     color: var(--primary-text-2);
 }
-:is(toolbar,.M3tk-E-Toolbar)>:is(lbtn,rbtn)>i::before{
+:is(toolbar,.M3tk-E-Toolbar,.ME-Toolbar)>:is(lbtn,rbtn)>i::before{
     font-size: calc(3*var(--g-unit));
 }
-:is(toolbar,.M3tk-E-Toolbar)>:is(lbtn,rbtn)>svg{
+:is(toolbar,.M3tk-E-Toolbar,.ME-Toolbar)>:is(lbtn,rbtn)>svg{
     height: calc(3*var(--g-unit));
     width: calc(3*var(--g-unit));
     margin: calc(1.5*var(--g-unit));

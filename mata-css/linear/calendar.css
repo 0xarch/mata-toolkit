@@ -49,13 +49,13 @@ calendar .MMi_arrows>button:hover{
     background-color: var(--selection-bg);
 }
 
-calendar .MMi_arrows>button:first-child{
+calendar .MMi_arrows>.MMi_arLeft{
     margin-right: 0px;
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
 }
 
-calendar .MMi_arrows>button:last-child{
+calendar .MMi_arrows>.MMi_arRight{
     margin-left: 0px;
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
@@ -100,6 +100,7 @@ calendar>container{
     display:grid;
     grid: auto-flow / repeat(7,calc(100% / 7));
     flex: 1;
+    background: var(--half-light-bg);
 }
 
 calendar dayaction{
